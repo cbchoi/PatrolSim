@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ObjectList>
+  <ShipList>
+    <Ship id="1" spd="10.0" type="0">
+      <Waypoints>
+        <Waypoint x="0" y ="0" z ="0"/>
+        <Waypoint x="0" y ="0" z ="0"/>
+        <Waypoint x="0" y ="0" z ="0"/>
+        <Waypoint x="0" y ="0" z ="0"/>
+        <Waypoint x="0" y ="0" z ="0"/>
+        <Waypoint x="0" y ="0" z ="0"/>
+        <Waypoint x="0" y ="0" z ="0"/>
+        <Waypoint x="0" y ="0" z ="0"/>
+        <Waypoint x="0" y ="0" z ="0"/>
+        <Waypoint x="0" y ="0" z ="0"/>
+      </Waypoints>
+    </Ship>
+  </ShipList>
+  <ObstcleList>
+    <Obstcle x ="0" y="0" z="0" r="102" g="153" b="0"/>
+  </ObstcleList>
+</ObjectList>

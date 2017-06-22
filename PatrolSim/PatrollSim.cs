@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,8 @@ namespace PatrolSim
         private double[][] matrixSimulation;
         private double[][] matrixRealWorld;
 
+        private ScenarioManager _scenarioManager;
+
         public PatrolSim()
         {
             InitializeComponent();
@@ -31,7 +34,7 @@ namespace PatrolSim
 
             for (int i = 0; i <= 20; i++)
             {
-                _colorTable[i] = InterpolateColors(Color.DeepSkyBlue, Color.Red, i / 20.0F);
+                _colorTable[i] = InterpolateColors(Color.AliceBlue, Color.Red, i / 20.0F);
             }
 
             InitMap(chartSimulation);
@@ -89,6 +92,20 @@ namespace PatrolSim
             NChartWall leftWall = chart.Wall(ChartWallType.Left);
             leftWall.Visible = false;
 
+            // setup axes
+            NOrdinalScaleConfigurator ordinalScale = (NOrdinalScaleConfigurator)chart.Axis(StandardAxis.PrimaryX).ScaleConfigurator;
+            ordinalScale.MajorGridStyle.SetShowAtWall(ChartWallType.Floor, true);
+            ordinalScale.MajorGridStyle.SetShowAtWall(ChartWallType.Back, true);
+            ordinalScale.DisplayDataPointsBetweenTicks = false;
+
+            ordinalScale = (NOrdinalScaleConfigurator)chart.Axis(StandardAxis.Depth).ScaleConfigurator;
+            ordinalScale.MajorGridStyle.SetShowAtWall(ChartWallType.Floor, true);
+            ordinalScale.MajorGridStyle.SetShowAtWall(ChartWallType.Left, true);
+            ordinalScale.DisplayDataPointsBetweenTicks = false;
+
+            chart.Axis(StandardAxis.SecondaryY).Anchor = new NDockAxisAnchor(AxisDockZone.FrontLeft, false, 100.0f, 100.0f);
+            chart.Axis(StandardAxis.SecondaryY).Visible = false;
+
             for (int i = 0; i < _gridSizeY; i++)
             {
                 // add the first line
@@ -109,8 +126,10 @@ namespace PatrolSim
                 bar.DataPointOriginIndex = 0;
 
                 // turn off bar border to improve performance
-                bar.BorderStyle.Width = new NLength(0);
+                bar.BorderStyle.Width = new NLength(0.5f);
             }
+            nChartControl.Settings.RenderSurface = RenderSurface.Window;
+
         }
 
         private void UpdateMap(NChartControl nChartControl, int gridY, double[] valList)
@@ -196,7 +215,7 @@ namespace PatrolSim
 
         private void UpdateLog(ListBox lb, String objID, String eventLog, int x, int y)
         {
-            String strLog = String.Format("{0:u} {1} {2} ({3}, {4})", DateTime.Now, objID, eventLog, x, y);
+            String strLog = String.Format("{0:s} {1} {2} ({3}, {4})", DateTime.Now, objID, eventLog, x, y);
             lb.Items.Add(strLog);
             lb.SelectedIndex = lb.Items.Count - 1;
 
@@ -225,6 +244,17 @@ namespace PatrolSim
             coordinate = UpdateMatrix(chartRealWorld,matrixRealWorld);
             //UpdateMap(chartRealWorld, coordinate.Item2, matrixRealWorld[coordinate.Item2]);
             UpdateLog(realLog, "ship1", "Moved", coordinate.Item1, coordinate.Item2);
+        }
+
+        private void openScenarioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                //StreamReader sr = new StreamReader(ofd.FileName);
+                _scenarioManager = new ScenarioManager(ofd.FileName);
+                int a = 10;
+            }
         }
     }
 }
