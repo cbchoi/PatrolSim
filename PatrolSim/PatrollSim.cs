@@ -378,5 +378,15 @@ namespace PatrolSim
         {
 
         }
+
+        private void PatrolSim_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (_worker.IsAlive)
+            {
+                _worker.Abort();
+                _threadState = ThreadState.Stop;
+               _simManager.Terminate();
+            }
+        }
     }
 }

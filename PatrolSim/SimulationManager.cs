@@ -29,6 +29,13 @@ namespace PatrolSim
         private System.Diagnostics.Stopwatch _sw;
         private List<Agent> _agentlist = null;
         private ThreadState _threadState;
+        private Thread _worker;
+
+        public ThreadState CurrentState
+        {
+            get { return _threadState; }
+            set => _threadState = value;
+        }
 
         public SimulationManager()
         {
@@ -41,8 +48,8 @@ namespace PatrolSim
             _agentlist = agentlist;
             _threadState = ThreadState.Run;
 
-            Thread worker = new Thread(Run);
-            worker.Start();
+            _worker = new Thread(Run);
+            _worker.Start();
         }
 
         private void Run()
@@ -54,6 +61,13 @@ namespace PatrolSim
                 else
                     Execute();
             }
+        }
+
+        public void Terminate()
+        {
+            _threadState = ThreadState.Stop;
+           if(_worker.IsAlive)
+                _worker.Abort();
         }
 
         private double Execute()

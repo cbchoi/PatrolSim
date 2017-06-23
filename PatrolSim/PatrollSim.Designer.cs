@@ -55,7 +55,6 @@
             this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.chartRealWorld = new Nevron.Chart.WinForm.NChartControl();
-            this.button1 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -226,7 +225,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.realLog);
-            this.groupBox1.Location = new System.Drawing.Point(1012, 1040);
+            this.groupBox1.Location = new System.Drawing.Point(1029, 1061);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(987, 391);
             this.groupBox1.TabIndex = 5;
@@ -236,7 +235,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.simLog);
-            this.groupBox2.Location = new System.Drawing.Point(17, 1040);
+            this.groupBox2.Location = new System.Drawing.Point(36, 1061);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(987, 391);
             this.groupBox2.TabIndex = 6;
@@ -256,7 +255,7 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this.chartSimulation);
-            this.groupBox3.Location = new System.Drawing.Point(17, 43);
+            this.groupBox3.Location = new System.Drawing.Point(34, 59);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(987, 975);
             this.groupBox3.TabIndex = 7;
@@ -267,7 +266,7 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.chartRealWorld);
-            this.groupBox4.Location = new System.Drawing.Point(1012, 43);
+            this.groupBox4.Location = new System.Drawing.Point(1029, 59);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(987, 975);
             this.groupBox4.TabIndex = 8;
@@ -288,23 +287,12 @@
             this.chartRealWorld.Text = "SimulationMap";
             this.chartRealWorld.Click += new System.EventHandler(this.chartRealWorld_Click);
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(948, 1437);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(156, 32);
-            this.button1.TabIndex = 5;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // PatrolSim
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(2022, 1481);
-            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -314,7 +302,7 @@
             this.Name = "PatrolSim";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
             this.Text = "PatrolSim";
-            this.Load += new System.EventHandler(this.PatrolSim_Load);
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.PatrolSim_FormClosing);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
@@ -349,7 +337,6 @@
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox4;
-        private System.Windows.Forms.Button button1;
         private System.Windows.Forms.ToolStripMenuItem bestEffortToolStripMenuItem;
         private Nevron.Chart.WinForm.NChartControl chartSimulation;
         private System.Windows.Forms.ListBox realLog;
