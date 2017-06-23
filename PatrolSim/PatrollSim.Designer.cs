@@ -72,7 +72,7 @@
             this.analysisToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(2022, 40);
+            this.menuStrip1.Size = new System.Drawing.Size(2022, 42);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -83,7 +83,7 @@
             this.openScenarioToolStripMenuItem,
             this.saveScenarioToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(64, 36);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(64, 38);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // newScenarioToolStripMenuItem
@@ -113,7 +113,7 @@
             this.simulationResumeToolStripMenuItem,
             this.simulationStopToolStripMenuItem});
             this.simulationControlToolStripMenuItem.Name = "simulationControlToolStripMenuItem";
-            this.simulationControlToolStripMenuItem.Size = new System.Drawing.Size(227, 36);
+            this.simulationControlToolStripMenuItem.Size = new System.Drawing.Size(227, 38);
             this.simulationControlToolStripMenuItem.Text = "Simulation Control";
             // 
             // simulationStartToolStripMenuItem
@@ -128,18 +128,21 @@
             this.simulaitionPauseToolStripMenuItem.Name = "simulaitionPauseToolStripMenuItem";
             this.simulaitionPauseToolStripMenuItem.Size = new System.Drawing.Size(319, 38);
             this.simulaitionPauseToolStripMenuItem.Text = "Simulaition Pause";
+            this.simulaitionPauseToolStripMenuItem.Click += new System.EventHandler(this.simulaitionPauseToolStripMenuItem_Click);
             // 
             // simulationResumeToolStripMenuItem
             // 
             this.simulationResumeToolStripMenuItem.Name = "simulationResumeToolStripMenuItem";
             this.simulationResumeToolStripMenuItem.Size = new System.Drawing.Size(319, 38);
             this.simulationResumeToolStripMenuItem.Text = "Simulation Resume";
+            this.simulationResumeToolStripMenuItem.Click += new System.EventHandler(this.simulationResumeToolStripMenuItem_Click);
             // 
             // simulationStopToolStripMenuItem
             // 
             this.simulationStopToolStripMenuItem.Name = "simulationStopToolStripMenuItem";
             this.simulationStopToolStripMenuItem.Size = new System.Drawing.Size(319, 38);
             this.simulationStopToolStripMenuItem.Text = "Simulation Stop";
+            this.simulationStopToolStripMenuItem.Click += new System.EventHandler(this.simulationStopToolStripMenuItem_Click);
             // 
             // simulationRatioToolStripMenuItem
             // 
@@ -150,53 +153,56 @@
             this.ratio100XToolStripMenuItem,
             this.bestEffortToolStripMenuItem});
             this.simulationRatioToolStripMenuItem.Name = "simulationRatioToolStripMenuItem";
-            this.simulationRatioToolStripMenuItem.Size = new System.Drawing.Size(202, 36);
+            this.simulationRatioToolStripMenuItem.Size = new System.Drawing.Size(202, 38);
             this.simulationRatioToolStripMenuItem.Text = "Simulation Ratio";
             // 
             // realTimeToolStripMenuItem
             // 
             this.realTimeToolStripMenuItem.Name = "realTimeToolStripMenuItem";
-            this.realTimeToolStripMenuItem.Size = new System.Drawing.Size(231, 38);
+            this.realTimeToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
             this.realTimeToolStripMenuItem.Text = "Real Time";
             this.realTimeToolStripMenuItem.Click += new System.EventHandler(this.realTimeToolStripMenuItem_Click);
             // 
             // ratio05XToolStripMenuItem
             // 
             this.ratio05XToolStripMenuItem.Name = "ratio05XToolStripMenuItem";
-            this.ratio05XToolStripMenuItem.Size = new System.Drawing.Size(231, 38);
+            this.ratio05XToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
             this.ratio05XToolStripMenuItem.Text = "Ratio:0.5X";
-            this.ratio05XToolStripMenuItem.Click += new System.EventHandler(this.ratio10XToolStripMenuItem_Click);
+            this.ratio05XToolStripMenuItem.Click += new System.EventHandler(this.ratio05XToolStripMenuItem_Click);
             // 
             // ratio50XToolStripMenuItem1
             // 
             this.ratio50XToolStripMenuItem1.Name = "ratio50XToolStripMenuItem1";
-            this.ratio50XToolStripMenuItem1.Size = new System.Drawing.Size(231, 38);
+            this.ratio50XToolStripMenuItem1.Size = new System.Drawing.Size(268, 38);
             this.ratio50XToolStripMenuItem1.Text = "Ratio:5.0X";
+            this.ratio50XToolStripMenuItem1.Click += new System.EventHandler(this.ratio50XToolStripMenuItem1_Click);
             // 
             // ratio100XToolStripMenuItem
             // 
             this.ratio100XToolStripMenuItem.Name = "ratio100XToolStripMenuItem";
-            this.ratio100XToolStripMenuItem.Size = new System.Drawing.Size(231, 38);
+            this.ratio100XToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
             this.ratio100XToolStripMenuItem.Text = "Ratio:10.0X";
+            this.ratio100XToolStripMenuItem.Click += new System.EventHandler(this.ratio100XToolStripMenuItem_Click);
             // 
             // bestEffortToolStripMenuItem
             // 
             this.bestEffortToolStripMenuItem.Name = "bestEffortToolStripMenuItem";
-            this.bestEffortToolStripMenuItem.Size = new System.Drawing.Size(231, 38);
+            this.bestEffortToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
             this.bestEffortToolStripMenuItem.Text = "Best Effort";
+            this.bestEffortToolStripMenuItem.Click += new System.EventHandler(this.bestEffortToolStripMenuItem_Click);
             // 
             // analysisToolStripMenuItem
             // 
             this.analysisToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.timedAnaysisToolStripMenuItem});
             this.analysisToolStripMenuItem.Name = "analysisToolStripMenuItem";
-            this.analysisToolStripMenuItem.Size = new System.Drawing.Size(112, 36);
+            this.analysisToolStripMenuItem.Size = new System.Drawing.Size(112, 38);
             this.analysisToolStripMenuItem.Text = "Analysis";
             // 
             // timedAnaysisToolStripMenuItem
             // 
             this.timedAnaysisToolStripMenuItem.Name = "timedAnaysisToolStripMenuItem";
-            this.timedAnaysisToolStripMenuItem.Size = new System.Drawing.Size(267, 38);
+            this.timedAnaysisToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
             this.timedAnaysisToolStripMenuItem.Text = "Timed Anaysis";
             // 
             // chartSimulation

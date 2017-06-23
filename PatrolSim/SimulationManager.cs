@@ -13,6 +13,7 @@ namespace PatrolSim
         public const double X05 = 2.0;
         public const double X10 = 1.0;
         public const double X50 = 0.2;
+        public const double X100 = 0.1;
         public const double BestEffort = 0;
     }
 
@@ -68,6 +69,16 @@ namespace PatrolSim
             _threadState = ThreadState.Stop;
            if(_worker.IsAlive)
                 _worker.Abort();
+        }
+
+        public void Pause()
+        {
+            _threadState = ThreadState.Pause;
+        }
+
+        public void Resume()
+        {
+            _threadState = ThreadState.Run;
         }
 
         private double Execute()

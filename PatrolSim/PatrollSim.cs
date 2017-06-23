@@ -62,10 +62,6 @@ namespace PatrolSim
             {
                 UpdateMatrixThreadTest(matrixSimulation);
                 UpdateMatrixThreadTest(matrixRealWorld);
-                //Tuple<int, int> coordinate = UpdateMatrix(chartSimulation, matrixSimulation);
-                //UpdateMap(chartSimulation, coordinate.Item2, matrixSimulation[coordinate.Item2]);
-                //String agentName = $"Agent_{agent.AgentID}";
-                //UpdateLog(simLog, agentName, "Moved", coordinate.Item1, coordinate.Item2);
             }
         }
 
@@ -317,31 +313,6 @@ namespace PatrolSim
 
         }
 
-        private void ratio10XToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void PatrolSim_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Tuple<int, int> coordinate = UpdateMatrix(chartSimulation, matrixSimulation);
-            //UpdateMap(chartSimulation, coordinate.Item2, matrixSimulation[coordinate.Item2]);
-            UpdateLog(simLog, "agent1", "Moved", coordinate.Item1, coordinate.Item2);
-
-            //value = (int)Math.Max(1, rnd.NextDouble() * 20);
-            //x = rnd.Next(0, 99);
-            //y = rnd.Next(0, 99);
-
-            coordinate = UpdateMatrix(chartRealWorld,matrixRealWorld);
-            //UpdateMap(chartRealWorld, coordinate.Item2, matrixRealWorld[coordinate.Item2]);
-            UpdateLog(realLog, "ship1", "Moved", coordinate.Item1, coordinate.Item2);
-        }
-
         private void openScenarioToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
@@ -355,18 +326,6 @@ namespace PatrolSim
         private void realTimeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _simManager.TimeMode = TimeModeStruct.X10;
-        }
-
-        private void simulationStartToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            _simManager.Run(_scenarioManager.AgentList);
-
-            _threadState = ThreadState.Run;
-            if (!_worker.IsAlive)
-            {
-                _worker.Start();
-            }
-            
         }
 
         private void chartSimulation_Click(object sender, EventArgs e)
@@ -386,6 +345,60 @@ namespace PatrolSim
                 _worker.Abort();
                 _threadState = ThreadState.Stop;
                _simManager.Terminate();
+            }
+        }
+
+        private void ratio100XToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _simManager.TimeMode = TimeModeStruct.X100;
+        }
+
+        private void bestEffortToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _simManager.TimeMode = TimeModeStruct.BestEffort;
+        }
+
+        private void ratio50XToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            _simManager.TimeMode = TimeModeStruct.X50;
+        }
+
+        private void ratio05XToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _simManager.TimeMode = TimeModeStruct.X05;
+        }
+
+        private void simulationStartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _simManager.Run(_scenarioManager.AgentList);
+
+            _threadState = ThreadState.Run;
+            if (!_worker.IsAlive)
+            {
+                _worker.Start();
+            }
+
+        }
+
+        private void simulaitionPauseToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _simManager.Pause();
+            _threadState = ThreadState.Pause;
+        }
+
+        private void simulationResumeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _simManager.Resume();
+            _threadState = ThreadState.Run;
+        }
+
+        private void simulationStopToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _simManager.Terminate();
+            _threadState = ThreadState.Stop;
+            if (_worker.IsAlive)
+            {
+                _worker.Abort();
             }
         }
     }
