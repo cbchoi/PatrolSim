@@ -19,6 +19,9 @@ namespace PatrolSim
         public int AgentType { get { return _agentType; } }
         public int CurrentWayointIndex { get { return _curWayIndex; } }
 
+        delegate void UpdateMap();
+
+        private UpdateMap _sim;
         public Agent(int id, double spd, int type)
         {
             _agentID = id;
@@ -27,6 +30,7 @@ namespace PatrolSim
 
             _curWayIndex = 0;
             _wayList = new ArrayList();
+            _sim += PatrolSim.UpdateSimulation;
         }
 
         public Agent(XmlNode node)
@@ -38,10 +42,12 @@ namespace PatrolSim
             _curWayIndex = 0;
             _wayList = new ArrayList();
 
-            foreach (XmlNode way in node.ChildNodes)
+            XmlNode waypoints = node.SelectSingleNode("Waypoints");
+            foreach (XmlNode way in waypoints.ChildNodes)
             {
                 AddWaypoint(way);
             }
+            _sim += PatrolSim.UpdateSimulation;
         }
 
         public Waypoint GetCurrentWaypoint()
@@ -57,7 +63,7 @@ namespace PatrolSim
 
         public void AddWaypoint(int x, int y, int z)
         {
-            _wayList[_curWayIndex++] = new Waypoint(x, y, z);
+            _wayList.Add(new Waypoint(x, y, z));
         }
 
         public void AddWaypoint(XmlNode node)
@@ -67,6 +73,12 @@ namespace PatrolSim
             int z = Int32.Parse(node.Attributes["z"].Value);
 
             AddWaypoint(x, y, z);
+        }
+
+        public Tuple<int, Waypoint> Move(float time)
+        {
+            _sim();
+            return new Tuple<int, Waypoint>(0, new Waypoint(0,0,0));
         }
     }
 }

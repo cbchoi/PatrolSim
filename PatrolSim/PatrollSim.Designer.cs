@@ -41,9 +41,10 @@
             this.simulationStopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.simulationRatioToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.realTimeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ratio10XToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ratio10XToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.ratio20XToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ratio05XToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ratio50XToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.ratio100XToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.bestEffortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.analysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timedAnaysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.chartSimulation = new Nevron.Chart.WinForm.NChartControl();
@@ -97,6 +98,7 @@
             this.openScenarioToolStripMenuItem.Name = "openScenarioToolStripMenuItem";
             this.openScenarioToolStripMenuItem.Size = new System.Drawing.Size(271, 38);
             this.openScenarioToolStripMenuItem.Text = "Open Scenario";
+            this.openScenarioToolStripMenuItem.Click += new System.EventHandler(this.openScenarioToolStripMenuItem_Click);
             // 
             // saveScenarioToolStripMenuItem
             // 
@@ -119,7 +121,8 @@
             // 
             this.simulationStartToolStripMenuItem.Name = "simulationStartToolStripMenuItem";
             this.simulationStartToolStripMenuItem.Size = new System.Drawing.Size(319, 38);
-            this.simulationStartToolStripMenuItem.Text = "Simulation Start";
+            this.simulationStartToolStripMenuItem.Text = "Simulation Run";
+            this.simulationStartToolStripMenuItem.Click += new System.EventHandler(this.simulationStartToolStripMenuItem_Click);
             // 
             // simulaitionPauseToolStripMenuItem
             // 
@@ -143,9 +146,10 @@
             // 
             this.simulationRatioToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.realTimeToolStripMenuItem,
-            this.ratio10XToolStripMenuItem,
-            this.ratio10XToolStripMenuItem1,
-            this.ratio20XToolStripMenuItem});
+            this.ratio05XToolStripMenuItem,
+            this.ratio50XToolStripMenuItem1,
+            this.ratio100XToolStripMenuItem,
+            this.bestEffortToolStripMenuItem});
             this.simulationRatioToolStripMenuItem.Name = "simulationRatioToolStripMenuItem";
             this.simulationRatioToolStripMenuItem.Size = new System.Drawing.Size(202, 36);
             this.simulationRatioToolStripMenuItem.Text = "Simulation Ratio";
@@ -153,27 +157,34 @@
             // realTimeToolStripMenuItem
             // 
             this.realTimeToolStripMenuItem.Name = "realTimeToolStripMenuItem";
-            this.realTimeToolStripMenuItem.Size = new System.Drawing.Size(218, 38);
+            this.realTimeToolStripMenuItem.Size = new System.Drawing.Size(231, 38);
             this.realTimeToolStripMenuItem.Text = "Real Time";
+            this.realTimeToolStripMenuItem.Click += new System.EventHandler(this.realTimeToolStripMenuItem_Click);
             // 
-            // ratio10XToolStripMenuItem
+            // ratio05XToolStripMenuItem
             // 
-            this.ratio10XToolStripMenuItem.Name = "ratio10XToolStripMenuItem";
-            this.ratio10XToolStripMenuItem.Size = new System.Drawing.Size(218, 38);
-            this.ratio10XToolStripMenuItem.Text = "Ratio:0.5X";
-            this.ratio10XToolStripMenuItem.Click += new System.EventHandler(this.ratio10XToolStripMenuItem_Click);
+            this.ratio05XToolStripMenuItem.Name = "ratio05XToolStripMenuItem";
+            this.ratio05XToolStripMenuItem.Size = new System.Drawing.Size(231, 38);
+            this.ratio05XToolStripMenuItem.Text = "Ratio:0.5X";
+            this.ratio05XToolStripMenuItem.Click += new System.EventHandler(this.ratio10XToolStripMenuItem_Click);
             // 
-            // ratio10XToolStripMenuItem1
+            // ratio50XToolStripMenuItem1
             // 
-            this.ratio10XToolStripMenuItem1.Name = "ratio10XToolStripMenuItem1";
-            this.ratio10XToolStripMenuItem1.Size = new System.Drawing.Size(218, 38);
-            this.ratio10XToolStripMenuItem1.Text = "Ratio:1.0X";
+            this.ratio50XToolStripMenuItem1.Name = "ratio50XToolStripMenuItem1";
+            this.ratio50XToolStripMenuItem1.Size = new System.Drawing.Size(231, 38);
+            this.ratio50XToolStripMenuItem1.Text = "Ratio:5.0X";
             // 
-            // ratio20XToolStripMenuItem
+            // ratio100XToolStripMenuItem
             // 
-            this.ratio20XToolStripMenuItem.Name = "ratio20XToolStripMenuItem";
-            this.ratio20XToolStripMenuItem.Size = new System.Drawing.Size(218, 38);
-            this.ratio20XToolStripMenuItem.Text = "Ratio:2.0X";
+            this.ratio100XToolStripMenuItem.Name = "ratio100XToolStripMenuItem";
+            this.ratio100XToolStripMenuItem.Size = new System.Drawing.Size(231, 38);
+            this.ratio100XToolStripMenuItem.Text = "Ratio:10.0X";
+            // 
+            // bestEffortToolStripMenuItem
+            // 
+            this.bestEffortToolStripMenuItem.Name = "bestEffortToolStripMenuItem";
+            this.bestEffortToolStripMenuItem.Size = new System.Drawing.Size(231, 38);
+            this.bestEffortToolStripMenuItem.Text = "Best Effort";
             // 
             // analysisToolStripMenuItem
             // 
@@ -200,6 +211,7 @@
             this.chartSimulation.State = ((Nevron.Chart.WinForm.NState)(resources.GetObject("chartSimulation.State")));
             this.chartSimulation.TabIndex = 1;
             this.chartSimulation.Text = "SimulationMap";
+            this.chartSimulation.Click += new System.EventHandler(this.chartSimulation_Click);
             // 
             // realLog
             // 
@@ -274,6 +286,7 @@
             this.chartRealWorld.State = ((Nevron.Chart.WinForm.NState)(resources.GetObject("chartRealWorld.State")));
             this.chartRealWorld.TabIndex = 1;
             this.chartRealWorld.Text = "SimulationMap";
+            this.chartRealWorld.Click += new System.EventHandler(this.chartRealWorld_Click);
             // 
             // button1
             // 
@@ -328,19 +341,20 @@
         private System.Windows.Forms.ToolStripMenuItem simulationRatioToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem analysisToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem realTimeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ratio10XToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem ratio10XToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem ratio20XToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ratio05XToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ratio50XToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem ratio100XToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem timedAnaysisToolStripMenuItem;
-        private Nevron.Chart.WinForm.NChartControl chartSimulation;
-        private System.Windows.Forms.ListBox realLog;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.ListBox simLog;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox4;
-        private Nevron.Chart.WinForm.NChartControl chartRealWorld;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ToolStripMenuItem bestEffortToolStripMenuItem;
+        private Nevron.Chart.WinForm.NChartControl chartSimulation;
+        private System.Windows.Forms.ListBox realLog;
+        private System.Windows.Forms.ListBox simLog;
+        private Nevron.Chart.WinForm.NChartControl chartRealWorld;
     }
 }
 

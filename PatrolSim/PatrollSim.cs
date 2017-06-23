@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Nevron.Chart;
@@ -17,14 +18,56 @@ namespace PatrolSim
 {
     public partial class PatrolSim : Form
     {
-        private readonly int _gridSizeX = 100;
-        private readonly int _gridSizeY = 100;
-        private readonly Color[] _colorTable;
+        private static int _gridSizeX = 100;
+        private static int _gridSizeY = 100;
+        private static Color[] _colorTable;
 
-        private double[][] matrixSimulation;
-        private double[][] matrixRealWorld;
+        private static double[][] matrixSimulation;
+        private static double[][] matrixRealWorld;
 
-        private ScenarioManager _scenarioManager;
+        private static ScenarioManager _scenarioManager;
+        private static SimulationManager _simManager;
+
+        enum ThreadState{ Run, Pause, Stop,}
+
+        private ThreadState _threadState = ThreadState.Stop;
+        private Thread _worker;
+
+        private BackgroundWorker backWorker;
+
+        private void backWorker_RunWorkerCompleted(
+            object sender,
+            RunWorkerCompletedEventArgs e)
+        {
+            TestUIComponent(chartSimulation, matrixSimulation);
+            TestUIComponent(chartRealWorld, matrixRealWorld);
+            chartSimulation.Refresh();
+        }
+
+        public void UpdateSimulationMap()
+        {
+            while (_threadState == ThreadState.Run || _threadState == ThreadState.Pause)
+            {
+                if (_threadState == ThreadState.Run)
+                {
+                    backWorker.RunWorkerAsync();
+                }
+                Thread.Sleep(1000);
+            }
+        }
+
+        public static void UpdateSimulation()
+        {
+            foreach (Agent agent in _scenarioManager.AgentList)
+            {
+                UpdateMatrixThreadTest(matrixSimulation);
+                UpdateMatrixThreadTest(matrixRealWorld);
+                //Tuple<int, int> coordinate = UpdateMatrix(chartSimulation, matrixSimulation);
+                //UpdateMap(chartSimulation, coordinate.Item2, matrixSimulation[coordinate.Item2]);
+                //String agentName = $"Agent_{agent.AgentID}";
+                //UpdateLog(simLog, agentName, "Moved", coordinate.Item1, coordinate.Item2);
+            }
+        }
 
         public PatrolSim()
         {
@@ -48,6 +91,12 @@ namespace PatrolSim
                 matrixRealWorld[i] = new double[_gridSizeX];
                 matrixSimulation[i] = new double[_gridSizeX];
             }
+
+            _simManager = new SimulationManager();
+            _worker = new Thread(UpdateSimulationMap);
+
+            backWorker = new BackgroundWorker();
+            this.backWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backWorker_RunWorkerCompleted);
         }
 
         public static Color InterpolateColors(Color color1, Color color2, float factor)
@@ -169,7 +218,54 @@ namespace PatrolSim
             nChartControl.Refresh();
         }
 
-        private Tuple<int, int> UpdateMatrix(NChartControl nChartControl, double[][] matrix)
+        private static Tuple<int, int> UpdateMatrixThreadTest(double[][] matrix)
+        {
+            Random rnd = new Random();
+            int value = (int) Math.Max(1, rnd.NextDouble() * 20);
+            int x = rnd.Next(0, 99);
+            int y = rnd.Next(0, 99);
+
+            matrix[y][x] = value;
+
+            return Tuple.Create(x, y);
+        }
+
+        private static void TestUIComponent(NChartControl nChartControl, double[][] matrix)
+        {
+            NCartesianChart chart = (NCartesianChart)nChartControl.Charts[0];
+            for (int i = 0; i < _gridSizeY; i++)
+            {
+                NBarSeries bar = chart.Series[i] as NBarSeries;
+                double[] barValues = matrix[i];
+                int barValueCount = barValues.Length;
+
+                if (bar.Values.Count == 0)
+                {
+                    bar.Values.AddRange(barValues);
+                }
+                else
+                {
+                    bar.Values.SetRange(0, barValues);
+                }
+
+                int fillStyleCount = bar.FillStyles.Count;
+
+                for (int j = 0; j < barValueCount; j++)
+                {
+                    if (j >= fillStyleCount)
+                    {
+                        bar.FillStyles[j] = new NColorFillStyle(_colorTable[(int)barValues[j]]);
+                    }
+                    else
+                    {
+                        ((NColorFillStyle)bar.FillStyles[j]).Color = _colorTable[(int)barValues[j]];
+                    }
+                }
+            }
+            nChartControl.Refresh();
+        }
+
+        private static Tuple<int, int> UpdateMatrix(NChartControl nChartControl, double[][] matrix)
         {
             Random rnd = new Random();
             int value = (int)Math.Max(1, rnd.NextDouble() * 20);
@@ -213,9 +309,9 @@ namespace PatrolSim
             return Tuple.Create(x, y);
         }
 
-        private void UpdateLog(ListBox lb, String objID, String eventLog, int x, int y)
+        private static void UpdateLog(ListBox lb, String objID, String eventLog, int x, int y)
         {
-            String strLog = String.Format("{0:s} {1} {2} ({3}, {4})", DateTime.Now, objID, eventLog, x, y);
+            String strLog = $"{DateTime.Now:s} {objID} {eventLog} ({x}, {y})";
             lb.Items.Add(strLog);
             lb.SelectedIndex = lb.Items.Count - 1;
 
@@ -253,8 +349,34 @@ namespace PatrolSim
             {
                 //StreamReader sr = new StreamReader(ofd.FileName);
                 _scenarioManager = new ScenarioManager(ofd.FileName);
-                int a = 10;
             }
+        }
+
+        private void realTimeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _simManager.TimeMode = TimeModeStruct.X10;
+        }
+
+        private void simulationStartToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            _simManager.Run(_scenarioManager.AgentList);
+
+            _threadState = ThreadState.Run;
+            if (!_worker.IsAlive)
+            {
+                _worker.Start();
+            }
+            
+        }
+
+        private void chartSimulation_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void chartRealWorld_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
