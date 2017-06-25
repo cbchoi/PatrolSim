@@ -19,8 +19,8 @@ namespace PatrolSim
 {
     public partial class PatrolSim : Form
     {
-        private static int _gridSizeX = 100;
-        private static int _gridSizeY = 100;
+        private static int _gridSizeX = 50;
+        private static int _gridSizeY = 50;
         private static Color[] _colorTable;
 
         private static double[][] matrixSimulation;
@@ -44,11 +44,11 @@ namespace PatrolSim
         {
             lock (thisLock)
             {
-                TestUIComponent(chartSimulation, matrixSimulation);
+                //TestUIComponent(chartSimulation, matrixSimulation);
                 TestUIComponent(chartRealWorld, matrixRealWorld);
             }
-            
-            chartSimulation.Refresh();
+
+            chartRealWorld.Refresh();
         }
 
         public void UpdateSimulationMap()
@@ -78,8 +78,10 @@ namespace PatrolSim
         public PatrolSim()
         {
             InitializeComponent();
-
-            InitMap(chartSimulation);
+            // Initalize Image
+            pictRealWorld.Load(@".\Image.png");
+            pictRealWorld.SizeMode = PictureBoxSizeMode.StretchImage;
+           // InitMap(chartSimulation);
             InitMap(chartRealWorld);
 
             matrixRealWorld = new double[_gridSizeY][];
@@ -151,7 +153,7 @@ namespace PatrolSim
             ordinalScale.MajorGridStyle.SetShowAtWall(ChartWallType.Left, true);
             ordinalScale.DisplayDataPointsBetweenTicks = false;
 
-            chart.Axis(StandardAxis.SecondaryY).Anchor = new NDockAxisAnchor(AxisDockZone.FrontLeft, false, 100.0f, 100.0f);
+            chart.Axis(StandardAxis.SecondaryY).Anchor = new NDockAxisAnchor(AxisDockZone.FrontLeft, false, 50.0f, 50.0f);
 
             // Axis Visable Setup.
             chart.Axis(StandardAxis.PrimaryX).Visible = false;

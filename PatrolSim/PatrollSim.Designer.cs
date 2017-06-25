@@ -47,19 +47,18 @@
             this.bestEffortToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.analysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timedAnaysisToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.chartSimulation = new Nevron.Chart.WinForm.NChartControl();
             this.realLog = new System.Windows.Forms.ListBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.simLog = new System.Windows.Forms.ListBox();
-            this.groupBox3 = new System.Windows.Forms.GroupBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.chartRealWorld = new Nevron.Chart.WinForm.NChartControl();
+            this.pictRealWorld = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
-            this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictRealWorld)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -72,7 +71,7 @@
             this.analysisToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(2022, 42);
+            this.menuStrip1.Size = new System.Drawing.Size(2022, 40);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -83,7 +82,7 @@
             this.openScenarioToolStripMenuItem,
             this.saveScenarioToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(64, 38);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(64, 36);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // newScenarioToolStripMenuItem
@@ -113,7 +112,7 @@
             this.simulationResumeToolStripMenuItem,
             this.simulationStopToolStripMenuItem});
             this.simulationControlToolStripMenuItem.Name = "simulationControlToolStripMenuItem";
-            this.simulationControlToolStripMenuItem.Size = new System.Drawing.Size(227, 38);
+            this.simulationControlToolStripMenuItem.Size = new System.Drawing.Size(227, 36);
             this.simulationControlToolStripMenuItem.Text = "Simulation Control";
             // 
             // simulationStartToolStripMenuItem
@@ -153,41 +152,41 @@
             this.ratio100XToolStripMenuItem,
             this.bestEffortToolStripMenuItem});
             this.simulationRatioToolStripMenuItem.Name = "simulationRatioToolStripMenuItem";
-            this.simulationRatioToolStripMenuItem.Size = new System.Drawing.Size(202, 38);
+            this.simulationRatioToolStripMenuItem.Size = new System.Drawing.Size(202, 36);
             this.simulationRatioToolStripMenuItem.Text = "Simulation Ratio";
             // 
             // realTimeToolStripMenuItem
             // 
             this.realTimeToolStripMenuItem.Name = "realTimeToolStripMenuItem";
-            this.realTimeToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
+            this.realTimeToolStripMenuItem.Size = new System.Drawing.Size(231, 38);
             this.realTimeToolStripMenuItem.Text = "Real Time";
             this.realTimeToolStripMenuItem.Click += new System.EventHandler(this.realTimeToolStripMenuItem_Click);
             // 
             // ratio05XToolStripMenuItem
             // 
             this.ratio05XToolStripMenuItem.Name = "ratio05XToolStripMenuItem";
-            this.ratio05XToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
+            this.ratio05XToolStripMenuItem.Size = new System.Drawing.Size(231, 38);
             this.ratio05XToolStripMenuItem.Text = "Ratio:0.5X";
             this.ratio05XToolStripMenuItem.Click += new System.EventHandler(this.ratio05XToolStripMenuItem_Click);
             // 
             // ratio50XToolStripMenuItem1
             // 
             this.ratio50XToolStripMenuItem1.Name = "ratio50XToolStripMenuItem1";
-            this.ratio50XToolStripMenuItem1.Size = new System.Drawing.Size(268, 38);
+            this.ratio50XToolStripMenuItem1.Size = new System.Drawing.Size(231, 38);
             this.ratio50XToolStripMenuItem1.Text = "Ratio:5.0X";
             this.ratio50XToolStripMenuItem1.Click += new System.EventHandler(this.ratio50XToolStripMenuItem1_Click);
             // 
             // ratio100XToolStripMenuItem
             // 
             this.ratio100XToolStripMenuItem.Name = "ratio100XToolStripMenuItem";
-            this.ratio100XToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
+            this.ratio100XToolStripMenuItem.Size = new System.Drawing.Size(231, 38);
             this.ratio100XToolStripMenuItem.Text = "Ratio:10.0X";
             this.ratio100XToolStripMenuItem.Click += new System.EventHandler(this.ratio100XToolStripMenuItem_Click);
             // 
             // bestEffortToolStripMenuItem
             // 
             this.bestEffortToolStripMenuItem.Name = "bestEffortToolStripMenuItem";
-            this.bestEffortToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
+            this.bestEffortToolStripMenuItem.Size = new System.Drawing.Size(231, 38);
             this.bestEffortToolStripMenuItem.Text = "Best Effort";
             this.bestEffortToolStripMenuItem.Click += new System.EventHandler(this.bestEffortToolStripMenuItem_Click);
             // 
@@ -196,27 +195,14 @@
             this.analysisToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.timedAnaysisToolStripMenuItem});
             this.analysisToolStripMenuItem.Name = "analysisToolStripMenuItem";
-            this.analysisToolStripMenuItem.Size = new System.Drawing.Size(112, 38);
+            this.analysisToolStripMenuItem.Size = new System.Drawing.Size(112, 36);
             this.analysisToolStripMenuItem.Text = "Analysis";
             // 
             // timedAnaysisToolStripMenuItem
             // 
             this.timedAnaysisToolStripMenuItem.Name = "timedAnaysisToolStripMenuItem";
-            this.timedAnaysisToolStripMenuItem.Size = new System.Drawing.Size(268, 38);
+            this.timedAnaysisToolStripMenuItem.Size = new System.Drawing.Size(267, 38);
             this.timedAnaysisToolStripMenuItem.Text = "Timed Anaysis";
-            // 
-            // chartSimulation
-            // 
-            this.chartSimulation.AutoRefresh = false;
-            this.chartSimulation.BackColor = System.Drawing.SystemColors.Control;
-            this.chartSimulation.InputKeys = new System.Windows.Forms.Keys[0];
-            this.chartSimulation.Location = new System.Drawing.Point(41, 42);
-            this.chartSimulation.Name = "chartSimulation";
-            this.chartSimulation.Size = new System.Drawing.Size(900, 900);
-            this.chartSimulation.State = ((Nevron.Chart.WinForm.NState)(resources.GetObject("chartSimulation.State")));
-            this.chartSimulation.TabIndex = 1;
-            this.chartSimulation.Text = "SimulationMap";
-            this.chartSimulation.Click += new System.EventHandler(this.chartSimulation_Click);
             // 
             // realLog
             // 
@@ -258,17 +244,6 @@
             this.simLog.Size = new System.Drawing.Size(956, 329);
             this.simLog.TabIndex = 4;
             // 
-            // groupBox3
-            // 
-            this.groupBox3.Controls.Add(this.chartSimulation);
-            this.groupBox3.Location = new System.Drawing.Point(34, 59);
-            this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(987, 975);
-            this.groupBox3.TabIndex = 7;
-            this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Simulation Map";
-            this.groupBox3.UseCompatibleTextRendering = true;
-            // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.chartRealWorld);
@@ -277,7 +252,7 @@
             this.groupBox4.Size = new System.Drawing.Size(987, 975);
             this.groupBox4.TabIndex = 8;
             this.groupBox4.TabStop = false;
-            this.groupBox4.Text = "Real World Map";
+            this.groupBox4.Text = "Visualization";
             this.groupBox4.UseCompatibleTextRendering = true;
             // 
             // chartRealWorld
@@ -293,14 +268,24 @@
             this.chartRealWorld.Text = "SimulationMap";
             this.chartRealWorld.Click += new System.EventHandler(this.chartRealWorld_Click);
             // 
+            // pictRealWorld
+            // 
+            this.pictRealWorld.Image = ((System.Drawing.Image)(resources.GetObject("pictRealWorld.Image")));
+            this.pictRealWorld.Location = new System.Drawing.Point(36, 76);
+            this.pictRealWorld.Name = "pictRealWorld";
+            this.pictRealWorld.Size = new System.Drawing.Size(959, 958);
+            this.pictRealWorld.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
+            this.pictRealWorld.TabIndex = 2;
+            this.pictRealWorld.TabStop = false;
+            // 
             // PatrolSim
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.ClientSize = new System.Drawing.Size(2022, 1481);
+            this.Controls.Add(this.pictRealWorld);
             this.Controls.Add(this.groupBox4);
-            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.menuStrip1);
@@ -313,8 +298,8 @@
             this.menuStrip1.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox2.ResumeLayout(false);
-            this.groupBox3.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictRealWorld)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -341,13 +326,12 @@
         private System.Windows.Forms.ToolStripMenuItem timedAnaysisToolStripMenuItem;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.ToolStripMenuItem bestEffortToolStripMenuItem;
-        private Nevron.Chart.WinForm.NChartControl chartSimulation;
         private System.Windows.Forms.ListBox realLog;
         private System.Windows.Forms.ListBox simLog;
         private Nevron.Chart.WinForm.NChartControl chartRealWorld;
+        private System.Windows.Forms.PictureBox pictRealWorld;
     }
 }
 
