@@ -11,17 +11,25 @@ namespace PatrolSim
         private readonly double _agentSpeed;
         private readonly int _agentType;
 
+        private Position _curPosition;
+        private Position _prevPosition;
+
         private readonly ArrayList _wayList;
         private int _curWayIndex; // Indicate Current Waypoints
+
+        private Position _currentPosition;
 
         public int AgentID { get { return _agentID; } }
         public double AgentSpeed { get { return _agentSpeed; } }
         public int AgentType { get { return _agentType; } }
         public int CurrentWayointIndex { get { return _curWayIndex; } }
 
-        delegate void UpdateMap();
+        public Position PrevPosition { get { return _prevPosition; } }
+        public Position CurrentPosition { get { return _currentPosition; }}
 
+        delegate void UpdateMap();
         private UpdateMap _sim;
+
         public Agent(int id, double spd, int type)
         {
             _agentID = id;
@@ -31,6 +39,10 @@ namespace PatrolSim
             _curWayIndex = 0;
             _wayList = new ArrayList();
             _sim += PatrolSim.UpdateSimulation;
+            
+            // Current Position Setting
+            _currentPosition = new Position(((Position)_wayList[CurrentWayointIndex]).X, ((Position)_wayList[CurrentWayointIndex]).Y) ;
+            _prevPosition = new Position(((Position)_wayList[CurrentWayointIndex]).X, ((Position)_wayList[CurrentWayointIndex]).Y);
         }
 
         public Agent(XmlNode node)
@@ -47,23 +59,39 @@ namespace PatrolSim
             {
                 AddWaypoint(way);
             }
+            
+            // Update Logic 
             _sim += PatrolSim.UpdateSimulation;
+
+            // Current Position Setting
+            _currentPosition = (Position)_wayList[CurrentWayointIndex];
+            _prevPosition = (Position)_wayList[CurrentWayointIndex];
         }
 
-        public Waypoint GetCurrentWaypoint()
+        public Position GetCurrentWaypoint()
         {
-            return (Waypoint)_wayList[_curWayIndex];
+            return (Position)_wayList[_curWayIndex];
         }
 
-        public Waypoint GetNextWaypoint()
+        public Position GetNextWaypoint()
         {
-            _curWayIndex++;
-            return (Waypoint) _wayList[_curWayIndex];
+            if(_curWayIndex+1 < _wayList.Count)
+                return (Position) _wayList[_curWayIndex+1];
+            else
+            {
+                return (Position) _wayList[_curWayIndex];
+            }
+        }
+
+        public void IncreaseWaypoint()
+        {
+            if (_curWayIndex+1 < _wayList.Count)
+                _curWayIndex++;
         }
 
         public void AddWaypoint(int x, int y, int z)
         {
-            _wayList.Add(new Waypoint(x, y, z));
+            _wayList.Add(new Position(x, y));
         }
 
         public void AddWaypoint(XmlNode node)
@@ -75,10 +103,53 @@ namespace PatrolSim
             AddWaypoint(x, y, z);
         }
 
-        public Tuple<int, Waypoint> Move(float time)
+        double CalculateDistance(Position currentPosition, Position targetPosition)
         {
+            double distance = Math.Sqrt(Math.Pow(targetPosition.X - _currentPosition.X, 2) + Math.Pow(targetPosition.Y - _currentPosition.Y, 2));
+
+            return distance;
+        }
+
+        bool CheckPointReached()
+        {
+            if (_wayList.Count > _curWayIndex)
+            {
+                Position targetPosition = GetCurrentWaypoint();
+                if (CalculateDistance(_currentPosition, targetPosition) < 1)
+                    return true;
+                else
+                    return false;
+            }
+            return false;
+        }
+
+        public Tuple<int, Position> Move(float time)
+        {
+            if (_wayList.Count > _curWayIndex)
+            {
+                Position targetPosition;
+                if (CheckPointReached())
+                {
+                    _prevPosition.X = GetCurrentWaypoint().X;
+                    _prevPosition.Y = GetCurrentWaypoint().Y;
+                    IncreaseWaypoint();
+                }
+                
+                targetPosition = GetCurrentWaypoint();
+
+                // X Move : total distance
+                if((targetPosition.X - _currentPosition.X) < 0)
+                    _currentPosition.X -= AgentSpeed*time;
+                else
+                    _currentPosition.X += AgentSpeed * time;
+                // Y Move
+                if ((targetPosition.Y - _currentPosition.Y) < 0)
+                    _currentPosition.Y -= AgentSpeed * time;
+                else
+                    _currentPosition.Y += AgentSpeed * time;
+            }
             _sim();
-            return new Tuple<int, Waypoint>(0, new Waypoint(0,0,0));
+            return new Tuple<int, Position>(0, new Position(0,0));
         }
     }
 }

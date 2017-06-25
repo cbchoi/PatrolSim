@@ -1,22 +1,44 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ObjectList>
   <ShipList>
-    <Ship id="1" spd="10.0" type="0">
+    <Ship id="1" spd="0.5" type="10">
       <Waypoints>
-        <Waypoint x="0" y ="0" z ="0"/>
-        <Waypoint x="0" y ="0" z ="0"/>
-        <Waypoint x="0" y ="0" z ="0"/>
-        <Waypoint x="0" y ="0" z ="0"/>
-        <Waypoint x="0" y ="0" z ="0"/>
-        <Waypoint x="0" y ="0" z ="0"/>
-        <Waypoint x="0" y ="0" z ="0"/>
-        <Waypoint x="0" y ="0" z ="0"/>
-        <Waypoint x="0" y ="0" z ="0"/>
-        <Waypoint x="0" y ="0" z ="0"/>
+        <Waypoint x="1" y ="1" z ="0"/>
+        <Waypoint x="10" y ="10" z ="0"/>
+        <Waypoint x="20" y ="1" z ="0"/>
+        <Waypoint x="20" y ="20" z ="0"/>
+        <Waypoint x="30" y ="1" z ="0"/>
+        <Waypoint x="30" y ="30" z ="0"/>
+        <Waypoint x="40" y ="1" z ="0"/>
+        <Waypoint x="50" y ="50" z ="0"/>
+        <Waypoint x="1" y ="50" z ="0"/>
+        <Waypoint x="1" y ="1" z ="0"/>
+      </Waypoints>
+    </Ship>
+    <Ship id="2" spd="0.5" type="5">
+      <Waypoints>
+        <Waypoint x="10" y ="10" z ="0"/>
+        <Waypoint x="10" y ="20" z ="0"/>
+        <Waypoint x="20" y ="21" z ="0"/>
+        <Waypoint x="20" y ="20" z ="0"/>
+        <Waypoint x="30" y ="11" z ="0"/>
+        <Waypoint x="30" y ="30" z ="0"/>
+        <Waypoint x="40" y ="10" z ="0"/>
+        <Waypoint x="50" y ="80" z ="0"/>
+        <Waypoint x="1" y ="20" z ="0"/>
+        <Waypoint x="1" y ="1" z ="0"/>
       </Waypoints>
     </Ship>
   </ShipList>
   <ObstcleList>
     <Obstcle x ="0" y="0" z="0" r="102" g="153" b="0"/>
   </ObstcleList>
+  <ColorList>
+    <Color id="1" r="255" g="0" b="0"/>
+    <Color id="2" r="0" g="255" b="0"/>
+    <Color id="3" r="0" g="0" b="255"/>
+    <Color id="4" r="238" g="244" b="66"/>
+    <Color id="5" r="214" g="93" b="23"/>
+    <Color id="6" r="112" g="214" b="23"/>
+  </ColorList>
 </ObjectList>

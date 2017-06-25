@@ -63,7 +63,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScenarioManager.cs" />
     <Compile Include="SimulationManager.cs" />
-    <Compile Include="Waypoint.cs" />
+    <Compile Include="Position.cs" />
     <EmbeddedResource Include="PatrollSim.resx">
       <DependentUpon>PatrollSim.cs</DependentUpon>
     </EmbeddedResource>
@@ -91,7 +91,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="scenario1.xml" />
+    <Content Include="scenario1.xml">
+      <SubType>Designer</SubType>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

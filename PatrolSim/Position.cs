@@ -8,13 +8,13 @@ namespace PatrolSim
 {
     public class Position
     {
-        private int _x;
-        private int _y;
+        private double _x;
+        private double _y;
 
-        public int X { get { return _x; } }
-        public int Y { get { return _y; } }
+        public double X { get { return _x; } set { _x = value; }}
+        public double Y { get { return _y; } set { _y = value; } }
 
-        public Position(int x, int y, int z)
+        public Position(double x, double y)
         {
             _x = x;
             _y = y;

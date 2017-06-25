@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Nevron.Chart;
+using Nevron.Chart.Windows;
 using Nevron.Chart.WinForm;
 using Nevron.Dom;
 using Nevron.GraphicsCore;
@@ -35,12 +36,18 @@ namespace PatrolSim
 
         private BackgroundWorker backWorker;
 
+        private static Object thisLock = new Object();
+
         private void backWorker_RunWorkerCompleted(
             object sender,
             RunWorkerCompletedEventArgs e)
         {
-            TestUIComponent(chartSimulation, matrixSimulation);
-            TestUIComponent(chartRealWorld, matrixRealWorld);
+            lock (thisLock)
+            {
+                TestUIComponent(chartSimulation, matrixSimulation);
+                TestUIComponent(chartRealWorld, matrixRealWorld);
+            }
+            
             chartSimulation.Refresh();
         }
 
@@ -58,10 +65,13 @@ namespace PatrolSim
 
         public static void UpdateSimulation()
         {
-            foreach (Agent agent in _scenarioManager.AgentList)
+            lock (thisLock)
             {
-                UpdateMatrixThreadTest(matrixSimulation);
-                UpdateMatrixThreadTest(matrixRealWorld);
+                foreach (Agent agent in _scenarioManager.AgentList)
+                {
+                    UpdateMatrix(agent, matrixSimulation);
+                    UpdateMatrix(agent, matrixRealWorld);
+                }
             }
         }
 
@@ -175,6 +185,9 @@ namespace PatrolSim
             }
             nChartControl.Settings.RenderSurface = RenderSurface.Window;
 
+            nChartControl.Controller.Tools.Add(new NPanelSelectorTool());
+            nChartControl.Controller.Tools.Add(new NTrackballTool());
+
         }
 
         private void UpdateMap(NChartControl nChartControl, int gridY, double[] valList)
@@ -224,6 +237,17 @@ namespace PatrolSim
             matrix[y][x] = value;
 
             return Tuple.Create(x, y);
+        }
+
+        private static void UpdateMatrix(Agent agent, double [][] matrix)
+        {
+            if(agent.CurrentPosition == agent.GetNextWaypoint())
+                matrix[(int)agent.CurrentPosition.Y][(int)agent.CurrentPosition.X] = agent.AgentType;
+            else
+            {
+                matrix[(int)agent.CurrentPosition.Y][(int)agent.CurrentPosition.X] = agent.AgentType;
+                //matrix[(int)agent.PrevPosition.Y][(int)agent.PrevPosition.X] -= agent.AgentType;
+            }
         }
 
         private static void TestUIComponent(NChartControl nChartControl, double[][] matrix)
