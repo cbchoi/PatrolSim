@@ -28,6 +28,9 @@ namespace PatrolSim
             get { return _colorList; }
         }
 
+        public int MapSizeX { get; }
+        public int MapSizeY { get; }
+
         private void Initalize()
         {
             _agentList = new List<Agent>();
@@ -50,6 +53,8 @@ namespace PatrolSim
             }
 
             XmlNode rootNode = xmlDoc.SelectSingleNode("ObjectList");
+            MapSizeX = Int32.Parse(rootNode.Attributes["MapSizeX"].Value);
+            MapSizeY = Int32.Parse(rootNode.Attributes["MapSizeY"].Value);
 
             HandleShips(rootNode.SelectSingleNode("ShipList"));
             HandleObscles(rootNode.SelectSingleNode("ObstcleList"));

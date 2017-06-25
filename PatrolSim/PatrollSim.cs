@@ -240,7 +240,7 @@ namespace PatrolSim
 
         private static void UpdateMatrix(Agent agent, double [][] matrix)
         {
-            matrix[(int)agent.CurrentPosition.Y][(int)agent.CurrentPosition.X] = agent.AgentID;
+            matrix[(int)(agent.CurrentPosition.Y*50/_scenarioManager.MapSizeY)][(int)(agent.CurrentPosition.X * 50 / _scenarioManager.MapSizeX)] = agent.AgentID;
         }
 
         private static void TestUIComponent(NChartControl nChartControl, double[][] matrix)

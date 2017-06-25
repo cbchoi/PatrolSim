@@ -96,9 +96,9 @@ namespace PatrolSim
 
         public void AddWaypoint(XmlNode node)
         {
-            int x = Int32.Parse(node.Attributes["x"].Value) / 50;
-            int y = 50 - ((Int32.Parse(node.Attributes["y"].Value) / 50));
-            int z = Int32.Parse(node.Attributes["z"].Value) / 50;
+            int x = Int32.Parse(node.Attributes["x"].Value);
+            int y = ((Int32.Parse(node.Attributes["y"].Value)));
+            int z = Int32.Parse(node.Attributes["z"].Value);
 
             AddWaypoint(x, y, z);
         }
