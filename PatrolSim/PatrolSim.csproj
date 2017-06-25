@@ -97,6 +97,7 @@
     <Content Include="scenario1.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="scenario2.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

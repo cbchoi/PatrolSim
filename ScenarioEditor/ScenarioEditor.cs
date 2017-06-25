@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace ScenarioEditor
 {
@@ -27,7 +22,7 @@ namespace ScenarioEditor
             MouseEventArgs me = (MouseEventArgs)e;
             Point coordinates = me.Location;
 
-            dataGridView1.Rows.Add(_curAgentID, _curAgentSpd, _curAgentType, coordinates.X, coordinates.Y, 0);
+            dataGridView1.Rows.Add(_curAgentID, _curAgentSpd, _curAgentType, coordinates.X, pictRealWorld.Height - coordinates.Y, 0);
             DrawBox(pictRealWorld.Image, coordinates.X, coordinates.Y);
             pictRealWorld.Refresh();
         }
@@ -84,6 +79,88 @@ namespace ScenarioEditor
             _curAgentID = form.AgentID;
             _curAgentSpd = form.AgentSpeed;
             _curAgentType = form.AgentType;
+        }
+
+        private void btExport_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog sfd = new SaveFileDialog();
+            if (sfd.ShowDialog() == DialogResult.OK)
+            {
+                XmlDocument newXmlDoc = new XmlDocument();
+                try
+                { // load existed file
+                    newXmlDoc.Load(sfd.FileName);
+                }
+                catch (System.IO.FileNotFoundException ex)
+                { // if file don't exist, make new file
+                    XmlNode NCD = newXmlDoc.CreateElement("ObjectList");
+
+                    newXmlDoc.AppendChild(NCD);
+                    newXmlDoc.Save(sfd.FileName);
+                }
+
+                XmlNode SelectedData = newXmlDoc.SelectSingleNode("ObjectList");
+                SelectedData.RemoveAll();
+
+                if (SelectedData is XmlElement)
+                {
+                    XmlElement elem = (XmlElement) SelectedData;
+                    elem.SetAttribute("MapSizeX", pictRealWorld.Width.ToString());
+                    elem.SetAttribute("MapSizeY", pictRealWorld.Height.ToString());
+                }
+
+                XmlElement shipListElement = newXmlDoc.CreateElement("ShipList");
+                SelectedData.AppendChild(shipListElement);
+                HandleShipList(shipListElement, newXmlDoc);
+
+                XmlElement obstcleListElement = newXmlDoc.CreateElement("ObstcleList");
+                SelectedData.AppendChild(obstcleListElement);
+                HandleObstcleList(obstcleListElement, newXmlDoc);
+
+                XmlElement colorListElement = newXmlDoc.CreateElement("ColorList");
+                SelectedData.AppendChild(colorListElement);
+                HandleColorList(colorListElement, newXmlDoc);
+
+                newXmlDoc.Save(sfd.FileName);
+                MessageBox.Show("Export Completed!");
+            }  
+        }
+
+        private void HandleShipList(XmlElement shipList, XmlDocument doc)
+        {
+            int curID = -1;
+            XmlElement curElement;
+            XmlElement waypointElement = doc.CreateElement("Waypoints");
+            for (int i = 0; i < dataGridView1.RowCount; i++)
+            {
+                if (curID != (int)dataGridView1.Rows[i].Cells[0].Value)
+                {
+                    curID = (int) dataGridView1.Rows[i].Cells[0].Value;
+                    curElement = doc.CreateElement("Ship");
+                    curElement.SetAttribute("id", dataGridView1.Rows[i].Cells[0].Value.ToString());
+                    curElement.SetAttribute("spd", dataGridView1.Rows[i].Cells[1].Value.ToString());
+                    curElement.SetAttribute("type", dataGridView1.Rows[i].Cells[2].Value.ToString());
+                    shipList.AppendChild(curElement);
+                    waypointElement = doc.CreateElement("Waypoints");
+                    curElement.AppendChild(waypointElement);
+                }
+
+                XmlElement wayElement = doc.CreateElement("Waypoint");
+                wayElement.SetAttribute("x", dataGridView1.Rows[i].Cells[3].Value.ToString());
+                wayElement.SetAttribute("y", dataGridView1.Rows[i].Cells[4].Value.ToString());
+                wayElement.SetAttribute("z", dataGridView1.Rows[i].Cells[5].Value.ToString());
+                waypointElement.AppendChild(wayElement);
+            }
+        }
+
+        private void HandleObstcleList(XmlElement obList, XmlDocument doc)
+        {
+            
+        }
+
+        private void HandleColorList(XmlElement crList, XmlDocument doc)
+        {
+            
         }
     }
 }

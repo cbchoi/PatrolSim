@@ -31,16 +31,16 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScenarioEditor));
             this.pictRealWorld = new System.Windows.Forms.PictureBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.btExport = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Speed = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.posX = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.posY = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.posZ = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btExport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictRealWorld)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -59,6 +59,8 @@
             // 
             // dataGridView1
             // 
+            this.dataGridView1.AllowUserToAddRows = false;
+            this.dataGridView1.AllowUserToDeleteRows = false;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ID,
@@ -72,46 +74,6 @@
             this.dataGridView1.RowTemplate.Height = 33;
             this.dataGridView1.Size = new System.Drawing.Size(856, 851);
             this.dataGridView1.TabIndex = 4;
-            // 
-            // panel1
-            // 
-            this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.button1);
-            this.panel1.Controls.Add(this.btExport);
-            this.panel1.Controls.Add(this.pictRealWorld);
-            this.panel1.Controls.Add(this.dataGridView1);
-            this.panel1.Location = new System.Drawing.Point(12, 12);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1887, 998);
-            this.panel1.TabIndex = 5;
-            // 
-            // btExport
-            // 
-            this.btExport.Location = new System.Drawing.Point(1538, 893);
-            this.btExport.Name = "btExport";
-            this.btExport.Size = new System.Drawing.Size(323, 82);
-            this.btExport.TabIndex = 5;
-            this.btExport.Text = "Export";
-            this.btExport.UseVisualStyleBackColor = true;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(1006, 893);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(260, 82);
-            this.button1.TabIndex = 6;
-            this.button1.Text = "New Object";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(1272, 893);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(260, 82);
-            this.button2.TabIndex = 7;
-            this.button2.Text = "Load Object";
-            this.button2.UseVisualStyleBackColor = true;
             // 
             // ID
             // 
@@ -142,6 +104,47 @@
             // 
             this.posZ.HeaderText = "posZ";
             this.posZ.Name = "posZ";
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.btExport);
+            this.panel1.Controls.Add(this.pictRealWorld);
+            this.panel1.Controls.Add(this.dataGridView1);
+            this.panel1.Location = new System.Drawing.Point(12, 12);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(1887, 998);
+            this.panel1.TabIndex = 5;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(1272, 893);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(260, 82);
+            this.button2.TabIndex = 7;
+            this.button2.Text = "Load Object";
+            this.button2.UseVisualStyleBackColor = true;
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(1006, 893);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(260, 82);
+            this.button1.TabIndex = 6;
+            this.button1.Text = "New Object";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // btExport
+            // 
+            this.btExport.Location = new System.Drawing.Point(1538, 893);
+            this.btExport.Name = "btExport";
+            this.btExport.Size = new System.Drawing.Size(323, 82);
+            this.btExport.TabIndex = 5;
+            this.btExport.Text = "Export";
+            this.btExport.UseVisualStyleBackColor = true;
+            this.btExport.Click += new System.EventHandler(this.btExport_Click);
             // 
             // ScenarioEditor
             // 
