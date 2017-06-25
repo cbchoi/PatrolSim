@@ -79,13 +79,6 @@ namespace PatrolSim
         {
             InitializeComponent();
 
-            _colorTable = new Color[21];
-
-            for (int i = 0; i <= 20; i++)
-            {
-                _colorTable[i] = InterpolateColors(Color.AliceBlue, Color.Red, i / 20.0F);
-            }
-
             InitMap(chartSimulation);
             InitMap(chartRealWorld);
 
@@ -159,14 +152,18 @@ namespace PatrolSim
             ordinalScale.DisplayDataPointsBetweenTicks = false;
 
             chart.Axis(StandardAxis.SecondaryY).Anchor = new NDockAxisAnchor(AxisDockZone.FrontLeft, false, 100.0f, 100.0f);
-            chart.Axis(StandardAxis.SecondaryY).Visible = false;
+
+            // Axis Visable Setup.
+            chart.Axis(StandardAxis.PrimaryX).Visible = false;
+            chart.Axis(StandardAxis.PrimaryY).Visible = false;
+            chart.Axis(StandardAxis.Depth).Visible = false;
 
             for (int i = 0; i < _gridSizeY; i++)
             {
                 // add the first line
                 NBarSeries bar = new NBarSeries();
                 chart.Series.Add(bar);
-
+                 
                 bar.WidthPercent = 100.0f;
                 bar.DepthPercent = 100.0f;
 
@@ -241,13 +238,7 @@ namespace PatrolSim
 
         private static void UpdateMatrix(Agent agent, double [][] matrix)
         {
-            if(agent.CurrentPosition == agent.GetNextWaypoint())
-                matrix[(int)agent.CurrentPosition.Y][(int)agent.CurrentPosition.X] = agent.AgentType;
-            else
-            {
-                matrix[(int)agent.CurrentPosition.Y][(int)agent.CurrentPosition.X] = agent.AgentType;
-                //matrix[(int)agent.PrevPosition.Y][(int)agent.PrevPosition.X] -= agent.AgentType;
-            }
+            matrix[(int)agent.CurrentPosition.Y][(int)agent.CurrentPosition.X] = agent.AgentID;
         }
 
         private static void TestUIComponent(NChartControl nChartControl, double[][] matrix)
@@ -274,11 +265,11 @@ namespace PatrolSim
                 {
                     if (j >= fillStyleCount)
                     {
-                        bar.FillStyles[j] = new NColorFillStyle(_colorTable[(int)barValues[j]]);
+                        bar.FillStyles[j] = new NColorFillStyle(_scenarioManager.ColorList[(int)barValues[j]]);
                     }
                     else
                     {
-                        ((NColorFillStyle)bar.FillStyles[j]).Color = _colorTable[(int)barValues[j]];
+                        ((NColorFillStyle)bar.FillStyles[j]).Color = _scenarioManager.ColorList[(int)barValues[j]];
                     }
                 }
             }
@@ -401,7 +392,6 @@ namespace PatrolSim
             {
                 _worker.Start();
             }
-
         }
 
         private void simulaitionPauseToolStripMenuItem_Click(object sender, EventArgs e)

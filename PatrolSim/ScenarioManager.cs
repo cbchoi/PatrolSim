@@ -22,10 +22,17 @@ namespace PatrolSim
             get { return _obList; }
         }
 
+        public Dictionary<int, Color> _colorList;
+        public Dictionary<int, Color> ColorList
+        {
+            get { return _colorList; }
+        }
+
         private void Initalize()
         {
             _agentList = new List<Agent>();
             _obList = new List<Obstcle>();
+            _colorList = new Dictionary<int, Color>();
         }
 
         public ScenarioManager(string xmlFilePath)
@@ -46,6 +53,7 @@ namespace PatrolSim
 
             HandleShips(rootNode.SelectSingleNode("ShipList"));
             HandleObscles(rootNode.SelectSingleNode("ObstcleList"));
+            HandleColors(rootNode.SelectSingleNode("ColorList"));
         }
 
         public void HandleShips(XmlNode node)
@@ -63,6 +71,19 @@ namespace PatrolSim
                 _obList.Add(new Obstcle(obstcle));
             }
         }
-        
+
+        public void HandleColors(XmlNode node)
+        {
+            foreach (XmlNode color in node.ChildNodes)
+            {
+                int id = Int32.Parse(color.Attributes["id"].Value);
+                int r = Int32.Parse(color.Attributes["r"].Value);
+                int g = Int32.Parse(color.Attributes["g"].Value);
+                int b = Int32.Parse(color.Attributes["b"].Value);
+
+                _colorList[id] = Color.FromArgb(r, g, b);
+            }
+        }
+
     }
 }
