@@ -53,19 +53,25 @@
   <ItemGroup>
     <Compile Include="Agent.cs" />
     <Compile Include="Obstcle.cs" />
-    <Compile Include="PatrollSim.cs">
+    <Compile Include="PatrolSim.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PatrollSim.Designer.cs">
-      <DependentUpon>PatrollSim.cs</DependentUpon>
+    <Compile Include="PatrolSim.Designer.cs">
+      <DependentUpon>PatrolSim.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PatrolSim.Map.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PatrolSim.UI.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ScenarioManager.cs" />
     <Compile Include="SimulationManager.cs" />
     <Compile Include="Position.cs" />
-    <EmbeddedResource Include="PatrollSim.resx">
-      <DependentUpon>PatrollSim.cs</DependentUpon>
+    <EmbeddedResource Include="PatrolSim.resx">
+      <DependentUpon>PatrolSim.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">

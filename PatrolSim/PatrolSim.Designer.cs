@@ -53,25 +53,25 @@
             this.simLog = new System.Windows.Forms.ListBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.chartRealWorld = new Nevron.Chart.WinForm.NChartControl();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
             this.pictRealWorld = new System.Windows.Forms.PictureBox();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
-            this.groupBox5 = new System.Windows.Forms.GroupBox();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this._simulateMap = new System.Windows.Forms.PictureBox();
             this.groupBox7 = new System.Windows.Forms.GroupBox();
-            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this._realMap = new System.Windows.Forms.PictureBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
-            this.pictureBox3 = new System.Windows.Forms.PictureBox();
+            this._exclusiveMap = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictRealWorld)).BeginInit();
             this.groupBox3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._simulateMap)).BeginInit();
             this.groupBox7.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._realMap)).BeginInit();
             this.groupBox6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this._exclusiveMap)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -282,6 +282,15 @@
             this.chartRealWorld.Text = "SimulationMap";
             this.chartRealWorld.Click += new System.EventHandler(this.chartRealWorld_Click);
             // 
+            // groupBox5
+            // 
+            this.groupBox5.Location = new System.Drawing.Point(0, 809);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(943, 833);
+            this.groupBox5.TabIndex = 10;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "groupBox5";
+            // 
             // pictRealWorld
             // 
             this.pictRealWorld.Image = ((System.Drawing.Image)(resources.GetObject("pictRealWorld.Image")));
@@ -294,69 +303,60 @@
             // 
             // groupBox3
             // 
-            this.groupBox3.Controls.Add(this.pictureBox1);
+            this.groupBox3.Controls.Add(this._simulateMap);
             this.groupBox3.Location = new System.Drawing.Point(29, 868);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(928, 833);
             this.groupBox3.TabIndex = 9;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "groupBox3";
+            this.groupBox3.Text = "Simulated Data (Cellularized)";
             // 
-            // groupBox5
+            // _simulateMap
             // 
-            this.groupBox5.Location = new System.Drawing.Point(0, 809);
-            this.groupBox5.Name = "groupBox5";
-            this.groupBox5.Size = new System.Drawing.Size(943, 833);
-            this.groupBox5.TabIndex = 10;
-            this.groupBox5.TabStop = false;
-            this.groupBox5.Text = "groupBox5";
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.White;
-            this.pictureBox1.Location = new System.Drawing.Point(19, 41);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(893, 772);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this._simulateMap.BackColor = System.Drawing.Color.White;
+            this._simulateMap.Location = new System.Drawing.Point(19, 41);
+            this._simulateMap.Name = "_simulateMap";
+            this._simulateMap.Size = new System.Drawing.Size(893, 772);
+            this._simulateMap.TabIndex = 0;
+            this._simulateMap.TabStop = false;
             // 
             // groupBox7
             // 
-            this.groupBox7.Controls.Add(this.pictureBox2);
+            this.groupBox7.Controls.Add(this._realMap);
             this.groupBox7.Location = new System.Drawing.Point(998, 868);
             this.groupBox7.Name = "groupBox7";
             this.groupBox7.Size = new System.Drawing.Size(952, 833);
             this.groupBox7.TabIndex = 9;
             this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "groupBox3";
+            this.groupBox7.Text = "Real World Data (Cellularized)";
             // 
-            // pictureBox2
+            // _realMap
             // 
-            this.pictureBox2.BackColor = System.Drawing.Color.White;
-            this.pictureBox2.Location = new System.Drawing.Point(35, 41);
-            this.pictureBox2.Name = "pictureBox2";
-            this.pictureBox2.Size = new System.Drawing.Size(893, 772);
-            this.pictureBox2.TabIndex = 0;
-            this.pictureBox2.TabStop = false;
+            this._realMap.BackColor = System.Drawing.Color.White;
+            this._realMap.Location = new System.Drawing.Point(35, 41);
+            this._realMap.Name = "_realMap";
+            this._realMap.Size = new System.Drawing.Size(893, 772);
+            this._realMap.TabIndex = 0;
+            this._realMap.TabStop = false;
             // 
             // groupBox6
             // 
-            this.groupBox6.Controls.Add(this.pictureBox3);
+            this.groupBox6.Controls.Add(this._exclusiveMap);
             this.groupBox6.Location = new System.Drawing.Point(1965, 868);
             this.groupBox6.Name = "groupBox6";
             this.groupBox6.Size = new System.Drawing.Size(987, 833);
             this.groupBox6.TabIndex = 10;
             this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "groupBox3";
+            this.groupBox6.Text = "Exclusive Data (Cellularized)";
             // 
-            // pictureBox3
+            // _exclusiveMap
             // 
-            this.pictureBox3.BackColor = System.Drawing.Color.White;
-            this.pictureBox3.Location = new System.Drawing.Point(45, 41);
-            this.pictureBox3.Name = "pictureBox3";
-            this.pictureBox3.Size = new System.Drawing.Size(893, 772);
-            this.pictureBox3.TabIndex = 0;
-            this.pictureBox3.TabStop = false;
+            this._exclusiveMap.BackColor = System.Drawing.Color.White;
+            this._exclusiveMap.Location = new System.Drawing.Point(45, 41);
+            this._exclusiveMap.Name = "_exclusiveMap";
+            this._exclusiveMap.Size = new System.Drawing.Size(893, 772);
+            this._exclusiveMap.TabIndex = 0;
+            this._exclusiveMap.TabStop = false;
             // 
             // PatrolSim
             // 
@@ -384,11 +384,11 @@
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictRealWorld)).EndInit();
             this.groupBox3.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._simulateMap)).EndInit();
             this.groupBox7.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._realMap)).EndInit();
             this.groupBox6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this._exclusiveMap)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -423,11 +423,11 @@
         private System.Windows.Forms.PictureBox pictRealWorld;
         private System.Windows.Forms.GroupBox groupBox3;
         private System.Windows.Forms.GroupBox groupBox5;
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox _simulateMap;
         private System.Windows.Forms.GroupBox groupBox7;
-        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.PictureBox _realMap;
         private System.Windows.Forms.GroupBox groupBox6;
-        private System.Windows.Forms.PictureBox pictureBox3;
+        private System.Windows.Forms.PictureBox _exclusiveMap;
     }
 }
 
