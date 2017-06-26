@@ -54,11 +54,24 @@
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.chartRealWorld = new Nevron.Chart.WinForm.NChartControl();
             this.pictRealWorld = new System.Windows.Forms.PictureBox();
+            this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.groupBox5 = new System.Windows.Forms.GroupBox();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.groupBox7 = new System.Windows.Forms.GroupBox();
+            this.pictureBox2 = new System.Windows.Forms.PictureBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.pictureBox3 = new System.Windows.Forms.PictureBox();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox4.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictRealWorld)).BeginInit();
+            this.groupBox3.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.groupBox7.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).BeginInit();
+            this.groupBox6.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).BeginInit();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -71,7 +84,7 @@
             this.analysisToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(2022, 40);
+            this.menuStrip1.Size = new System.Drawing.Size(2976, 40);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -217,7 +230,7 @@
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.realLog);
-            this.groupBox1.Location = new System.Drawing.Point(1029, 1061);
+            this.groupBox1.Location = new System.Drawing.Point(1965, 471);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(987, 391);
             this.groupBox1.TabIndex = 5;
@@ -227,7 +240,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.simLog);
-            this.groupBox2.Location = new System.Drawing.Point(36, 1061);
+            this.groupBox2.Location = new System.Drawing.Point(1965, 59);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(987, 391);
             this.groupBox2.TabIndex = 6;
@@ -247,9 +260,10 @@
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.chartRealWorld);
-            this.groupBox4.Location = new System.Drawing.Point(1029, 59);
+            this.groupBox4.Controls.Add(this.groupBox5);
+            this.groupBox4.Location = new System.Drawing.Point(963, 59);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(987, 975);
+            this.groupBox4.Size = new System.Drawing.Size(987, 803);
             this.groupBox4.TabIndex = 8;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Visualization";
@@ -260,9 +274,9 @@
             this.chartRealWorld.AutoRefresh = false;
             this.chartRealWorld.BackColor = System.Drawing.SystemColors.Control;
             this.chartRealWorld.InputKeys = new System.Windows.Forms.Keys[0];
-            this.chartRealWorld.Location = new System.Drawing.Point(41, 42);
+            this.chartRealWorld.Location = new System.Drawing.Point(22, 42);
             this.chartRealWorld.Name = "chartRealWorld";
-            this.chartRealWorld.Size = new System.Drawing.Size(900, 900);
+            this.chartRealWorld.Size = new System.Drawing.Size(941, 744);
             this.chartRealWorld.State = ((Nevron.Chart.WinForm.NState)(resources.GetObject("chartRealWorld.State")));
             this.chartRealWorld.TabIndex = 1;
             this.chartRealWorld.Text = "SimulationMap";
@@ -271,19 +285,88 @@
             // pictRealWorld
             // 
             this.pictRealWorld.Image = ((System.Drawing.Image)(resources.GetObject("pictRealWorld.Image")));
-            this.pictRealWorld.Location = new System.Drawing.Point(36, 76);
+            this.pictRealWorld.Location = new System.Drawing.Point(29, 76);
             this.pictRealWorld.Name = "pictRealWorld";
-            this.pictRealWorld.Size = new System.Drawing.Size(959, 958);
+            this.pictRealWorld.Size = new System.Drawing.Size(912, 769);
             this.pictRealWorld.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictRealWorld.TabIndex = 2;
             this.pictRealWorld.TabStop = false;
+            // 
+            // groupBox3
+            // 
+            this.groupBox3.Controls.Add(this.pictureBox1);
+            this.groupBox3.Location = new System.Drawing.Point(29, 868);
+            this.groupBox3.Name = "groupBox3";
+            this.groupBox3.Size = new System.Drawing.Size(928, 833);
+            this.groupBox3.TabIndex = 9;
+            this.groupBox3.TabStop = false;
+            this.groupBox3.Text = "groupBox3";
+            // 
+            // groupBox5
+            // 
+            this.groupBox5.Location = new System.Drawing.Point(0, 809);
+            this.groupBox5.Name = "groupBox5";
+            this.groupBox5.Size = new System.Drawing.Size(943, 833);
+            this.groupBox5.TabIndex = 10;
+            this.groupBox5.TabStop = false;
+            this.groupBox5.Text = "groupBox5";
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.White;
+            this.pictureBox1.Location = new System.Drawing.Point(19, 41);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(893, 772);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
+            // 
+            // groupBox7
+            // 
+            this.groupBox7.Controls.Add(this.pictureBox2);
+            this.groupBox7.Location = new System.Drawing.Point(998, 868);
+            this.groupBox7.Name = "groupBox7";
+            this.groupBox7.Size = new System.Drawing.Size(952, 833);
+            this.groupBox7.TabIndex = 9;
+            this.groupBox7.TabStop = false;
+            this.groupBox7.Text = "groupBox3";
+            // 
+            // pictureBox2
+            // 
+            this.pictureBox2.BackColor = System.Drawing.Color.White;
+            this.pictureBox2.Location = new System.Drawing.Point(35, 41);
+            this.pictureBox2.Name = "pictureBox2";
+            this.pictureBox2.Size = new System.Drawing.Size(893, 772);
+            this.pictureBox2.TabIndex = 0;
+            this.pictureBox2.TabStop = false;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.pictureBox3);
+            this.groupBox6.Location = new System.Drawing.Point(1965, 868);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Size = new System.Drawing.Size(987, 833);
+            this.groupBox6.TabIndex = 10;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "groupBox3";
+            // 
+            // pictureBox3
+            // 
+            this.pictureBox3.BackColor = System.Drawing.Color.White;
+            this.pictureBox3.Location = new System.Drawing.Point(45, 41);
+            this.pictureBox3.Name = "pictureBox3";
+            this.pictureBox3.Size = new System.Drawing.Size(893, 772);
+            this.pictureBox3.TabIndex = 0;
+            this.pictureBox3.TabStop = false;
             // 
             // PatrolSim
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(2022, 1481);
+            this.ClientSize = new System.Drawing.Size(2976, 1723);
+            this.Controls.Add(this.groupBox6);
+            this.Controls.Add(this.groupBox7);
+            this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.pictRealWorld);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox2);
@@ -300,6 +383,12 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox4.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictRealWorld)).EndInit();
+            this.groupBox3.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            this.groupBox7.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox2)).EndInit();
+            this.groupBox6.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -332,6 +421,13 @@
         private System.Windows.Forms.ListBox simLog;
         private Nevron.Chart.WinForm.NChartControl chartRealWorld;
         private System.Windows.Forms.PictureBox pictRealWorld;
+        private System.Windows.Forms.GroupBox groupBox3;
+        private System.Windows.Forms.GroupBox groupBox5;
+        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.GroupBox groupBox7;
+        private System.Windows.Forms.PictureBox pictureBox2;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.PictureBox pictureBox3;
     }
 }
 

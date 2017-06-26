@@ -122,7 +122,7 @@ namespace PatrolSim
             // configure the chart
             NCartesianChart chart = (NCartesianChart)nChartControl.Charts[0];
             chart.Projection.SetPredefinedProjection(PredefinedProjection.OrthogonalTop);
-            chart.BoundsMode = BoundsMode.Fit;
+            chart.BoundsMode = BoundsMode.Stretch;
             chart.Enable3D = true;
             chart.Fit3DAxisContent = false;
 
@@ -143,22 +143,43 @@ namespace PatrolSim
             leftWall.Visible = false;
 
             // setup axes
-            NOrdinalScaleConfigurator ordinalScale = (NOrdinalScaleConfigurator)chart.Axis(StandardAxis.PrimaryX).ScaleConfigurator;
-            ordinalScale.MajorGridStyle.SetShowAtWall(ChartWallType.Floor, true);
-            ordinalScale.MajorGridStyle.SetShowAtWall(ChartWallType.Back, true);
-            ordinalScale.DisplayDataPointsBetweenTicks = false;
+            //NOrdinalScaleConfigurator ordinalScale = (NOrdinalScaleConfigurator)chart.Axis(StandardAxis.PrimaryX).ScaleConfigurator;
+            //ordinalScale.MajorGridStyle.SetShowAtWall(ChartWallType.Floor, true);
+            //ordinalScale.MajorGridStyle.SetShowAtWall(ChartWallType.Back, true);
+            //ordinalScale.DisplayDataPointsBetweenTicks = false;
 
-            ordinalScale = (NOrdinalScaleConfigurator)chart.Axis(StandardAxis.Depth).ScaleConfigurator;
-            ordinalScale.MajorGridStyle.SetShowAtWall(ChartWallType.Floor, true);
-            ordinalScale.MajorGridStyle.SetShowAtWall(ChartWallType.Left, true);
-            ordinalScale.DisplayDataPointsBetweenTicks = false;
+            //ordinalScale = (NOrdinalScaleConfigurator)chart.Axis(StandardAxis.Depth).ScaleConfigurator;
+            //ordinalScale.MajorGridStyle.SetShowAtWall(ChartWallType.Floor, true);
+            //ordinalScale.MajorGridStyle.SetShowAtWall(ChartWallType.Left, true);
+            //ordinalScale.DisplayDataPointsBetweenTicks = false;
+
+            NLinearScaleConfigurator linearScale = new NLinearScaleConfigurator();
+            chart.Axis(StandardAxis.PrimaryX).ScaleConfigurator = linearScale;
+            linearScale.MajorGridStyle.SetShowAtWall(ChartWallType.Floor, true);
+            linearScale.MajorGridStyle.SetShowAtWall(ChartWallType.Back, true);
+            linearScale.RoundToTickMax = false;
+            linearScale.RoundToTickMin = false;
+
+            linearScale = new NLinearScaleConfigurator();
+            chart.Axis(StandardAxis.Depth).ScaleConfigurator = linearScale;
+            linearScale.MajorGridStyle.SetShowAtWall(ChartWallType.Floor, true);
+            linearScale.MajorGridStyle.SetShowAtWall(ChartWallType.Left, true);
+            linearScale.RoundToTickMax = false;
+            linearScale.RoundToTickMin = false;
+
+            linearScale = new NLinearScaleConfigurator();
+            chart.Axis(StandardAxis.PrimaryY).ScaleConfigurator = linearScale;
+            linearScale.MajorGridStyle.SetShowAtWall(ChartWallType.Floor, true);
+            linearScale.MajorGridStyle.SetShowAtWall(ChartWallType.Left, true);
+            linearScale.RoundToTickMax = false;
+            linearScale.RoundToTickMin = false;
 
             chart.Axis(StandardAxis.SecondaryY).Anchor = new NDockAxisAnchor(AxisDockZone.FrontLeft, false, 50.0f, 50.0f);
 
             // Axis Visable Setup.
-            chart.Axis(StandardAxis.PrimaryX).Visible = false;
+            //chart.Axis(StandardAxis.PrimaryX).Visible = false;
             chart.Axis(StandardAxis.PrimaryY).Visible = false;
-            chart.Axis(StandardAxis.Depth).Visible = false;
+            //chart.Axis(StandardAxis.Depth).Visible = false;
 
             for (int i = 0; i < _gridSizeY; i++)
             {

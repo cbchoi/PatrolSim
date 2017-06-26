@@ -42,7 +42,6 @@ namespace ScenarioEditor
                         graphics.DrawLine(blackPen, 0, j, bmp.Width, j);
                     }
                 }
-                
             }
         }
 
