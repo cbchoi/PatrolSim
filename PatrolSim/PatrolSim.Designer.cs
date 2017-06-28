@@ -235,7 +235,7 @@
             this.groupBox1.Size = new System.Drawing.Size(987, 391);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Real World Log";
+            this.groupBox1.Text = "Interpreted AIVDM Messagers";
             // 
             // groupBox2
             // 
@@ -245,7 +245,7 @@
             this.groupBox2.Size = new System.Drawing.Size(987, 391);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Simulation Log";
+            this.groupBox2.Text = "AIVDM Messages";
             // 
             // simLog
             // 

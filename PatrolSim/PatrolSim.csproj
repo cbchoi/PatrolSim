@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Agent.cs" />
+    <Compile Include="AIVDMHandler.cs" />
     <Compile Include="Obstcle.cs" />
     <Compile Include="PatrolSim.cs">
       <SubType>Form</SubType>
