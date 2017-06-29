@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Runtime.InteropServices;
 
 namespace AIVDMTest
@@ -230,6 +231,14 @@ namespace AIVDMTest
             Marshal.FreeHGlobal(p);
 
             destroy_ais_msg();
+
+            string str = "AIVDM,1,1,,B,133qF`0000oSviTBvBp`SPK00 < 1;,0";
+            char checksum = str[0];
+            for (int i = 1; i < str.Length; i++)
+            {
+                checksum = (char)(checksum ^ str[i]);
+            }
+            Console.WriteLine(((int)checksum).ToString());
         }
     }
 }

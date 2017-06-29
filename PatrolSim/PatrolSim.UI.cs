@@ -26,6 +26,24 @@ namespace PatrolSim
             chartRealWorld.Refresh();
         }
 
+        private void backWorker_log_DoWork(object sender, DoWorkEventArgs e)
+        {
+            e.Result = e.Argument;
+        }
+
+        private void backWorker_log_RunWorkerCompleted(
+            object sender,
+            RunWorkerCompletedEventArgs e)
+        {
+            
+            {
+                string value = (string)e.Result;
+
+                realLog.Items.Add(value);
+                //realLog.SelectedIndex = realLog.Items.Count - 1;
+            }   
+        }
+
         private static void UpdateUiComponent(NChartControl nChartControl, double[][] matrix)
         {
             NCartesianChart chart = (NCartesianChart)nChartControl.Charts[0];
@@ -67,7 +85,7 @@ namespace PatrolSim
             {
                 if (_threadState == ThreadState.Run)
                 {
-                    backWorker.RunWorkerAsync();
+                    backWorker_map.RunWorkerAsync();
                 }
                 Thread.Sleep(1000);
             }
