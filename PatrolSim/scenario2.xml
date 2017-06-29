@@ -1,0 +1,52 @@
+<ObjectList MapSizeX="480" MapSizeY="498">
+  <ShipList>
+    <Ship id="1" spd="0.5" type="1">
+      <Waypoints>
+        <Waypoint x="3" y="347" z="0" />
+        <Waypoint x="12" y="350" z="0" />
+        <Waypoint x="15" y="357" z="0" />
+        <Waypoint x="15" y="367" z="0" />
+        <Waypoint x="24" y="366" z="0" />
+        <Waypoint x="26" y="378" z="0" />
+        <Waypoint x="37" y="376" z="0" />
+        <Waypoint x="33" y="388" z="0" />
+        <Waypoint x="39" y="387" z="0" />
+        <Waypoint x="39" y="395" z="0" />
+        <Waypoint x="41" y="402" z="0" />
+        <Waypoint x="47" y="414" z="0" />
+        <Waypoint x="53" y="418" z="0" />
+        <Waypoint x="58" y="424" z="0" />
+        <Waypoint x="69" y="430" z="0" />
+        <Waypoint x="87" y="445" z="0" />
+        <Waypoint x="108" y="464" z="0" />
+        <Waypoint x="123" y="473" z="0" />
+        <Waypoint x="142" y="485" z="0" />
+        <Waypoint x="171" y="491" z="0" />
+        <Waypoint x="194" y="486" z="0" />
+        <Waypoint x="231" y="487" z="0" />
+        <Waypoint x="266" y="478" z="0" />
+        <Waypoint x="282" y="468" z="0" />
+        <Waypoint x="303" y="456" z="0" />
+        <Waypoint x="344" y="437" z="0" />
+        <Waypoint x="368" y="422" z="0" />
+        <Waypoint x="393" y="401" z="0" />
+        <Waypoint x="409" y="390" z="0" />
+        <Waypoint x="424" y="378" z="0" />
+        <Waypoint x="448" y="356" z="0" />
+        <Waypoint x="463" y="342" z="0" />
+        <Waypoint x="475" y="333" z="0" />
+      </Waypoints>
+      <AIS />
+    </Ship>
+  </ShipList>
+  <ObstcleList />
+  <ColorList>
+    <Color id="0" r="255" g="255" b="255"/>
+    <Color id="1" r="255" g="0" b="0"/>
+    <Color id="2" r="0" g="255" b="0"/>
+    <Color id="3" r="0" g="0" b="255"/>
+    <Color id="4" r="238" g="244" b="66"/>
+    <Color id="5" r="214" g="93" b="23"/>
+    <Color id="6" r="112" g="214" b="23"/>
+  </ColorList>
+</ObjectList>
