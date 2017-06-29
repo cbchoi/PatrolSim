@@ -23,8 +23,8 @@ namespace PatrolSim
                 DrawArea = pictureBox.Image;
             }
 
-            int _dx = DrawArea.Width / 50;
-            int _dy = DrawArea.Height / 50;
+            int _dx = DrawArea.Width / _gridSizeX;
+            int _dy = DrawArea.Height / _gridSizeY;
 
             // Draw line to screen.
             using (var graphics = Graphics.FromImage(pictureBox.Image))
@@ -49,13 +49,16 @@ namespace PatrolSim
         {
             lock (draw_lock)
             {
-                int _dx = pictureBox.Width / 50;
-                int _dy = pictureBox.Height / 50;
+                int _dx = pictureBox.Image.Width / _gridSizeX;
+                int _dy = pictureBox.Image.Height / _gridSizeY;
 
                 float fx = x;
                 float fy = y;
-                int curX = ((int)(pictureBox.Width * (fx / map_x)));
-                int curY = pictureBox.Image.Height - ((int)(pictureBox.Height * (fy / map_y)) );
+                int curX = ((int)(pictureBox.Image.Width * (fx / map_x)));
+
+                int curY = 0;
+                if (pictureBox.Image.Height - _dy - ((int) (pictureBox.Image.Height * (fy / map_y))) >= 0)
+                    curY = pictureBox.Image.Height - _dy - ((int) (pictureBox.Image.Height * (fy / map_y)));
 
                 //Bitmap bmpImage = new Bitmap(bmp);
                 
@@ -69,6 +72,10 @@ namespace PatrolSim
                     brush.Dispose();
                     blackPen.Dispose();
                 }
+                //MessageBox.Show(String.Format("pictureBox.Image: ({0},{1})", pictureBox.Image.Width, pictureBox.Image.Height));
+                //MessageBox.Show(String.Format("Map Size: ({0},{1})", map_x, map_y));
+                //MessageBox.Show(String.Format("current: ({0},{1})", curX, curY));
+                //MessageBox.Show(String.Format("fx, fy: ({0},{1})", x, y));
             }
             //pictureBox.Invalidate();
         }

@@ -20,8 +20,8 @@ namespace PatrolSim
 {
     public partial class PatrolSim : Form
     {
-        private static int _gridSizeX = 50;
-        private static int _gridSizeY = 50;
+        private static int _gridSizeX = 100;
+        private static int _gridSizeY = 100;
         private static Color[] _colorTable;
 
         private static double[][] matrixSimulation;
@@ -175,20 +175,7 @@ namespace PatrolSim
         }
 
         private static List<Agent> agent_list = new List<Agent>();
-        private static void UpdateMatrix(Agent agent, double [][] matrix)
-        {
-            matrix[(int)(agent.CurrentPosition.Y*50/_scenarioManager.MapSizeY)][(int)(agent.CurrentPosition.X * 50 / _scenarioManager.MapSizeX)] = agent.AgentID;
-
-            lock (log_lock)
-            {
-                agent_list.Add(agent);
-            }
-
-            if (!backWorker_log.IsBusy)
-            {
-                backWorker_log.RunWorkerAsync(agent_list);
-            }
-        }
+        
 
         private static Tuple<int, int> UpdateMatrix(NChartControl nChartControl, double[][] matrix)
         {

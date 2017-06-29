@@ -54,10 +54,10 @@ namespace PatrolSim
                     agent.AIS_MSG1.sog(0);
                     agent.AIS_MSG1.position_accuracy(1);
 
-                    double lng = 128.3731 + (agent.CurrentPosition.Y * (0.0147 / 50.0));
+                    double lng = 128.4552 + (agent.CurrentPosition.Y * (0.0460 / 100.0));
                     agent.AIS_MSG1.pos_long(lng);
 
-                    double lat = 34.7824 + (agent.CurrentPosition.X * (0.0113 / 50.0));
+                    double lat = 34.8035 + (agent.CurrentPosition.X * (0.0313 / 100.0));
                     agent.AIS_MSG1.pos_lat(lat);
 
                     agent.AIS_MSG1.cog(219);
@@ -145,6 +145,21 @@ namespace PatrolSim
                     
                     UpdateMatrix(agent, matrixRealWorld);
                 }
+            }
+        }
+
+        private static void UpdateMatrix(Agent agent, double[][] matrix)
+        {
+            matrix[(int)(agent.CurrentPosition.Y *_gridSizeY/ _scenarioManager.MapSizeY)][(int)(agent.CurrentPosition.X * _gridSizeX / _scenarioManager.MapSizeX)] = agent.AgentID;
+
+            lock (log_lock)
+            {
+                agent_list.Add(agent);
+            }
+
+            if (!backWorker_log.IsBusy)
+            {
+                backWorker_log.RunWorkerAsync(agent_list);
             }
         }
     }
