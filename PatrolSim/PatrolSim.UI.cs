@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -14,6 +15,8 @@ namespace PatrolSim
 {
     partial class PatrolSim
     {
+        enum AgentType { NormalShip = 10, Unregistered = 5, }
+
         private void backWorker_RunWorkerCompleted(
             object sender,
             RunWorkerCompletedEventArgs e)
@@ -21,11 +24,14 @@ namespace PatrolSim
             lock (thisLock)
             {
                 UpdateUiComponent(chartRealWorld, matrixRealWorld);
-                DrawBox(_realMap, matrixRealWorld);
+                
+                DrawBox2(_realMap, matrixRealWorld);
+                DrawBox2(_simulateMap, matrixSimulation);
             }
 
             chartRealWorld.Refresh();
             _realMap.Refresh();
+            _simulateMap.Refresh();
         }
 
         private void backWorker_log_DoWork(object sender, DoWorkEventArgs e)
@@ -141,9 +147,14 @@ namespace PatrolSim
             {
                 foreach (Agent agent in _scenarioManager.AgentList)
                 {
-                    UpdateMatrix(agent, matrixSimulation);
-                    
-                    UpdateMatrix(agent, matrixRealWorld);
+                    if (agent.AgentType == (int) AgentType.NormalShip)
+                    {
+                        UpdateMatrix(agent, matrixRealWorld);
+                    }
+                    else if (agent.AgentType == (int)AgentType.Unregistered)
+                    {
+                        UpdateMatrix(agent, matrixSimulation);
+                    }
                 }
             }
         }

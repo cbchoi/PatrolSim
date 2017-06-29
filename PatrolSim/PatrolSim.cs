@@ -41,6 +41,10 @@ namespace PatrolSim
         private static Object thisLock = new Object();
         private static Object log_lock = new Object();
 
+        private Image _cloneSim;
+        private Image _cloneReal;
+        private Image _cloneExclusive;
+
         public PatrolSim()
         {
             InitializeComponent();
@@ -57,9 +61,9 @@ namespace PatrolSim
 
 
             InitMap(chartRealWorld);
-            DrawLineInt(_simulateMap);
-            DrawLineInt(_realMap);
-            DrawLineInt(_exclusiveMap);
+            DrawLineInt(_simulateMap, out _cloneSim);
+            DrawLineInt(_realMap, out _cloneReal);
+            DrawLineInt(_exclusiveMap, out _cloneExclusive);
 
             matrixRealWorld = new double[_gridSizeY][];
             matrixSimulation = new double[_gridSizeX][];
