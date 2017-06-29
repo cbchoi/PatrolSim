@@ -21,6 +21,21 @@ void destroy_ais_msg()
 	ais1_2_3 = NULL;
 }
 
+int get_message_id()
+{
+	return ais1_2_3->message_id;
+}
+
+int get_repeat_indicator()
+{
+	return ais1_2_3->repeat_indicator;
+}
+
+int get_mmsi()
+{
+	return ais1_2_3->mmsi;
+}
+
 int    get_nav_status()
 {
 	return ais1_2_3->nav_status;

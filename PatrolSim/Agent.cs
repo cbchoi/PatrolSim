@@ -10,6 +10,7 @@ namespace PatrolSim
         private readonly int _agentID;
         private readonly double _agentSpeed;
         private readonly int _agentType;
+        private readonly int _agentMMSI;
 
         private Position _curPosition;
         private Position _prevPosition;
@@ -22,6 +23,8 @@ namespace PatrolSim
         public int AgentID { get { return _agentID; } }
         public double AgentSpeed { get { return _agentSpeed; } }
         public int AgentType { get { return _agentType; } }
+        public int AgentMMSI { get { return _agentMMSI; } }
+
         public int CurrentWayointIndex { get { return _curWayIndex; } }
 
         public Position PrevPosition { get { return _prevPosition; } }
@@ -50,6 +53,7 @@ namespace PatrolSim
             _agentID = Int32.Parse(node.Attributes["id"].Value);
             _agentSpeed = Double.Parse(node.Attributes["spd"].Value);
             _agentType = Int32.Parse(node.Attributes["type"].Value);
+            _agentMMSI = Int32.Parse(node.Attributes["mmsi"].Value);
 
             _curWayIndex = 0;
             _wayList = new ArrayList();

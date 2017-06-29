@@ -13,10 +13,50 @@ namespace AISWrapper
     {
         [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
         protected static extern System.IntPtr get_ais_msg();
+
+        [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
+        protected static extern void create_ais_msg(string payload, int pad);
         [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
         protected static extern void create_empty_ais_msg();
         [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
         protected static extern void destroy_ais_msg();
+
+        [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int get_message_id();
+        [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int get_repeat_indicator();
+        [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int get_mmsi();
+        [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int get_nav_status();
+        [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern float get_rot_raw();
+        [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern float get_sog();
+        [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int get_position_accuracy();
+        [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern double get_pos_long();
+        [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern double get_pos_lat();
+        [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int get_cog();
+        [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int get_true_heading();
+        [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int get_timestamp();
+        [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int get_special_manoeuvre();
+        [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int get_spare();
+        [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int get_raim();
+        [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int get_sync_state();
+        [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int get_slot_timeout();
+        [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
+        public static extern int get_received_stations();
 
         [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void set_message_id(int val);
@@ -60,6 +100,13 @@ namespace AISWrapper
             create_empty_ais_msg();
         }
 
+        public AIS_MSG_1(string msg)
+        {
+            char[] delimiter = { ',' };
+            string[] tokens = msg.Split(delimiter, StringSplitOptions.None);
+            create_ais_msg(tokens[5], 0);
+        }
+
         ~AIS_MSG_1()
         {
             destroy_ais_msg();
@@ -83,6 +130,50 @@ namespace AISWrapper
             string checksum = "*" + ((int)check).ToString("X2");
             return "!" + ais_msg + checksum;
         }
+
+
+        public int message_id( )
+        {
+            return get_message_id();
+        }
+
+        public int repeat_indicator( )
+        {
+            return get_repeat_indicator();
+        }
+
+        public int mmsi( ) { return get_mmsi(); }
+
+        public int nav_status( ) { return get_nav_status(); }
+
+        public float rot_raw( ) { return get_rot_raw(); }
+
+        public float sog( ) { return get_sog(); }
+
+        public int position_accuracy( ) { return get_position_accuracy(); }
+
+        public double pos_long( ) { return get_pos_long(); }
+
+        public double pos_lat( ) { return get_pos_lat(); }
+
+        public int cog( ) { return get_cog(); }
+
+        public int true_heading( ) { return get_true_heading(); }
+
+        public int timestamp( ) { return get_timestamp(); }
+
+        public int special_manoeuvre( ) { return get_special_manoeuvre(); }
+
+        public int spare( ) { return get_spare(); }
+
+        public int raim( ) { return get_raim(); }
+
+        public int sync_state( ) { return get_sync_state(); }
+
+        public int slot_timeout( ) { return get_slot_timeout(); }
+
+        public int received_stations( ) { return get_received_stations(); }
+
 
 
         public void message_id(int val)

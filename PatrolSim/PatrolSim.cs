@@ -45,9 +45,16 @@ namespace PatrolSim
             InitializeComponent();
            
             // Initalize Image
-            pictRealWorld.Load(@".\Image.png");
+            pictRealWorld.Load(@".\RealMap.png");
             pictRealWorld.SizeMode = PictureBoxSizeMode.StretchImage;
-           
+
+            _simulateMap.Load(@".\SimMap.png");
+            _simulateMap.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            _realMap.Load(@".\SimMap.png");
+            _realMap.SizeMode = PictureBoxSizeMode.StretchImage;
+
+
             InitMap(chartRealWorld);
             DrawLineInt(_simulateMap);
             DrawLineInt(_realMap);
@@ -67,6 +74,7 @@ namespace PatrolSim
 
             backWorker_map = new BackgroundWorker();
             backWorker_log = new BackgroundWorker();
+
             this.backWorker_map.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backWorker_RunWorkerCompleted);
             backWorker_log.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backWorker_log_RunWorkerCompleted);
             backWorker_log.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backWorker_log_DoWork);
@@ -171,13 +179,13 @@ namespace PatrolSim
             AIS_MSG_1 asg = new AIS_MSG_1();
             asg.message_id(1);
             asg.repeat_indicator(0);
-            asg.mmsi(205412000);
+            asg.mmsi(440113380);
             asg.nav_status(0);
             asg.rot_raw(0);
             asg.sog(0);
             asg.position_accuracy(1);
-            asg.pos_long(-117.96898333333333);
-            asg.pos_lat(33.15835);
+            asg.pos_long(128.3731);
+            asg.pos_lat(34.7824);
             asg.cog(219);
             asg.true_heading(13);
             asg.timestamp(32);
@@ -192,7 +200,6 @@ namespace PatrolSim
             while(!backWorker_log.IsBusy)
             {
                 backWorker_log.RunWorkerAsync(log);
-               
             }
             
         }

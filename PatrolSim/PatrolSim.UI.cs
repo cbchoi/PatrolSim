@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Nevron.Chart;
 using Nevron.Chart.WinForm;
 using Nevron.GraphicsCore;
+using AISWrapper;
 
 namespace PatrolSim
 {
@@ -35,13 +36,14 @@ namespace PatrolSim
             object sender,
             RunWorkerCompletedEventArgs e)
         {
-            
-            {
-                string value = (string)e.Result;
+            string value = (string)e.Result;
+            simLog.Items.Add(value);
+            simLog.SelectedIndex = simLog.Items.Count - 1;
 
-                realLog.Items.Add(value);
-                //realLog.SelectedIndex = realLog.Items.Count - 1;
-            }   
+            AIS_MSG_1 msg = new AIS_MSG_1(value);
+            string str = String.Format("MMSI:{0} Latitude:{1} Longitude:{2}", msg.mmsi(), msg.pos_lat(), msg.pos_long());
+            realLog.Items.Add(str);
+            realLog.SelectedIndex = realLog.Items.Count - 1;
         }
 
         private static void UpdateUiComponent(NChartControl nChartControl, double[][] matrix)

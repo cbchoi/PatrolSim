@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ObjectList MapSizeX="100" MapSizeY="100">
   <ShipList>
-    <Ship id="1" spd="0.5" type="10">
+    <Ship id="1" spd="0.5" type="10" mmsi="440113380">
       <Waypoints>
         <Waypoint x="1" y ="1" z ="0"/>
         <Waypoint x="10" y ="10" z ="0"/>
@@ -15,7 +15,7 @@
         <Waypoint x="1" y ="1" z ="0"/>
       </Waypoints>
     </Ship>
-    <Ship id="2" spd="0.5" type="5">
+    <Ship id="2" spd="0.5" type="5" mmsi="440005720">
       <Waypoints>
         <Waypoint x="10" y ="10" z ="0"/>
         <Waypoint x="10" y ="20" z ="0"/>

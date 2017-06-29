@@ -1,6 +1,6 @@
 <ObjectList MapSizeX="480" MapSizeY="498">
   <ShipList>
-    <Ship id="1" spd="0.5" type="1">
+    <Ship id="1" spd="0.5" type="1" mmsi="440113380">
       <Waypoints>
         <Waypoint x="3" y="347" z="0" />
         <Waypoint x="12" y="350" z="0" />
@@ -36,10 +36,6 @@
         <Waypoint x="463" y="342" z="0" />
         <Waypoint x="475" y="333" z="0" />
       </Waypoints>
-<<<<<<< HEAD
-      <AIS />
-=======
->>>>>>> FeatureUpdate
     </Ship>
   </ShipList>
   <ObstcleList />

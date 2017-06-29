@@ -8,6 +8,9 @@ extern "C" __declspec(dllexport) void create_ais_msg(const char* payload, const 
 extern "C" __declspec(dllexport) void create_empty_ais_msg();
 extern "C" __declspec(dllexport) void destroy_ais_msg();
 
+extern "C" __declspec(dllexport) int    get_message_id();
+extern "C" __declspec(dllexport) int    get_repeat_indicator();
+extern "C" __declspec(dllexport) int    get_mmsi();
 extern "C" __declspec(dllexport) int    get_nav_status();
 extern "C" __declspec(dllexport) bool   get_rot_over_range();
 extern "C" __declspec(dllexport) int    get_rot_raw();

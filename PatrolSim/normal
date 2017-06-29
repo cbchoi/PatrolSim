@@ -1,0 +1,23 @@
+<ObjectList MapSizeX="480" MapSizeY="498">
+  <ShipList>
+    <Ship id="1" spd="0.5" type="1">
+      <Waypoints>
+        <Waypoint x="281" y="495" z="0" />
+        <Waypoint x="296" y="465" z="0" />
+        <Waypoint x="309" y="431" z="0" />
+        <Waypoint x="311" y="392" z="0" />
+        <Waypoint x="291" y="340" z="0" />
+        <Waypoint x="281" y="315" z="0" />
+        <Waypoint x="240" y="267" z="0" />
+        <Waypoint x="220" y="226" z="0" />
+        <Waypoint x="206" y="155" z="0" />
+        <Waypoint x="211" y="118" z="0" />
+        <Waypoint x="212" y="60" z="0" />
+        <Waypoint x="214" y="25" z="0" />
+        <Waypoint x="208" y="3" z="0" />
+      </Waypoints>
+    </Ship>
+  </ShipList>
+  <ObstcleList />
+  <ColorList />
+</ObjectList>

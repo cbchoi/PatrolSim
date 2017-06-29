@@ -12,23 +12,31 @@ namespace PatrolSim
     {
         public void DrawLineInt(PictureBox pictureBox)
         {
-            Bitmap DrawArea = new Bitmap(pictureBox.Size.Width, pictureBox.Size.Height);
-            pictureBox.Image = DrawArea;
+            Image DrawArea;
+            if (pictureBox.Image == null)
+            {
+                DrawArea = new Bitmap(pictureBox.Size.Width, pictureBox.Size.Height);
+                pictureBox.Image = DrawArea;
+            }
+            else
+            {
+                DrawArea = pictureBox.Image;
+            }
 
-            int _dx = pictureBox.Width / 50;
-            int _dy = pictureBox.Height / 50;
+            int _dx = DrawArea.Width / 50;
+            int _dy = DrawArea.Height / 50;
 
             // Draw line to screen.
             using (var graphics = Graphics.FromImage(pictureBox.Image))
             {
                 Pen blackPen = new Pen(Color.Black, 1);
 
-                for (int i = 0; i < pictureBox.Width; i += _dx)
+                for (int i = 0; i < DrawArea.Width; i += _dx)
                 {
-                    for (int j = 0; j < pictureBox.Height; j += _dy)
+                    for (int j = 0; j < DrawArea.Height; j += _dy)
                     {
-                        graphics.DrawLine(blackPen, i, 0, i, pictureBox.Height);
-                        graphics.DrawLine(blackPen, 0, j, pictureBox.Width, j);
+                        graphics.DrawLine(blackPen, i, 0, i, DrawArea.Height);
+                        graphics.DrawLine(blackPen, 0, j, DrawArea.Width, j);
                     }
                 }
                 blackPen.Dispose();
@@ -37,13 +45,14 @@ namespace PatrolSim
 
         public void DrawBox(PictureBox pictureBox, int x, int y, Color clr)
         {
-            int _dx = pictureBox.Width / 50;
-            int _dy = pictureBox.Height / 50;
+            Image DrawArea = pictureBox.Image;
+            int _dx = DrawArea.Width / 50;
+            int _dy = DrawArea.Height / 50;
 
             float fx = x;
             float fy = y;
-            int curX = ((int)(pictureBox.Image.Width * (fx / pictRealWorld.Width)) / _dx) * _dx;
-            int curY = ((int)(pictureBox.Image.Height * (fy / pictRealWorld.Height)) / _dy) * _dy;
+            int curX = ((int)(pictureBox.Image.Width * (fx / pictureBox.Width)) / _dx) * _dx;
+            int curY = ((int)(pictureBox.Image.Height * (fy / pictureBox.Height)) / _dy) * _dy;
 
             //Bitmap bmpImage = new Bitmap(bmp);
             using (var graphics = Graphics.FromImage(pictureBox.Image))

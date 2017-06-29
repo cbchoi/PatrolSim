@@ -72,7 +72,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Agent.cs" />
-    <Compile Include="AIVDMHandler.cs" />
     <Compile Include="Obstcle.cs" />
     <Compile Include="PatrolSim.cs">
       <SubType>Form</SubType>
@@ -121,10 +120,12 @@
     <Content Include="Image.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="RealMap.png" />
     <Content Include="scenario1.xml">
       <SubType>Designer</SubType>
     </Content>
     <Content Include="scenario2.xml" />
+    <Content Include="SimMap.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AISWrapper\AISWrapper.csproj">
