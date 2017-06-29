@@ -31,16 +31,17 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ScenarioEditor));
             this.pictRealWorld = new System.Windows.Forms.PictureBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
+            this.btExport = new System.Windows.Forms.Button();
             this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.mmsi = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Speed = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Type = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.posX = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.posY = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.posZ = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.btExport = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictRealWorld)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -64,6 +65,7 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ID,
+            this.mmsi,
             this.Speed,
             this.Type,
             this.posX,
@@ -74,36 +76,6 @@
             this.dataGridView1.RowTemplate.Height = 33;
             this.dataGridView1.Size = new System.Drawing.Size(856, 851);
             this.dataGridView1.TabIndex = 4;
-            // 
-            // ID
-            // 
-            this.ID.HeaderText = "ID";
-            this.ID.Name = "ID";
-            // 
-            // Speed
-            // 
-            this.Speed.HeaderText = "Speed";
-            this.Speed.Name = "Speed";
-            // 
-            // Type
-            // 
-            this.Type.HeaderText = "Type";
-            this.Type.Name = "Type";
-            // 
-            // posX
-            // 
-            this.posX.HeaderText = "posX";
-            this.posX.Name = "posX";
-            // 
-            // posY
-            // 
-            this.posY.HeaderText = "posY";
-            this.posY.Name = "posY";
-            // 
-            // posZ
-            // 
-            this.posZ.HeaderText = "posZ";
-            this.posZ.Name = "posZ";
             // 
             // panel1
             // 
@@ -146,6 +118,41 @@
             this.btExport.UseVisualStyleBackColor = true;
             this.btExport.Click += new System.EventHandler(this.btExport_Click);
             // 
+            // ID
+            // 
+            this.ID.HeaderText = "ID";
+            this.ID.Name = "ID";
+            // 
+            // mmsi
+            // 
+            this.mmsi.HeaderText = "mmsi";
+            this.mmsi.Name = "mmsi";
+            // 
+            // Speed
+            // 
+            this.Speed.HeaderText = "Speed";
+            this.Speed.Name = "Speed";
+            // 
+            // Type
+            // 
+            this.Type.HeaderText = "Type";
+            this.Type.Name = "Type";
+            // 
+            // posX
+            // 
+            this.posX.HeaderText = "posX";
+            this.posX.Name = "posX";
+            // 
+            // posY
+            // 
+            this.posY.HeaderText = "posY";
+            this.posY.Name = "posY";
+            // 
+            // posZ
+            // 
+            this.posZ.HeaderText = "posZ";
+            this.posZ.Name = "posZ";
+            // 
             // ScenarioEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
@@ -171,6 +178,7 @@
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button btExport;
         private System.Windows.Forms.DataGridViewTextBoxColumn ID;
+        private System.Windows.Forms.DataGridViewTextBoxColumn mmsi;
         private System.Windows.Forms.DataGridViewTextBoxColumn Speed;
         private System.Windows.Forms.DataGridViewTextBoxColumn Type;
         private System.Windows.Forms.DataGridViewTextBoxColumn posX;

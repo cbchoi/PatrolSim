@@ -22,7 +22,7 @@ namespace ScenarioEditor
             MouseEventArgs me = (MouseEventArgs)e;
             Point coordinates = me.Location;
 
-            dataGridView1.Rows.Add(_curAgentID, _curAgentSpd, _curAgentType, coordinates.X, pictRealWorld.Height - coordinates.Y, 0);
+            dataGridView1.Rows.Add(_curAgentID, 0, _curAgentSpd, _curAgentType, coordinates.X, pictRealWorld.Height - coordinates.Y, 0);
             DrawBox(pictRealWorld.Image, coordinates.X, coordinates.Y);
             pictRealWorld.Refresh();
         }
@@ -137,17 +137,19 @@ namespace ScenarioEditor
                     curID = (int) dataGridView1.Rows[i].Cells[0].Value;
                     curElement = doc.CreateElement("Ship");
                     curElement.SetAttribute("id", dataGridView1.Rows[i].Cells[0].Value.ToString());
-                    curElement.SetAttribute("spd", dataGridView1.Rows[i].Cells[1].Value.ToString());
-                    curElement.SetAttribute("type", dataGridView1.Rows[i].Cells[2].Value.ToString());
+                    curElement.SetAttribute("mmsi", dataGridView1.Rows[i].Cells[1].Value.ToString());
+                    curElement.SetAttribute("spd", dataGridView1.Rows[i].Cells[2].Value.ToString());
+                    curElement.SetAttribute("type", dataGridView1.Rows[i].Cells[3].Value.ToString());
+                    
                     shipList.AppendChild(curElement);
                     waypointElement = doc.CreateElement("Waypoints");
                     curElement.AppendChild(waypointElement);
                 }
 
                 XmlElement wayElement = doc.CreateElement("Waypoint");
-                wayElement.SetAttribute("x", dataGridView1.Rows[i].Cells[3].Value.ToString());
-                wayElement.SetAttribute("y", dataGridView1.Rows[i].Cells[4].Value.ToString());
-                wayElement.SetAttribute("z", dataGridView1.Rows[i].Cells[5].Value.ToString());
+                wayElement.SetAttribute("x", dataGridView1.Rows[i].Cells[4].Value.ToString());
+                wayElement.SetAttribute("y", dataGridView1.Rows[i].Cells[5].Value.ToString());
+                wayElement.SetAttribute("z", dataGridView1.Rows[i].Cells[6].Value.ToString());
                 waypointElement.AppendChild(wayElement);
             }
         }
