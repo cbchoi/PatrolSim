@@ -4,10 +4,10 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{6F9042F7-6F78-4799-8C53-FCE2499C9D3A}</ProjectGuid>
+    <ProjectGuid>{00A2F386-9B92-46A5-8449-88864919D9C8}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>PatrolSim</RootNamespace>
-    <AssemblyName>PatrolSim</AssemblyName>
+    <RootNamespace>ScenarioEditor</RootNamespace>
+    <AssemblyName>ScenarioEditor</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -31,35 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <DebugSymbols>true</DebugSymbols>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <DebugType>full</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <Optimize>true</Optimize>
-    <DebugType>pdbonly</DebugType>
-    <PlatformTarget>x64</PlatformTarget>
-    <ErrorReport>prompt</ErrorReport>
-    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
-    <Prefer32Bit>true</Prefer32Bit>
-  </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Nevron.Chart, Version=17.6.15.12, Culture=neutral, PublicKeyToken=2961c51bb98125d2" />
-    <Reference Include="Nevron.Chart.WinForm, Version=17.6.15.12, Culture=neutral, PublicKeyToken=c9bd8998e981e4ee" />
-    <Reference Include="Nevron.GraphicsGL, Version=17.6.15.12, Culture=neutral, PublicKeyToken=2f17c6a71f852d32" />
-    <Reference Include="Nevron.Presentation, Version=17.6.15.12, Culture=neutral, PublicKeyToken=6656c5d1103e75cc" />
-    <Reference Include="Nevron.System, Version=17.6.15.12, Culture=neutral, PublicKeyToken=6a987feae5e496fd" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Design" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -71,30 +45,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Agent.cs" />
-    <Compile Include="AIVDMHandler.cs" />
-    <Compile Include="Obstcle.cs" />
-    <Compile Include="PatrolSim.cs">
+    <Compile Include="NewObject.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PatrolSim.Designer.cs">
-      <DependentUpon>PatrolSim.cs</DependentUpon>
+    <Compile Include="NewObject.Designer.cs">
+      <DependentUpon>NewObject.cs</DependentUpon>
     </Compile>
-    <Compile Include="PatrolSim.Map.cs">
+    <Compile Include="ScenarioEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="PatrolSim.UI.cs">
-      <SubType>Form</SubType>
+    <Compile Include="ScenarioEditor.Designer.cs">
+      <DependentUpon>ScenarioEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ScenarioManager.cs" />
-    <Compile Include="SimulationManager.cs" />
-    <Compile Include="Position.cs" />
-    <EmbeddedResource Include="PatrolSim.resx">
-      <DependentUpon>PatrolSim.cs</DependentUpon>
+    <EmbeddedResource Include="NewObject.resx">
+      <DependentUpon>NewObject.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\licenses.licx" />
+    <EmbeddedResource Include="ScenarioEditor.resx">
+      <DependentUpon>ScenarioEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -116,25 +86,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Image.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="scenario1.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="scenario2.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\AISWrapper\AISWrapper.csproj">
-      <Project>{0966a5c3-0a2d-4654-be3b-34d4f12b2ac0}</Project>
-      <Name>AISWrapper</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\libAIVDM\libAIVDM.vcxproj">
-      <Project>{256007b6-7e7c-4e40-bb0f-a1dfe01f375f}</Project>
-      <Name>libAIVDM</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

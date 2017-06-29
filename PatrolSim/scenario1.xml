@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ObjectList>
+<ObjectList MapSizeX="100" MapSizeY="100">
   <ShipList>
     <Ship id="1" spd="0.5" type="10">
       <Waypoints>

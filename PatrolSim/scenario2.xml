@@ -36,7 +36,10 @@
         <Waypoint x="463" y="342" z="0" />
         <Waypoint x="475" y="333" z="0" />
       </Waypoints>
+<<<<<<< HEAD
       <AIS />
+=======
+>>>>>>> FeatureUpdate
     </Ship>
   </ShipList>
   <ObstcleList />

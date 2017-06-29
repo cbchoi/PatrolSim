@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using AISWrapper;
 using Nevron.Chart;
 using Nevron.Chart.Windows;
 using Nevron.Chart.WinForm;
@@ -19,8 +20,8 @@ namespace PatrolSim
 {
     public partial class PatrolSim : Form
     {
-        private static int _gridSizeX = 100;
-        private static int _gridSizeY = 100;
+        private static int _gridSizeX = 50;
+        private static int _gridSizeY = 50;
         private static Color[] _colorTable;
 
         private static double[][] matrixSimulation;
@@ -34,53 +35,23 @@ namespace PatrolSim
         private ThreadState _threadState = ThreadState.Stop;
         private Thread _worker;
 
-        private BackgroundWorker backWorker;
+        private BackgroundWorker backWorker_map;
+        private static BackgroundWorker backWorker_log;
 
         private static Object thisLock = new Object();
-
-        private void backWorker_RunWorkerCompleted(
-            object sender,
-            RunWorkerCompletedEventArgs e)
-        {
-            lock (thisLock)
-            {
-                TestUIComponent(chartSimulation, matrixSimulation);
-                TestUIComponent(chartRealWorld, matrixRealWorld);
-            }
-            
-            chartSimulation.Refresh();
-        }
-
-        public void UpdateSimulationMap()
-        {
-            while (_threadState == ThreadState.Run || _threadState == ThreadState.Pause)
-            {
-                if (_threadState == ThreadState.Run)
-                {
-                    backWorker.RunWorkerAsync();
-                }
-                Thread.Sleep(1000);
-            }
-        }
-
-        public static void UpdateSimulation()
-        {
-            lock (thisLock)
-            {
-                foreach (Agent agent in _scenarioManager.AgentList)
-                {
-                    UpdateMatrix(agent, matrixSimulation);
-                    UpdateMatrix(agent, matrixRealWorld);
-                }
-            }
-        }
 
         public PatrolSim()
         {
             InitializeComponent();
-
-            InitMap(chartSimulation);
+           
+            // Initalize Image
+            pictRealWorld.Load(@".\Image.png");
+            pictRealWorld.SizeMode = PictureBoxSizeMode.StretchImage;
+           
             InitMap(chartRealWorld);
+            DrawLineInt(_simulateMap);
+            DrawLineInt(_realMap);
+            DrawLineInt(_exclusiveMap);
 
             matrixRealWorld = new double[_gridSizeY][];
             matrixSimulation = new double[_gridSizeX][];
@@ -94,25 +65,11 @@ namespace PatrolSim
             _simManager = new SimulationManager();
             _worker = new Thread(UpdateSimulationMap);
 
-            backWorker = new BackgroundWorker();
-            this.backWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backWorker_RunWorkerCompleted);
-        }
-
-        public static Color InterpolateColors(Color color1, Color color2, float factor)
-        {
-            int num1 = ((int)color1.R);
-            int num2 = ((int)color1.G);
-            int num3 = ((int)color1.B);
-
-            int num4 = ((int)color2.R);
-            int num5 = ((int)color2.G);
-            int num6 = ((int)color2.B);
-
-            byte num7 = (byte)((((float)num1) + (((float)(num4 - num1)) * factor)));
-            byte num8 = (byte)((((float)num2) + (((float)(num5 - num2)) * factor)));
-            byte num9 = (byte)((((float)num3) + (((float)(num6 - num3)) * factor)));
-
-            return Color.FromArgb(num7, num8, num9);
+            backWorker_map = new BackgroundWorker();
+            backWorker_log = new BackgroundWorker();
+            this.backWorker_map.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backWorker_RunWorkerCompleted);
+            backWorker_log.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backWorker_log_RunWorkerCompleted);
+            backWorker_log.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backWorker_log_DoWork);
         }
 
         private void InitMap(NChartControl nChartControl)
@@ -120,7 +77,7 @@ namespace PatrolSim
             // configure the chart
             NCartesianChart chart = (NCartesianChart)nChartControl.Charts[0];
             chart.Projection.SetPredefinedProjection(PredefinedProjection.OrthogonalTop);
-            chart.BoundsMode = BoundsMode.Fit;
+            chart.BoundsMode = BoundsMode.Stretch;
             chart.Enable3D = true;
             chart.Fit3DAxisContent = false;
 
@@ -141,29 +98,50 @@ namespace PatrolSim
             leftWall.Visible = false;
 
             // setup axes
-            NOrdinalScaleConfigurator ordinalScale = (NOrdinalScaleConfigurator)chart.Axis(StandardAxis.PrimaryX).ScaleConfigurator;
-            ordinalScale.MajorGridStyle.SetShowAtWall(ChartWallType.Floor, true);
-            ordinalScale.MajorGridStyle.SetShowAtWall(ChartWallType.Back, true);
-            ordinalScale.DisplayDataPointsBetweenTicks = false;
+            //NOrdinalScaleConfigurator ordinalScale = (NOrdinalScaleConfigurator)chart.Axis(StandardAxis.PrimaryX).ScaleConfigurator;
+            //ordinalScale.MajorGridStyle.SetShowAtWall(ChartWallType.Floor, true);
+            //ordinalScale.MajorGridStyle.SetShowAtWall(ChartWallType.Back, true);
+            //ordinalScale.DisplayDataPointsBetweenTicks = false;
 
-            ordinalScale = (NOrdinalScaleConfigurator)chart.Axis(StandardAxis.Depth).ScaleConfigurator;
-            ordinalScale.MajorGridStyle.SetShowAtWall(ChartWallType.Floor, true);
-            ordinalScale.MajorGridStyle.SetShowAtWall(ChartWallType.Left, true);
-            ordinalScale.DisplayDataPointsBetweenTicks = false;
+            //ordinalScale = (NOrdinalScaleConfigurator)chart.Axis(StandardAxis.Depth).ScaleConfigurator;
+            //ordinalScale.MajorGridStyle.SetShowAtWall(ChartWallType.Floor, true);
+            //ordinalScale.MajorGridStyle.SetShowAtWall(ChartWallType.Left, true);
+            //ordinalScale.DisplayDataPointsBetweenTicks = false;
 
-            chart.Axis(StandardAxis.SecondaryY).Anchor = new NDockAxisAnchor(AxisDockZone.FrontLeft, false, 100.0f, 100.0f);
+            NLinearScaleConfigurator linearScale = new NLinearScaleConfigurator();
+            chart.Axis(StandardAxis.PrimaryX).ScaleConfigurator = linearScale;
+            linearScale.MajorGridStyle.SetShowAtWall(ChartWallType.Floor, true);
+            linearScale.MajorGridStyle.SetShowAtWall(ChartWallType.Back, true);
+            linearScale.RoundToTickMax = false;
+            linearScale.RoundToTickMin = false;
+
+            linearScale = new NLinearScaleConfigurator();
+            chart.Axis(StandardAxis.Depth).ScaleConfigurator = linearScale;
+            linearScale.MajorGridStyle.SetShowAtWall(ChartWallType.Floor, true);
+            linearScale.MajorGridStyle.SetShowAtWall(ChartWallType.Left, true);
+            linearScale.RoundToTickMax = false;
+            linearScale.RoundToTickMin = false;
+
+            linearScale = new NLinearScaleConfigurator();
+            chart.Axis(StandardAxis.PrimaryY).ScaleConfigurator = linearScale;
+            linearScale.MajorGridStyle.SetShowAtWall(ChartWallType.Floor, true);
+            linearScale.MajorGridStyle.SetShowAtWall(ChartWallType.Left, true);
+            linearScale.RoundToTickMax = false;
+            linearScale.RoundToTickMin = false;
+
+            chart.Axis(StandardAxis.SecondaryY).Anchor = new NDockAxisAnchor(AxisDockZone.FrontLeft, false, 50.0f, 50.0f);
 
             // Axis Visable Setup.
-            chart.Axis(StandardAxis.PrimaryX).Visible = false;
+            //chart.Axis(StandardAxis.PrimaryX).Visible = false;
             chart.Axis(StandardAxis.PrimaryY).Visible = false;
-            chart.Axis(StandardAxis.Depth).Visible = false;
+            //chart.Axis(StandardAxis.Depth).Visible = false;
 
             for (int i = 0; i < _gridSizeY; i++)
             {
                 // add the first line
                 NBarSeries bar = new NBarSeries();
                 chart.Series.Add(bar);
-                 
+
                 bar.WidthPercent = 100.0f;
                 bar.DepthPercent = 100.0f;
 
@@ -187,93 +165,36 @@ namespace PatrolSim
 
         }
 
-        private void UpdateMap(NChartControl nChartControl, int gridY, double[] valList)
-        {
-            NCartesianChart chart = (NCartesianChart)nChartControl.Charts[0];
-            // fill grid to bars
-            //for (int i = 0; i < 100; i++)
-            {
-                NBarSeries bar = chart.Series[gridY] as NBarSeries;
-                double[] barValues = valList;
-                int barValueCount = barValues.Length;
-
-                if (bar.Values.Count == 0)
-                {
-                    bar.Values.AddRange(barValues);
-                }
-                else
-                {
-                    bar.Values.SetRange(0, barValues);
-                }
-
-                int fillStyleCount = bar.FillStyles.Count;
-
-                for (int j = 0; j < barValueCount; j++)
-                {
-                    if (j >= fillStyleCount)
-                    {
-                        bar.FillStyles[j] = new NColorFillStyle(_colorTable[(int)barValues[j]]);
-                    }
-                    else
-                    {
-                        ((NColorFillStyle)bar.FillStyles[j]).Color = _colorTable[(int)barValues[j]];
-                    }
-                }
-            }
-
-            nChartControl.Refresh();
-        }
-
-        private static Tuple<int, int> UpdateMatrixThreadTest(double[][] matrix)
-        {
-            Random rnd = new Random();
-            int value = (int) Math.Max(1, rnd.NextDouble() * 20);
-            int x = rnd.Next(0, 99);
-            int y = rnd.Next(0, 99);
-
-            matrix[y][x] = value;
-
-            return Tuple.Create(x, y);
-        }
-
         private static void UpdateMatrix(Agent agent, double [][] matrix)
         {
-            matrix[(int)agent.CurrentPosition.Y][(int)agent.CurrentPosition.X] = agent.AgentID;
-        }
+            matrix[(int)(agent.CurrentPosition.Y*50/_scenarioManager.MapSizeY)][(int)(agent.CurrentPosition.X * 50 / _scenarioManager.MapSizeX)] = agent.AgentID;
+            AIS_MSG_1 asg = new AIS_MSG_1();
+            asg.message_id(1);
+            asg.repeat_indicator(0);
+            asg.mmsi(440044410);
+            asg.nav_status(0);
+            asg.rot_raw(0);
+            asg.sog(0);
+            asg.position_accuracy(1);
+            asg.pos_long(-117.96898333333333);
+            asg.pos_lat(33.15835);
+            asg.cog(219);
+            asg.true_heading(13);
+            asg.timestamp(32);
+            asg.special_manoeuvre(0);
+            asg.spare(0);
+            asg.raim(0);
+            asg.sync_state(0);
+            asg.slot_timeout(3);
+            asg.received_stations(75);
+            string log = asg.get_encoded_msg();
 
-        private static void TestUIComponent(NChartControl nChartControl, double[][] matrix)
-        {
-            NCartesianChart chart = (NCartesianChart)nChartControl.Charts[0];
-            for (int i = 0; i < _gridSizeY; i++)
+            while(!backWorker_log.IsBusy)
             {
-                NBarSeries bar = chart.Series[i] as NBarSeries;
-                double[] barValues = matrix[i];
-                int barValueCount = barValues.Length;
-
-                if (bar.Values.Count == 0)
-                {
-                    bar.Values.AddRange(barValues);
-                }
-                else
-                {
-                    bar.Values.SetRange(0, barValues);
-                }
-
-                int fillStyleCount = bar.FillStyles.Count;
-
-                for (int j = 0; j < barValueCount; j++)
-                {
-                    if (j >= fillStyleCount)
-                    {
-                        bar.FillStyles[j] = new NColorFillStyle(_scenarioManager.ColorList[(int)barValues[j]]);
-                    }
-                    else
-                    {
-                        ((NColorFillStyle)bar.FillStyles[j]).Color = _scenarioManager.ColorList[(int)barValues[j]];
-                    }
-                }
+                backWorker_log.RunWorkerAsync(log);
+               
             }
-            nChartControl.Refresh();
+            
         }
 
         private static Tuple<int, int> UpdateMatrix(NChartControl nChartControl, double[][] matrix)
@@ -328,29 +249,14 @@ namespace PatrolSim
 
         }
 
-        private void openScenarioToolStripMenuItem_Click(object sender, EventArgs e)
+        private void chartRealWorld_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            if (ofd.ShowDialog() == DialogResult.OK)
-            {
-                //StreamReader sr = new StreamReader(ofd.FileName);
-                _scenarioManager = new ScenarioManager(ofd.FileName);
-            }
+
         }
 
         private void realTimeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _simManager.TimeMode = TimeModeStruct.X10;
-        }
-
-        private void chartSimulation_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void chartRealWorld_Click(object sender, EventArgs e)
-        {
-
         }
 
         private void PatrolSim_FormClosing(object sender, FormClosingEventArgs e)
@@ -360,6 +266,16 @@ namespace PatrolSim
                 _worker.Abort();
                 _threadState = ThreadState.Stop;
                _simManager.Terminate();
+            }
+        }
+
+        private void openScenarioToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                //StreamReader sr = new StreamReader(ofd.FileName);
+                _scenarioManager = new ScenarioManager(ofd.FileName);
             }
         }
 
@@ -414,6 +330,72 @@ namespace PatrolSim
             {
                 _worker.Abort();
             }
+        }
+
+        public static Color InterpolateColors(Color color1, Color color2, float factor)
+        {
+            int num1 = ((int)color1.R);
+            int num2 = ((int)color1.G);
+            int num3 = ((int)color1.B);
+
+            int num4 = ((int)color2.R);
+            int num5 = ((int)color2.G);
+            int num6 = ((int)color2.B);
+
+            byte num7 = (byte)((((float)num1) + (((float)(num4 - num1)) * factor)));
+            byte num8 = (byte)((((float)num2) + (((float)(num5 - num2)) * factor)));
+            byte num9 = (byte)((((float)num3) + (((float)(num6 - num3)) * factor)));
+
+            return Color.FromArgb(num7, num8, num9);
+        }
+
+        private void UpdateMap(NChartControl nChartControl, int gridY, double[] valList)
+        {
+            NCartesianChart chart = (NCartesianChart)nChartControl.Charts[0];
+            // fill grid to bars
+            //for (int i = 0; i < 100; i++)
+            {
+                NBarSeries bar = chart.Series[gridY] as NBarSeries;
+                double[] barValues = valList;
+                int barValueCount = barValues.Length;
+
+                if (bar.Values.Count == 0)
+                {
+                    bar.Values.AddRange(barValues);
+                }
+                else
+                {
+                    bar.Values.SetRange(0, barValues);
+                }
+
+                int fillStyleCount = bar.FillStyles.Count;
+
+                for (int j = 0; j < barValueCount; j++)
+                {
+                    if (j >= fillStyleCount)
+                    {
+                        bar.FillStyles[j] = new NColorFillStyle(_colorTable[(int)barValues[j]]);
+                    }
+                    else
+                    {
+                        ((NColorFillStyle)bar.FillStyles[j]).Color = _colorTable[(int)barValues[j]];
+                    }
+                }
+            }
+
+            nChartControl.Refresh();
+        }
+
+        private static Tuple<int, int> UpdateMatrixThreadTest(double[][] matrix)
+        {
+            Random rnd = new Random();
+            int value = (int)Math.Max(1, rnd.NextDouble() * 20);
+            int x = rnd.Next(0, 99);
+            int y = rnd.Next(0, 99);
+
+            matrix[y][x] = value;
+
+            return Tuple.Create(x, y);
         }
     }
 }

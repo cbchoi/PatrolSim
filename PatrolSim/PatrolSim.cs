@@ -171,7 +171,7 @@ namespace PatrolSim
             AIS_MSG_1 asg = new AIS_MSG_1();
             asg.message_id(1);
             asg.repeat_indicator(0);
-            asg.mmsi(440044410);
+            asg.mmsi(205412000);
             asg.nav_status(0);
             asg.rot_raw(0);
             asg.sog(0);
