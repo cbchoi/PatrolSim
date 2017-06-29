@@ -25,8 +25,8 @@ namespace PatrolSim
             {
                 UpdateUiComponent(chartRealWorld, matrixRealWorld);
                 
-                DrawBox2(_realMap, matrixRealWorld);
-                DrawBox2(_simulateMap, matrixSimulation);
+                DrawBox2(_realMap, matrixRealAgents);
+                DrawBox2(_simulateMap, matrixSimAgents);
             }
 
             chartRealWorld.Refresh();
@@ -149,11 +149,11 @@ namespace PatrolSim
                 {
                     if (agent.AgentType == (int) AgentType.NormalShip)
                     {
-                        UpdateMatrix(agent, matrixRealWorld);
+                        UpdateMatrix(agent, matrixRealWorld, matrixRealAgents);
                     }
                     else if (agent.AgentType == (int)AgentType.Unregistered)
                     {
-                        UpdateMatrix(agent, matrixSimulation);
+                        UpdateMatrix(agent, matrixSimulation, matrixSimAgents);
                     }
                 }
             }
@@ -162,6 +162,36 @@ namespace PatrolSim
         private static void UpdateMatrix(Agent agent, double[][] matrix)
         {
             matrix[(int)(agent.CurrentPosition.Y *_gridSizeY/ _scenarioManager.MapSizeY)][(int)(agent.CurrentPosition.X * _gridSizeX / _scenarioManager.MapSizeX)] = agent.AgentID;
+
+            lock (log_lock)
+            {
+                agent_list.Add(agent);
+            }
+
+            if (!backWorker_log.IsBusy)
+            {
+                backWorker_log.RunWorkerAsync(agent_list);
+            }
+        }
+
+        private static void UpdateMatrix(Agent agent, double[][] matrix_chart, Dictionary<int, Agent>[][] matrix)
+        {
+            matrix_chart[(int)(agent.CurrentPosition.Y * _gridSizeY / _scenarioManager.MapSizeY)][(int)(agent.CurrentPosition.X * _gridSizeX / _scenarioManager.MapSizeX)] = agent.AgentID;
+
+            if ((int) (agent.CurrentPosition.Y * _gridSizeY / _scenarioManager.MapSizeY) ==
+                (int) (agent.PrevPosition.Y * _gridSizeY / _scenarioManager.MapSizeY)
+                && (int) (agent.CurrentPosition.X * _gridSizeX/ _scenarioManager.MapSizeX) ==
+                (int) (agent.PrevPosition.X * _gridSizeX / _scenarioManager.MapSizeX))
+            {
+                if(!matrix[(int)(agent.CurrentPosition.Y * _gridSizeY / _scenarioManager.MapSizeY)][(int)(agent.CurrentPosition.X * _gridSizeX / _scenarioManager.MapSizeX)].ContainsKey(agent.AgentID))
+                    matrix[(int)(agent.CurrentPosition.Y * _gridSizeY / _scenarioManager.MapSizeY)][(int)(agent.CurrentPosition.X * _gridSizeX / _scenarioManager.MapSizeX)].Add(agent.AgentID, agent);
+            }
+            else
+            {
+                matrix[(int)(agent.PrevPosition.Y * _gridSizeY / _scenarioManager.MapSizeY)][(int)(agent.PrevPosition.X * _gridSizeX / _scenarioManager.MapSizeX)].Remove(agent.AgentID);
+                matrix[(int)(agent.CurrentPosition.Y * _gridSizeY / _scenarioManager.MapSizeY)][(int)(agent.CurrentPosition.X * _gridSizeX / _scenarioManager.MapSizeX)].Add(agent.AgentID, agent);
+            }
+            
 
             lock (log_lock)
             {

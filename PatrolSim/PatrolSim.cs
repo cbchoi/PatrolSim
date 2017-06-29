@@ -27,6 +27,9 @@ namespace PatrolSim
         private static double[][] matrixSimulation;
         private static double[][] matrixRealWorld;
 
+        private static Dictionary<int, Agent>[][] matrixRealAgents;
+        private static Dictionary<int, Agent>[][] matrixSimAgents;
+
         private static ScenarioManager _scenarioManager;
         private static SimulationManager _simManager;
 
@@ -68,10 +71,25 @@ namespace PatrolSim
             matrixRealWorld = new double[_gridSizeY][];
             matrixSimulation = new double[_gridSizeX][];
 
+            matrixRealAgents = new Dictionary<int, Agent>[_gridSizeY][];
+            matrixSimAgents = new Dictionary<int, Agent>[_gridSizeY][];
+
             for (int i = 0; i < _gridSizeY; i++)
             {
                 matrixRealWorld[i] = new double[_gridSizeX];
                 matrixSimulation[i] = new double[_gridSizeX];
+
+                matrixRealAgents[i] = new Dictionary<int, Agent>[_gridSizeX];
+                matrixSimAgents[i] = new Dictionary<int, Agent>[_gridSizeX];
+            }
+
+            for (int i = 0; i < _gridSizeY; i++)
+            {
+                for (int j = 0; j < _gridSizeX; j++)
+                {
+                    matrixRealAgents[i][j] = new Dictionary<int, Agent>();
+                    matrixSimAgents[i][j] = new Dictionary<int, Agent>();
+                }
             }
 
             _simManager = new SimulationManager(this);

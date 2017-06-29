@@ -154,6 +154,43 @@ namespace PatrolSim
             }
         }
 
+        public static void DrawBox2(PictureBox pictureBox, Dictionary<int, Agent>[][] matrix)
+        {
+            int _dx = pictureBox.Image.Width / _gridSizeX;
+            int _dy = pictureBox.Image.Height / _gridSizeY;
+
+            //Bitmap bmpImage = new Bitmap(bmp);
+
+            using (var graphics = Graphics.FromImage(pictureBox.Image))
+            {
+                for (int i = 0; i < _gridSizeY; i++)
+                {
+                    for (int j = 0; j < _gridSizeX; j++)
+                    {
+                        if (matrix[i][j].Keys.Count != 0)
+                        {
+                            float fx = j;
+                            float fy = i;
+                            int curX = ((int)(pictureBox.Image.Width * (fx / _scenarioManager.MapSizeX)));
+
+                            int curY = 0;
+                            if (pictureBox.Image.Height - _dy - ((int)(pictureBox.Image.Height * (fy / _scenarioManager.MapSizeY))) >=
+                                0)
+                                curY = pictureBox.Image.Height - _dy -
+                                       ((int)(pictureBox.Image.Height * (fy / _scenarioManager.MapSizeY)));
+                            Pen blackPen = new Pen(_scenarioManager.ColorList[1], 1);
+                            Brush brush = new SolidBrush(_scenarioManager.ColorList[1]);
+
+                            graphics.FillRectangle(brush, curX, curY, _dx, _dy); // redraws background
+                            graphics.DrawRectangle(blackPen, curX, curY, _dx, _dy);
+                            brush.Dispose();
+                            blackPen.Dispose();
+                        }
+                    }
+                }
+            }
+        }
+
         public static void DrawBox(PictureBox pictureBox, double[][] matrix)
         {
             

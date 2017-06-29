@@ -16,7 +16,6 @@ namespace PatrolSim
         private AIS_MSG_1 _asg = new AIS_MSG_1();
         public AIS_MSG_1 AIS_MSG1 { get { return _asg; } }
 
-        private Position _curPosition;
         private Position _prevPosition;
 
         private readonly ArrayList _wayList;
@@ -151,22 +150,25 @@ namespace PatrolSim
             return false;
         }
 
-        public Tuple<int, Position> Move(double time)
+        public void Move(double time)
         {
             if (_wayList.Count > _curWayIndex)
             {
                 Position targetPosition;
                 if (CheckPointReached())
                 {
-                    _prevPosition.X = GetCurrentWaypoint().X;
-                    _prevPosition.Y = GetCurrentWaypoint().Y;
+                    //_prevPosition.X = GetCurrentWaypoint().X;
+                    //_prevPosition.Y = GetCurrentWaypoint().Y;
                     IncreaseWaypoint();
                 }
                 
                 targetPosition = GetCurrentWaypoint();
 
+                _prevPosition.X = _currentPosition.X;
+                _prevPosition.Y = _currentPosition.Y;
+
                 // X Move : total distance
-                if((targetPosition.X - _currentPosition.X) < 0)
+                if ((targetPosition.X - _currentPosition.X) < 0)
                     _currentPosition.X -= AgentSpeed * time;
                 else
                     _currentPosition.X += AgentSpeed * time;
@@ -176,8 +178,7 @@ namespace PatrolSim
                 else
                     _currentPosition.Y += AgentSpeed * time;
             }
-            //_sim();
-            return new Tuple<int, Position>(0, new Position(0,0));
+           
         }
     }
 }
