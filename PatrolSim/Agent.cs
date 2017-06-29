@@ -91,8 +91,9 @@ namespace PatrolSim
             _sim += PatrolSim.UpdateSimulation;
 
             // Current Position Setting
-            _currentPosition = (Position)_wayList[CurrentWayointIndex];
-            _prevPosition = (Position)_wayList[CurrentWayointIndex];
+            Position initalWaypoint = (Position) _wayList[CurrentWayointIndex];
+            _currentPosition = new Position(initalWaypoint.X, initalWaypoint.Y);
+            _prevPosition = new Position(initalWaypoint.X, initalWaypoint.Y);
         }
 
         public Position GetCurrentWaypoint()

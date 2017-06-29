@@ -25,13 +25,13 @@ namespace PatrolSim
             {
                 UpdateUiComponent(chartRealWorld, matrixRealWorld);
                 
-                DrawBox2(_realMap, matrixRealAgents);
-                DrawBox2(_simulateMap, matrixSimAgents);
+                //DrawBox2(_realMap, matrixRealAgents);
+                //DrawBox2(_simulateMap, matrixSimAgents);
             }
 
             chartRealWorld.Refresh();
-            _realMap.Refresh();
-            _simulateMap.Refresh();
+            _realMap.Invalidate();
+            _simulateMap.Invalidate();
         }
 
         private void backWorker_log_DoWork(object sender, DoWorkEventArgs e)
@@ -79,13 +79,13 @@ namespace PatrolSim
 
                     string value = agent.AIS_MSG1.get_encoded_msg();
 
-                    simLog.Items.Add(value);
-                    simLog.SelectedIndex = simLog.Items.Count - 1;
+                    //simLog.Items.Add(value);
+                    //simLog.SelectedIndex = simLog.Items.Count - 1;
 
                     //AIS_MSG_1 msg = new AIS_MSG_1(value);
                     string str = String.Format("MMSI:{0} Latitude:{1} Longitude:{2}", agent.AgentMMSI, lat, lng);
-                    realLog.Items.Add(str);
-                    realLog.SelectedIndex = realLog.Items.Count - 1;
+                    //realLog.Items.Add(str);
+                    //realLog.SelectedIndex = realLog.Items.Count - 1;
                 }
 
                 agent_list.Clear();

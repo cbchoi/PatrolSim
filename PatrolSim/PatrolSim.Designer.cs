@@ -319,6 +319,7 @@
             this._simulateMap.Size = new System.Drawing.Size(893, 772);
             this._simulateMap.TabIndex = 0;
             this._simulateMap.TabStop = false;
+            this._simulateMap.Paint += new System.Windows.Forms.PaintEventHandler(this._simulateMap_Paint);
             // 
             // groupBox7
             // 
@@ -338,6 +339,7 @@
             this._realMap.Size = new System.Drawing.Size(893, 772);
             this._realMap.TabIndex = 0;
             this._realMap.TabStop = false;
+            this._realMap.Paint += new System.Windows.Forms.PaintEventHandler(this._realMap_Paint);
             // 
             // groupBox6
             // 
@@ -357,6 +359,7 @@
             this._exclusiveMap.Size = new System.Drawing.Size(893, 772);
             this._exclusiveMap.TabIndex = 0;
             this._exclusiveMap.TabStop = false;
+            this._exclusiveMap.Paint += new System.Windows.Forms.PaintEventHandler(this._exclusiveMap_Paint);
             // 
             // PatrolSim
             // 

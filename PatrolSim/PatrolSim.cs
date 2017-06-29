@@ -50,24 +50,6 @@ namespace PatrolSim
 
         public PatrolSim()
         {
-            InitializeComponent();
-           
-            // Initalize Image
-            pictRealWorld.Load(@".\RealMap.png");
-            pictRealWorld.SizeMode = PictureBoxSizeMode.StretchImage;
-
-            _simulateMap.Load(@".\SimMap.png");
-            _simulateMap.SizeMode = PictureBoxSizeMode.StretchImage;
-
-            _realMap.Load(@".\SimMap.png");
-            _realMap.SizeMode = PictureBoxSizeMode.StretchImage;
-
-
-            InitMap(chartRealWorld);
-            DrawLineInt(_simulateMap, out _cloneSim);
-            DrawLineInt(_realMap, out _cloneReal);
-            DrawLineInt(_exclusiveMap, out _cloneExclusive);
-
             matrixRealWorld = new double[_gridSizeY][];
             matrixSimulation = new double[_gridSizeX][];
 
@@ -91,6 +73,24 @@ namespace PatrolSim
                     matrixSimAgents[i][j] = new Dictionary<int, Agent>();
                 }
             }
+
+            InitializeComponent();
+           
+            // Initalize Image
+            pictRealWorld.Load(@".\RealMap.png");
+            pictRealWorld.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            _simulateMap.Load(@".\SimMap.png");
+            _simulateMap.SizeMode = PictureBoxSizeMode.StretchImage;
+
+            _realMap.Load(@".\SimMap.png");
+            _realMap.SizeMode = PictureBoxSizeMode.StretchImage;
+
+
+            InitMap(chartRealWorld);
+            DrawLineInt(_simulateMap, out _cloneSim);
+            DrawLineInt(_realMap, out _cloneReal);
+            DrawLineInt(_exclusiveMap, out _cloneExclusive);
 
             _simManager = new SimulationManager(this);
             _worker = new Thread(UpdateSimulationMap);
@@ -283,12 +283,12 @@ namespace PatrolSim
 
         private void ratio100XToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _simManager.TimeMode = TimeModeStruct.X50;
+            _simManager.TimeMode = TimeModeStruct.X100;
         }
 
         private void bestEffortToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _simManager.TimeMode = TimeModeStruct.X50;
+            _simManager.TimeMode = TimeModeStruct.BestEffort;
         }
 
         private void ratio50XToolStripMenuItem1_Click(object sender, EventArgs e)
@@ -399,5 +399,6 @@ namespace PatrolSim
 
             return Tuple.Create(x, y);
         }
+
     }
 }
