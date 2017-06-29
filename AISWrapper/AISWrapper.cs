@@ -95,9 +95,14 @@ namespace AISWrapper
         [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]
         public static extern void set_received_stations(int val);
 
+        private static object creation_lock = new object();
+
         public AIS_MSG_1()
         {
-            create_empty_ais_msg();
+            lock (creation_lock)
+            {
+                create_empty_ais_msg();
+            }
         }
 
         public AIS_MSG_1(string msg)
@@ -109,7 +114,10 @@ namespace AISWrapper
 
         ~AIS_MSG_1()
         {
-            destroy_ais_msg();
+            lock (creation_lock)
+            {
+                destroy_ais_msg();
+            }
         }
 
         public string get_encoded_msg()

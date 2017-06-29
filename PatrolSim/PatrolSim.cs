@@ -39,6 +39,7 @@ namespace PatrolSim
         private static BackgroundWorker backWorker_log;
 
         private static Object thisLock = new Object();
+        private static Object log_lock = new Object();
 
         public PatrolSim()
         {
@@ -173,35 +174,20 @@ namespace PatrolSim
 
         }
 
+        private static List<Agent> agent_list = new List<Agent>();
         private static void UpdateMatrix(Agent agent, double [][] matrix)
         {
             matrix[(int)(agent.CurrentPosition.Y*50/_scenarioManager.MapSizeY)][(int)(agent.CurrentPosition.X * 50 / _scenarioManager.MapSizeX)] = agent.AgentID;
-            AIS_MSG_1 asg = new AIS_MSG_1();
-            asg.message_id(1);
-            asg.repeat_indicator(0);
-            asg.mmsi(440113380);
-            asg.nav_status(0);
-            asg.rot_raw(0);
-            asg.sog(0);
-            asg.position_accuracy(1);
-            asg.pos_long(128.3731);
-            asg.pos_lat(34.7824);
-            asg.cog(219);
-            asg.true_heading(13);
-            asg.timestamp(32);
-            asg.special_manoeuvre(0);
-            asg.spare(0);
-            asg.raim(0);
-            asg.sync_state(0);
-            asg.slot_timeout(3);
-            asg.received_stations(75);
-            string log = asg.get_encoded_msg();
 
-            while(!backWorker_log.IsBusy)
+            lock(log_lock)
             {
-                backWorker_log.RunWorkerAsync(log);
+                agent_list.Add(agent);
             }
             
+            if (!backWorker_log.IsBusy)
+            {
+                backWorker_log.RunWorkerAsync(agent_list);
+            }
         }
 
         private static Tuple<int, int> UpdateMatrix(NChartControl nChartControl, double[][] matrix)

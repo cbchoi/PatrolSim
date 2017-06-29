@@ -19,6 +19,26 @@ namespace PatrolSim
         private int _curWayIndex; // Indicate Current Waypoints
 
         private Position _currentPosition;
+        private int _timestamp = 0;
+
+        public int Timestamp
+        {
+            get
+            {
+                Random rnd = new Random();
+                _timestamp += rnd.Next(15);
+                if (_timestamp > 60)
+                    _timestamp -= 60;
+
+                return _timestamp;
+            }
+        }
+
+        public int get_random_value(int min, int max)
+        {
+            Random rnd = new Random();
+            return rnd.Next(min, max);
+        }
 
         public int AgentID { get { return _agentID; } }
         public double AgentSpeed { get { return _agentSpeed; } }
@@ -127,7 +147,7 @@ namespace PatrolSim
             return false;
         }
 
-        public Tuple<int, Position> Move(float time)
+        public Tuple<int, Position> Move(double time)
         {
             if (_wayList.Count > _curWayIndex)
             {
@@ -143,7 +163,7 @@ namespace PatrolSim
 
                 // X Move : total distance
                 if((targetPosition.X - _currentPosition.X) < 0)
-                    _currentPosition.X -= AgentSpeed*time;
+                    _currentPosition.X -= AgentSpeed * time;
                 else
                     _currentPosition.X += AgentSpeed * time;
                 // Y Move
