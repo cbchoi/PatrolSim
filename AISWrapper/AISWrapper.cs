@@ -186,44 +186,46 @@ namespace AISWrapper
 
         public void message_id(int val)
         {
-            set_message_id(val);
+            lock (creation_lock)
+                set_message_id(val);
         }
 
         public void repeat_indicator(int val)
         {
-            set_repeat_indicator(val);
+            lock (creation_lock)
+                set_repeat_indicator(val);
         }
 
-        public void mmsi(int val) { set_mmsi(val); }
+        public void mmsi(int val) { lock (creation_lock) set_mmsi(val); }
 
-        public void nav_status(int val) { set_nav_status(val); }
+        public void nav_status(int val) { lock (creation_lock) set_nav_status(val); }
 
-        public void rot_raw(float val) { set_rot_raw(val); }
+        public void rot_raw(float val) { lock (creation_lock) set_rot_raw(val); }
 
-        public void sog(float val) { set_sog(val); }
+        public void sog(float val) { lock (creation_lock) set_sog(val); }
 
-        public void position_accuracy(int val) { set_position_accuracy(val); }
+        public void position_accuracy(int val) { lock (creation_lock) set_position_accuracy(val); }
 
-        public void pos_long(double val) { set_pos_long(val); }
+        public void pos_long(double val) { lock (creation_lock) set_pos_long(val); }
 
-        public void pos_lat(double val) { set_pos_lat(val); }
+        public void pos_lat(double val) { lock (creation_lock) set_pos_lat(val); }
 
-        public void cog(int val) { set_cog(val); }
+        public void cog(int val) { lock (creation_lock) set_cog(val); }
 
-        public void true_heading(int val) { set_true_heading(val); }
+        public void true_heading(int val) { lock (creation_lock) set_true_heading(val); }
 
-        public void timestamp(int val) { set_timestamp(val); }
+        public void timestamp(int val) { lock (creation_lock) set_timestamp(val); }
 
-        public void special_manoeuvre(int val) { set_special_manoeuvre(val); }
+        public void special_manoeuvre(int val) { lock (creation_lock) set_special_manoeuvre(val); }
 
-        public void spare(int val) { set_spare(val); }
+        public void spare(int val) { lock (creation_lock) set_spare(val); }
 
-        public void raim(int val) { set_raim(val); }
+        public void raim(int val) { lock (creation_lock) set_raim(val); }
 
-        public void sync_state(int val) { set_sync_state(val); }
+        public void sync_state(int val) { lock (creation_lock) set_sync_state(val); }
 
-        public void slot_timeout(int val) { set_slot_timeout(val); }
+        public void slot_timeout(int val) { lock (creation_lock) set_slot_timeout(val); }
 
-        public void received_stations(int val) { set_received_stations(val); }
+        public void received_stations(int val) { lock (creation_lock) set_received_stations(val); }
     }
 }

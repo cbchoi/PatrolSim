@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Xml;
+using AISWrapper;
 
 namespace PatrolSim
 {
@@ -11,6 +12,9 @@ namespace PatrolSim
         private readonly double _agentSpeed;
         private readonly int _agentType;
         private readonly int _agentMMSI;
+
+        private AIS_MSG_1 _asg = new AIS_MSG_1();
+        public AIS_MSG_1 AIS_MSG1 { get { return _asg; } }
 
         private Position _curPosition;
         private Position _prevPosition;
@@ -172,7 +176,7 @@ namespace PatrolSim
                 else
                     _currentPosition.Y += AgentSpeed * time;
             }
-            _sim();
+            //_sim();
             return new Tuple<int, Position>(0, new Position(0,0));
         }
     }

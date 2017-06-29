@@ -10,7 +10,7 @@ namespace PatrolSim
 {
     partial class PatrolSim
     {
-        public void DrawLineInt(PictureBox pictureBox)
+        public static void DrawLineInt(PictureBox pictureBox)
         {
             Image DrawArea;
             if (pictureBox.Image == null)
@@ -43,27 +43,50 @@ namespace PatrolSim
             }
         }
 
-        public void DrawBox(PictureBox pictureBox, int x, int y, Color clr)
+        private static Object draw_lock = new Object();
+
+        public static void DrawBox(PictureBox pictureBox, int x, int y, int map_x, int map_y, Color clr)
         {
-            Image DrawArea = pictureBox.Image;
-            int _dx = DrawArea.Width / 50;
-            int _dy = DrawArea.Height / 50;
-
-            float fx = x;
-            float fy = y;
-            int curX = ((int)(pictureBox.Image.Width * (fx / pictureBox.Width)) / _dx) * _dx;
-            int curY = ((int)(pictureBox.Image.Height * (fy / pictureBox.Height)) / _dy) * _dy;
-
-            //Bitmap bmpImage = new Bitmap(bmp);
-            using (var graphics = Graphics.FromImage(pictureBox.Image))
+            lock (draw_lock)
             {
-                Pen blackPen = new Pen(clr, 1);
-                Brush brush = new SolidBrush(clr);
+                int _dx = pictureBox.Width / 50;
+                int _dy = pictureBox.Height / 50;
 
-                graphics.FillRectangle(brush, curX, curY, _dx, _dy);  // redraws background
-                graphics.DrawRectangle(blackPen, curX, curY, _dx, _dy);
-                brush.Dispose();
-                blackPen.Dispose();
+                float fx = x;
+                float fy = y;
+                int curX = ((int)(pictureBox.Width * (fx / map_x)));
+                int curY = pictureBox.Image.Height - ((int)(pictureBox.Height * (fy / map_y)) );
+
+                //Bitmap bmpImage = new Bitmap(bmp);
+                
+                using (var graphics = Graphics.FromImage(pictureBox.Image))
+                {
+                    Pen blackPen = new Pen(clr, 1);
+                    Brush brush = new SolidBrush(clr);
+
+                    graphics.FillRectangle(brush, curX, curY, _dx, _dy);  // redraws background
+                    graphics.DrawRectangle(blackPen, curX, curY, _dx, _dy);
+                    brush.Dispose();
+                    blackPen.Dispose();
+                }
+            }
+            //pictureBox.Invalidate();
+        }
+
+        public static void DrawBox(PictureBox pictureBox, double[][] matrix)
+        {
+            for (int i = 0; i < _gridSizeY; i++)
+            {
+                for (int j = 0; j < _gridSizeX; j++)
+                {
+                    if (matrix[i][j] != 0)
+                    {
+                        DrawBox(pictureBox, j, i,
+                            _scenarioManager.MapSizeX, _scenarioManager.MapSizeY,
+                            _scenarioManager.ColorList[(int)matrix[i][j]]);
+                    }
+                    
+                }
             }
         }
     }

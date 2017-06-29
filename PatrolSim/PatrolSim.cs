@@ -70,7 +70,7 @@ namespace PatrolSim
                 matrixSimulation[i] = new double[_gridSizeX];
             }
 
-            _simManager = new SimulationManager();
+            _simManager = new SimulationManager(this);
             _worker = new Thread(UpdateSimulationMap);
 
             backWorker_map = new BackgroundWorker();
@@ -179,11 +179,11 @@ namespace PatrolSim
         {
             matrix[(int)(agent.CurrentPosition.Y*50/_scenarioManager.MapSizeY)][(int)(agent.CurrentPosition.X * 50 / _scenarioManager.MapSizeX)] = agent.AgentID;
 
-            lock(log_lock)
+            lock (log_lock)
             {
                 agent_list.Add(agent);
             }
-            
+
             if (!backWorker_log.IsBusy)
             {
                 backWorker_log.RunWorkerAsync(agent_list);
@@ -274,12 +274,12 @@ namespace PatrolSim
 
         private void ratio100XToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _simManager.TimeMode = TimeModeStruct.X100;
+            _simManager.TimeMode = TimeModeStruct.X50;
         }
 
         private void bestEffortToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            _simManager.TimeMode = TimeModeStruct.BestEffort;
+            _simManager.TimeMode = TimeModeStruct.X50;
         }
 
         private void ratio50XToolStripMenuItem1_Click(object sender, EventArgs e)

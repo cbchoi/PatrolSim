@@ -38,8 +38,10 @@ namespace PatrolSim
             set => _threadState = value;
         }
 
-        public SimulationManager()
+        private PatrolSim _parent;
+        public SimulationManager(PatrolSim parent)
         {
+            _parent = parent;
             time_mode = 1;
             _threadState = ThreadState.Stop;
         }
@@ -89,6 +91,9 @@ namespace PatrolSim
             {
                 agent.Move(1);
             }
+            
+            PatrolSim.UpdateSimulation();
+
             long elapsedMilliseconds = _sw.ElapsedMilliseconds;
             // 1 sec - (ElapsedMilliseconds - CurrentMilliseconds) > 0, sleep
             // 1 sec - (ElapsedMilliseconds - CurrentMilliseconds) < 0, pass
