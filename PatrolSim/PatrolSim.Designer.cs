@@ -61,6 +61,12 @@
             this._realMap = new System.Windows.Forms.PictureBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this._exclusiveMap = new System.Windows.Forms.PictureBox();
+            this.groupBox8 = new System.Windows.Forms.GroupBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.groupBox9 = new System.Windows.Forms.GroupBox();
+            this.listBox2 = new System.Windows.Forms.ListBox();
+            this.groupBox10 = new System.Windows.Forms.GroupBox();
+            this.listBox3 = new System.Windows.Forms.ListBox();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -72,6 +78,9 @@
             ((System.ComponentModel.ISupportInitialize)(this._realMap)).BeginInit();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._exclusiveMap)).BeginInit();
+            this.groupBox8.SuspendLayout();
+            this.groupBox9.SuspendLayout();
+            this.groupBox10.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -361,12 +370,75 @@
             this._exclusiveMap.TabStop = false;
             this._exclusiveMap.Paint += new System.Windows.Forms.PaintEventHandler(this._exclusiveMap_Paint);
             // 
+            // groupBox8
+            // 
+            this.groupBox8.Controls.Add(this.listBox1);
+            this.groupBox8.Location = new System.Drawing.Point(29, 1720);
+            this.groupBox8.Name = "groupBox8";
+            this.groupBox8.Size = new System.Drawing.Size(928, 170);
+            this.groupBox8.TabIndex = 11;
+            this.groupBox8.TabStop = false;
+            this.groupBox8.Text = "Simulation Model Infomation";
+            // 
+            // listBox1
+            // 
+            this.listBox1.FormattingEnabled = true;
+            this.listBox1.HorizontalScrollbar = true;
+            this.listBox1.ItemHeight = 25;
+            this.listBox1.Location = new System.Drawing.Point(19, 42);
+            this.listBox1.Name = "listBox1";
+            this.listBox1.Size = new System.Drawing.Size(893, 104);
+            this.listBox1.TabIndex = 4;
+            // 
+            // groupBox9
+            // 
+            this.groupBox9.Controls.Add(this.listBox2);
+            this.groupBox9.Location = new System.Drawing.Point(998, 1707);
+            this.groupBox9.Name = "groupBox9";
+            this.groupBox9.Size = new System.Drawing.Size(952, 170);
+            this.groupBox9.TabIndex = 12;
+            this.groupBox9.TabStop = false;
+            this.groupBox9.Text = "Radar Information";
+            // 
+            // listBox2
+            // 
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.HorizontalScrollbar = true;
+            this.listBox2.ItemHeight = 25;
+            this.listBox2.Location = new System.Drawing.Point(35, 42);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(893, 104);
+            this.listBox2.TabIndex = 4;
+            // 
+            // groupBox10
+            // 
+            this.groupBox10.Controls.Add(this.listBox3);
+            this.groupBox10.Location = new System.Drawing.Point(1965, 1707);
+            this.groupBox10.Name = "groupBox10";
+            this.groupBox10.Size = new System.Drawing.Size(987, 170);
+            this.groupBox10.TabIndex = 13;
+            this.groupBox10.TabStop = false;
+            this.groupBox10.Text = "Filtered Information";
+            // 
+            // listBox3
+            // 
+            this.listBox3.FormattingEnabled = true;
+            this.listBox3.HorizontalScrollbar = true;
+            this.listBox3.ItemHeight = 25;
+            this.listBox3.Location = new System.Drawing.Point(45, 42);
+            this.listBox3.Name = "listBox3";
+            this.listBox3.Size = new System.Drawing.Size(893, 104);
+            this.listBox3.TabIndex = 4;
+            // 
             // PatrolSim
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(2976, 1723);
+            this.ClientSize = new System.Drawing.Size(2976, 1930);
+            this.Controls.Add(this.groupBox10);
+            this.Controls.Add(this.groupBox9);
+            this.Controls.Add(this.groupBox8);
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox3);
@@ -392,6 +464,9 @@
             ((System.ComponentModel.ISupportInitialize)(this._realMap)).EndInit();
             this.groupBox6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this._exclusiveMap)).EndInit();
+            this.groupBox8.ResumeLayout(false);
+            this.groupBox9.ResumeLayout(false);
+            this.groupBox10.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -431,6 +506,12 @@
         private System.Windows.Forms.PictureBox _simulateMap;
         private System.Windows.Forms.PictureBox _realMap;
         private System.Windows.Forms.PictureBox _exclusiveMap;
+        private System.Windows.Forms.GroupBox groupBox8;
+        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.GroupBox groupBox9;
+        private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.GroupBox groupBox10;
+        private System.Windows.Forms.ListBox listBox3;
     }
 }
 
