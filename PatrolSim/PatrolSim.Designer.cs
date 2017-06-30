@@ -61,12 +61,6 @@
             this._realMap = new System.Windows.Forms.PictureBox();
             this.groupBox6 = new System.Windows.Forms.GroupBox();
             this._exclusiveMap = new System.Windows.Forms.PictureBox();
-            this.groupBox8 = new System.Windows.Forms.GroupBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.groupBox9 = new System.Windows.Forms.GroupBox();
-            this.listBox2 = new System.Windows.Forms.ListBox();
-            this.groupBox10 = new System.Windows.Forms.GroupBox();
-            this.listBox3 = new System.Windows.Forms.ListBox();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -78,9 +72,6 @@
             ((System.ComponentModel.ISupportInitialize)(this._realMap)).BeginInit();
             this.groupBox6.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._exclusiveMap)).BeginInit();
-            this.groupBox8.SuspendLayout();
-            this.groupBox9.SuspendLayout();
-            this.groupBox10.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -371,6 +362,7 @@
             this._exclusiveMap.TabStop = false;
             this._exclusiveMap.Paint += new System.Windows.Forms.PaintEventHandler(this._exclusiveMap_Paint);
             // 
+<<<<<<< HEAD
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.listBox1);
@@ -431,15 +423,21 @@
             this.listBox3.Size = new System.Drawing.Size(700, 104);
             this.listBox3.TabIndex = 4;
             // 
+=======
+>>>>>>> f740fcbf06fb730a286dba483ae6fd3f196b08c3
             // PatrolSim
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
+<<<<<<< HEAD
             this.ClientSize = new System.Drawing.Size(2324, 1779);
             this.Controls.Add(this.groupBox10);
             this.Controls.Add(this.groupBox9);
             this.Controls.Add(this.groupBox8);
+=======
+            this.ClientSize = new System.Drawing.Size(2976, 1723);
+>>>>>>> f740fcbf06fb730a286dba483ae6fd3f196b08c3
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox3);
@@ -465,9 +463,6 @@
             ((System.ComponentModel.ISupportInitialize)(this._realMap)).EndInit();
             this.groupBox6.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this._exclusiveMap)).EndInit();
-            this.groupBox8.ResumeLayout(false);
-            this.groupBox9.ResumeLayout(false);
-            this.groupBox10.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -507,12 +502,6 @@
         private System.Windows.Forms.PictureBox _simulateMap;
         private System.Windows.Forms.PictureBox _realMap;
         private System.Windows.Forms.PictureBox _exclusiveMap;
-        private System.Windows.Forms.GroupBox groupBox8;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.GroupBox groupBox9;
-        private System.Windows.Forms.ListBox listBox2;
-        private System.Windows.Forms.GroupBox groupBox10;
-        private System.Windows.Forms.ListBox listBox3;
     }
 }
 
