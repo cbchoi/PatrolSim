@@ -24,6 +24,7 @@ namespace PatrolSim
 
     class SimulationManager
     {
+        private bool _abnormalEvent = false;
         private double time_mode;
         public double TimeMode { set => time_mode = value; }
 
@@ -83,13 +84,27 @@ namespace PatrolSim
             _threadState = ThreadState.Run;
         }
 
+        private static Object event_lock = new Object();
+
+        public bool AbnormalEvent{ get { return _abnormalEvent; } }
+        public void SetAbnormalEvent(bool ev)
+        {
+            lock (event_lock)
+            {
+                _abnormalEvent = ev;
+            }
+        }
+
         private double Execute()
         {
             _sw = Stopwatch.StartNew();;
             long currentMilliseconds = _sw.ElapsedMilliseconds;
             foreach (Agent agent in _agentlist)
             {
-                agent.Move(1);
+                lock (event_lock)
+                {
+                    agent.Move(1, _abnormalEvent);
+                }
             }
             
             PatrolSim.UpdateSimulation();

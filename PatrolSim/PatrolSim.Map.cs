@@ -12,17 +12,7 @@ namespace PatrolSim
     {
         public static void DrawLineInt(PictureBox pictureBox)
         {
-            Image DrawArea;
-            if (pictureBox.Image == null)
-            {
-                DrawArea = new Bitmap(pictureBox.Size.Width, pictureBox.Size.Height);
-                pictureBox.Image = DrawArea;
-
-            }
-            else
-            {
-                DrawArea = pictureBox.Image;
-            }
+            Image DrawArea = pictureBox.Image;
 
             int _dx = DrawArea.Width / _gridSizeX;
             int _dy = DrawArea.Height / _gridSizeY;
@@ -44,41 +34,41 @@ namespace PatrolSim
             }
         }
 
-        public static void DrawLineInt(PictureBox pictureBox, out Image clone)
-        {
-            Image DrawArea;
-            if (pictureBox.Image == null)
-            {
-                DrawArea = new Bitmap(pictureBox.Size.Width, pictureBox.Size.Height);
-                pictureBox.Image = DrawArea;
+        //public static void DrawLineInt(PictureBox pictureBox, out Image clone)
+        //{
+        //    Image DrawArea;
+        //    if (pictureBox.Image == null)
+        //    {
+        //        DrawArea = new Bitmap(pictureBox.Size.Width, pictureBox.Size.Height);
+        //        pictureBox.Image = DrawArea;
 
-            }
-            else
-            {
-                DrawArea = pictureBox.Image;
-            }
+        //    }
+        //    else
+        //    {
+        //        DrawArea = pictureBox.Image;
+        //    }
 
-            int _dx = DrawArea.Width / _gridSizeX;
-            int _dy = DrawArea.Height / _gridSizeY;
+        //    int _dx = DrawArea.Width / _gridSizeX;
+        //    int _dy = DrawArea.Height / _gridSizeY;
 
-            // Draw line to screen.
-            using (var graphics = Graphics.FromImage(pictureBox.Image))
-            {
-                Pen blackPen = new Pen(Color.Black, 1);
+        //    // Draw line to screen.
+        //    using (var graphics = Graphics.FromImage(pictureBox.Image))
+        //    {
+        //        Pen blackPen = new Pen(Color.Black, 1);
 
-                for (int i = 0; i < DrawArea.Width; i += _dx)
-                {
-                    for (int j = 0; j < DrawArea.Height; j += _dy)
-                    {
-                        graphics.DrawLine(blackPen, i, 0, i, DrawArea.Height);
-                        graphics.DrawLine(blackPen, 0, j, DrawArea.Width, j);
-                    }
-                }
-                blackPen.Dispose();
-            }
+        //        for (int i = 0; i < DrawArea.Width; i += _dx)
+        //        {
+        //            for (int j = 0; j < DrawArea.Height; j += _dy)
+        //            {
+        //                graphics.DrawLine(blackPen, i, 0, i, DrawArea.Height);
+        //                graphics.DrawLine(blackPen, 0, j, DrawArea.Width, j);
+        //            }
+        //        }
+        //        blackPen.Dispose();
+        //    }
 
-            clone = (Image)pictureBox.Image.Clone();
-        }
+        //    clone = (Image)pictureBox.Image.Clone();
+        //}
 
         private static Object draw_lock = new Object();
 
@@ -154,6 +144,16 @@ namespace PatrolSim
             }
         }
 
+        public static void UpdateAgentMap(Agent agent, int MapSizeX, int MapSizeY, int dx, int dy)
+        {
+            
+        }
+
+        public static void UpdateRadarMap(Agent agent)
+        {
+            
+        }
+
         public static void DrawBox2(PictureBox pictureBox, Dictionary<int, Agent>[][] matrix)
         {
             int _dx = pictureBox.Image.Width / _gridSizeX;
@@ -172,12 +172,10 @@ namespace PatrolSim
                             float fx = j;
                             float fy = i;
                             int curX = ((int)(pictureBox.Image.Width * (fx / _scenarioManager.MapSizeX)));
-
                             int curY = 0;
-                            if (pictureBox.Image.Height - _dy - ((int)(pictureBox.Image.Height * (fy / _scenarioManager.MapSizeY))) >=
-                                0)
-                                curY = pictureBox.Image.Height - _dy -
-                                       ((int)(pictureBox.Image.Height * (fy / _scenarioManager.MapSizeY)));
+                            if (pictureBox.Image.Height - _dy - ((int)(pictureBox.Image.Height * (fy / _scenarioManager.MapSizeY))) >= 0)
+                                curY = pictureBox.Image.Height - _dy - ((int)(pictureBox.Image.Height * (fy / _scenarioManager.MapSizeY)));
+
                             Pen blackPen = new Pen(_scenarioManager.ColorList[matrix[i][j].Values.ElementAt(0).AgentID], 1);
                             Brush brush = new SolidBrush(_scenarioManager.ColorList[matrix[i][j].Values.ElementAt(0).AgentID]);
 
@@ -189,6 +187,25 @@ namespace PatrolSim
                     }
                 }
             }
+        }
+
+        public static void DrawAgent(PaintEventArgs e, float fx, float fy, int _dx, int _dy, Color clr)
+        {
+            int curX = ((int)(e.ClipRectangle.Width * (fx / _scenarioManager.MapSizeX)));
+
+            int curY = 0;
+            if (e.ClipRectangle.Height - _dy - ((int)(e.ClipRectangle.Height * (fy / _scenarioManager.MapSizeY))) >=
+                0)
+                curY = e.ClipRectangle.Height - _dy -
+                       ((int)(e.ClipRectangle.Height * (fy / _scenarioManager.MapSizeY)));
+
+            Pen blackPen = new Pen(clr, 1);
+            Brush brush = new SolidBrush(clr);
+
+            e.Graphics.FillRectangle(brush, curX, curY, _dx, _dy); // redraws background
+            e.Graphics.DrawRectangle(blackPen, curX, curY, _dx, _dy);
+            brush.Dispose();
+            blackPen.Dispose();
         }
 
         private void _simulateMap_Paint(object sender, PaintEventArgs e)
@@ -206,22 +223,29 @@ namespace PatrolSim
                     {
                         if (matrixSimAgents[i][j].Keys.Count != 0)
                         {
-                            float fx = j;
-                            float fy = i;
-                            int curX = ((int)(e.ClipRectangle.Width * (fx / _scenarioManager.MapSizeX)));
+                            foreach (Agent agent in matrixSimAgents[i][j].Values)
+                            {
+                                if (agent.AbnormalEvent == true)
+                                {
+                                    //1. Draw Simulated Data 
+                                    int simX = (int)(agent.SimulationPosition.X * _gridSizeX / _scenarioManager.MapSizeX);
+                                    int simY = (int)(agent.SimulationPosition.Y * _gridSizeY / _scenarioManager.MapSizeY);
 
-                            int curY = 0;
-                            if (e.ClipRectangle.Height - _dy - ((int)(e.ClipRectangle.Height * (fy / _scenarioManager.MapSizeY))) >=
-                                0)
-                                curY = e.ClipRectangle.Height - _dy -
-                                       ((int)(e.ClipRectangle.Height * (fy / _scenarioManager.MapSizeY)));
-                            Pen blackPen = new Pen(_scenarioManager.ColorList[matrixSimAgents[i][j].Values.ElementAt(0).AgentID], 1);
-                            Brush brush = new SolidBrush(_scenarioManager.ColorList[matrixSimAgents[i][j].Values.ElementAt(0).AgentID]);
+                                    DrawAgent(e, simX, simY, _dx, _dy, Color.Yellow);
 
-                            e.Graphics.FillRectangle(brush, curX, curY, _dx, _dy); // redraws background
-                            e.Graphics.DrawRectangle(blackPen, curX, curY, _dx, _dy);
-                            brush.Dispose();
-                            blackPen.Dispose();
+                                    if (agent.CrashedPosition != null)
+                                    {
+                                        int crashX = (int)(agent.CrashedPosition.X * _gridSizeX / _scenarioManager.MapSizeX);
+                                        int crashY = (int)(agent.CrashedPosition.Y * _gridSizeY / _scenarioManager.MapSizeY); ;
+                                        //2. Draw Crashed Data 
+                                        DrawAgent(e, crashX, crashY, _dx, _dy, _scenarioManager.ColorList[agent.AgentID]);
+                                    }
+                                }
+                                else
+                                {
+                                    DrawAgent(e, j, i, _dx, _dy, _scenarioManager.ColorList[agent.AgentID]);
+                                }
+                            }
                         }
                     }
                 }
@@ -288,6 +312,7 @@ namespace PatrolSim
                                 0)
                                 curY = e.ClipRectangle.Height - _dy -
                                        ((int)(e.ClipRectangle.Height * (fy / _scenarioManager.MapSizeY)));
+
                             Pen blackPen = new Pen(Color.DarkGreen);
                             Brush brush = new SolidBrush(Color.DarkGreen);
 

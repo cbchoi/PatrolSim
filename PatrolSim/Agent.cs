@@ -22,6 +22,7 @@ namespace PatrolSim
         private int _curWayIndex; // Indicate Current Waypoints
 
         private Position _currentPosition;
+        private Position _crashedPosition;
         private int _timestamp = 0;
 
         public int Timestamp
@@ -51,7 +52,24 @@ namespace PatrolSim
         public int CurrentWayointIndex { get { return _curWayIndex; } }
 
         public Position PrevPosition { get { return _prevPosition; } }
-        public Position CurrentPosition { get { return _currentPosition; }}
+
+        public Position SimulationPosition
+        {
+            get
+            {
+                return _currentPosition; // AIS Data
+            }
+        }
+
+        public Position CurrentPosition
+        {
+            get
+            {
+                return _currentPosition; // AIS Data                
+            }
+        }
+
+        public Position CrashedPosition { get { return _crashedPosition; } }
 
         delegate void UpdateMap();
         private UpdateMap _sim;
@@ -92,8 +110,10 @@ namespace PatrolSim
 
             // Current Position Setting
             Position initalWaypoint = (Position) _wayList[CurrentWayointIndex];
+
             _currentPosition = new Position(initalWaypoint.X, initalWaypoint.Y);
             _prevPosition = new Position(initalWaypoint.X, initalWaypoint.Y);
+            _crashedPosition = null;
         }
 
         public Position GetCurrentWaypoint()
@@ -162,7 +182,7 @@ namespace PatrolSim
                     //_prevPosition.Y = GetCurrentWaypoint().Y;
                     IncreaseWaypoint();
                 }
-                
+
                 targetPosition = GetCurrentWaypoint();
 
                 _prevPosition.X = _currentPosition.X;
@@ -179,7 +199,34 @@ namespace PatrolSim
                 else
                     _currentPosition.Y += AgentSpeed * time;
             }
-           
+
+        }
+
+        private bool _abnormalEvent = false;
+
+        public bool AbnormalEvent
+        {
+            get { return _abnormalEvent; }
+        }
+
+        public void Move(double time, bool abnormalEvent)
+        {
+            if (abnormalEvent)
+            {
+                if (!_abnormalEvent)
+                {
+                    _abnormalEvent = true;
+                    _crashedPosition = new Position(_currentPosition.X, _currentPosition.Y); ;
+                }
+                Move(time); // Real Agent
+                //Move(time); // Simulated Agent
+            }
+            else
+            {
+                _abnormalEvent = false;
+                _crashedPosition = null;
+                Move(time);
+            }
         }
     }
 }

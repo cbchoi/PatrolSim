@@ -45,9 +45,9 @@ namespace PatrolSim
         private static Object thisLock = new Object();
         private static Object log_lock = new Object();
 
-        private Image _cloneSim;
-        private Image _cloneReal;
-        private Image _cloneExclusive;
+        //private Image _cloneSim;
+        //private Image _cloneReal;
+        //private Image _cloneExclusive;
 
         private Configuration _config;
 
@@ -93,11 +93,13 @@ namespace PatrolSim
             _realMap.Load(@".\SimMap2.png");
             _realMap.SizeMode = PictureBoxSizeMode.StretchImage;
 
+            _exclusiveMap.Image = new Bitmap(_simulateMap.Image.Width, _simulateMap.Image.Height);
+            _exclusiveMap.SizeMode = PictureBoxSizeMode.StretchImage;
 
             InitMap(chartRealWorld);
-            DrawLineInt(_simulateMap, out _cloneSim);
-            DrawLineInt(_realMap, out _cloneReal);
-            DrawLineInt(_exclusiveMap, out _cloneExclusive);
+            DrawLineInt(_simulateMap);
+            DrawLineInt(_realMap);
+            DrawLineInt(_exclusiveMap);
 
             _simManager = new SimulationManager(this);
             _worker = new Thread(UpdateSimulationMap);
@@ -250,13 +252,13 @@ namespace PatrolSim
         //    return Tuple.Create(x, y);
         //}
 
-        private static void UpdateLog(ListBox lb, String objID, String eventLog, int x, int y)
-        {
-            String strLog = $"{DateTime.Now:s} {objID} {eventLog} ({x}, {y})";
-            lb.Items.Add(strLog);
-            lb.SelectedIndex = lb.Items.Count - 1;
+        //private static void UpdateLog(ListBox lb, String objID, String eventLog, int x, int y)
+        //{
+        //    String strLog = $"{DateTime.Now:s} {objID} {eventLog} ({x}, {y})";
+        //    lb.Items.Add(strLog);
+        //    lb.SelectedIndex = lb.Items.Count - 1;
 
-        }
+        //}
 
         private void chartRealWorld_Click(object sender, EventArgs e)
         {
@@ -341,22 +343,22 @@ namespace PatrolSim
             }
         }
 
-        public static Color InterpolateColors(Color color1, Color color2, float factor)
-        {
-            int num1 = ((int)color1.R);
-            int num2 = ((int)color1.G);
-            int num3 = ((int)color1.B);
+        //public static Color InterpolateColors(Color color1, Color color2, float factor)
+        //{
+        //    int num1 = ((int)color1.R);
+        //    int num2 = ((int)color1.G);
+        //    int num3 = ((int)color1.B);
 
-            int num4 = ((int)color2.R);
-            int num5 = ((int)color2.G);
-            int num6 = ((int)color2.B);
+        //    int num4 = ((int)color2.R);
+        //    int num5 = ((int)color2.G);
+        //    int num6 = ((int)color2.B);
 
-            byte num7 = (byte)((((float)num1) + (((float)(num4 - num1)) * factor)));
-            byte num8 = (byte)((((float)num2) + (((float)(num5 - num2)) * factor)));
-            byte num9 = (byte)((((float)num3) + (((float)(num6 - num3)) * factor)));
+        //    byte num7 = (byte)((((float)num1) + (((float)(num4 - num1)) * factor)));
+        //    byte num8 = (byte)((((float)num2) + (((float)(num5 - num2)) * factor)));
+        //    byte num9 = (byte)((((float)num3) + (((float)(num6 - num3)) * factor)));
 
-            return Color.FromArgb(num7, num8, num9);
-        }
+        //    return Color.FromArgb(num7, num8, num9);
+        //}
 
         //private void UpdateMap(NChartControl nChartControl, int gridY, double[] valList)
         //{
@@ -395,21 +397,21 @@ namespace PatrolSim
         //    nChartControl.Refresh();
         //}
 
-        private static Tuple<int, int> UpdateMatrixThreadTest(double[][] matrix)
-        {
-            Random rnd = new Random();
-            int value = (int)Math.Max(1, rnd.NextDouble() * 20);
-            int x = rnd.Next(0, 99);
-            int y = rnd.Next(0, 99);
+        //private static Tuple<int, int> UpdateMatrixThreadTest(double[][] matrix)
+        //{
+        //    Random rnd = new Random();
+        //    int value = (int)Math.Max(1, rnd.NextDouble() * 20);
+        //    int x = rnd.Next(0, 99);
+        //    int y = rnd.Next(0, 99);
 
-            matrix[y][x] = value;
+        //    matrix[y][x] = value;
 
-            return Tuple.Create(x, y);
-        }
+        //    return Tuple.Create(x, y);
+        //}
 
         private void aisCrashlStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            _simManager.SetAbnormalEvent(!_simManager.AbnormalEvent);
         }
     }
 }

@@ -260,7 +260,7 @@
             this.simLog.FormattingEnabled = true;
             this.simLog.HorizontalScrollbar = true;
             this.simLog.ItemHeight = 12;
-            this.simLog.Location = new System.Drawing.Point(16, 22);
+            this.simLog.Location = new System.Drawing.Point(16, 20);
             this.simLog.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.simLog.Name = "simLog";
             this.simLog.Size = new System.Drawing.Size(410, 136);
@@ -326,7 +326,7 @@
             this.groupBox3.Size = new System.Drawing.Size(437, 360);
             this.groupBox3.TabIndex = 9;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Simulated +AIS Data (Cellularized)";
+            this.groupBox3.Text = "AIS + Simulated Data (Cellularized)";
             // 
             // _simulateMap
             // 
