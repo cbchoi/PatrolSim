@@ -309,7 +309,7 @@
             this.groupBox3.Size = new System.Drawing.Size(928, 833);
             this.groupBox3.TabIndex = 9;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "Simulated Data (Cellularized)";
+            this.groupBox3.Text = "Simulated +AIS Data (Cellularized)";
             // 
             // _simulateMap
             // 
@@ -329,7 +329,7 @@
             this.groupBox7.Size = new System.Drawing.Size(952, 833);
             this.groupBox7.TabIndex = 9;
             this.groupBox7.TabStop = false;
-            this.groupBox7.Text = "Real World Data (Cellularized)";
+            this.groupBox7.Text = "Radar Data (Cellularized)";
             // 
             // _realMap
             // 

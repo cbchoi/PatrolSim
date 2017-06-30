@@ -249,8 +249,7 @@ namespace PatrolSim
                             int curX = ((int)(e.ClipRectangle.Width * (fx / _scenarioManager.MapSizeX)));
 
                             int curY = 0;
-                            if (e.ClipRectangle.Height - _dy - ((int)(e.ClipRectangle.Height * (fy / _scenarioManager.MapSizeY))) >=
-                                0)
+                            if (e.ClipRectangle.Height - _dy - ((int)(e.ClipRectangle.Height * (fy / _scenarioManager.MapSizeY))) >= 0)
                                 curY = e.ClipRectangle.Height - _dy -
                                        ((int)(e.ClipRectangle.Height * (fy / _scenarioManager.MapSizeY)));
                             Pen blackPen = new Pen(_scenarioManager.ColorList[matrixRealAgents[i][j].Values.ElementAt(0).AgentID], 1);

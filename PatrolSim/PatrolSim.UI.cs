@@ -24,9 +24,6 @@ namespace PatrolSim
             lock (thisLock)
             {
                 UpdateUiComponent(chartRealWorld, matrixRealWorld);
-                
-                //DrawBox2(_realMap, matrixRealAgents);
-                //DrawBox2(_simulateMap, matrixSimAgents);
             }
 
             chartRealWorld.Refresh();
@@ -36,8 +33,6 @@ namespace PatrolSim
 
         private void backWorker_log_DoWork(object sender, DoWorkEventArgs e)
         {
-            
-
             e.Result = e.Argument;
         }
 
@@ -78,14 +73,12 @@ namespace PatrolSim
                     agent.AIS_MSG1.received_stations(agent.get_random_value(70, 75));
 
                     string value = agent.AIS_MSG1.get_encoded_msg();
+                    simLog.Items.Add(value);
+                    simLog.SelectedIndex = simLog.Items.Count - 1;
 
-                    //simLog.Items.Add(value);
-                    //simLog.SelectedIndex = simLog.Items.Count - 1;
-
-                    //AIS_MSG_1 msg = new AIS_MSG_1(value);
                     string str = String.Format("MMSI:{0} Latitude:{1} Longitude:{2}", agent.AgentMMSI, lat, lng);
-                    //realLog.Items.Add(str);
-                    //realLog.SelectedIndex = realLog.Items.Count - 1;
+                    realLog.Items.Add(str);
+                    realLog.SelectedIndex = realLog.Items.Count - 1;
                 }
 
                 agent_list.Clear();
@@ -176,32 +169,40 @@ namespace PatrolSim
 
         private static void UpdateMatrix(Agent agent, double[][] matrix_chart, Dictionary<int, Agent>[][] matrix)
         {
-            matrix_chart[(int)(agent.CurrentPosition.Y * _gridSizeY / _scenarioManager.MapSizeY)][(int)(agent.CurrentPosition.X * _gridSizeX / _scenarioManager.MapSizeX)] = agent.AgentID;
-
-            if ((int) (agent.CurrentPosition.Y * _gridSizeY / _scenarioManager.MapSizeY) ==
-                (int) (agent.PrevPosition.Y * _gridSizeY / _scenarioManager.MapSizeY)
-                && (int) (agent.CurrentPosition.X * _gridSizeX/ _scenarioManager.MapSizeX) ==
-                (int) (agent.PrevPosition.X * _gridSizeX / _scenarioManager.MapSizeX))
+            int normalizedX = (int)(agent.CurrentPosition.X * _gridSizeX / _scenarioManager.MapSizeX);
+            int normalizedY = (int)(agent.CurrentPosition.Y * _gridSizeY / _scenarioManager.MapSizeY);
+            if (normalizedY < _gridSizeY && normalizedX < _gridSizeX && normalizedY >= 0 && normalizedX >= 0)
             {
-                if(!matrix[(int)(agent.CurrentPosition.Y * _gridSizeY / _scenarioManager.MapSizeY)][(int)(agent.CurrentPosition.X * _gridSizeX / _scenarioManager.MapSizeX)].ContainsKey(agent.AgentID))
-                    matrix[(int)(agent.CurrentPosition.Y * _gridSizeY / _scenarioManager.MapSizeY)][(int)(agent.CurrentPosition.X * _gridSizeX / _scenarioManager.MapSizeX)].Add(agent.AgentID, agent);
+                matrix_chart[normalizedY][normalizedX] = agent.AgentID;
+
+                if (normalizedY == (int)(agent.PrevPosition.Y * _gridSizeY / _scenarioManager.MapSizeY)
+                    && normalizedX == (int)(agent.PrevPosition.X * _gridSizeX / _scenarioManager.MapSizeX))
+                {
+                    if (!matrix[normalizedY][normalizedX].ContainsKey(agent.AgentID))
+                        matrix[normalizedY][normalizedX].Add(agent.AgentID, agent);
+                }
+                else
+                {
+                    matrix[(int)(agent.PrevPosition.Y * _gridSizeY / _scenarioManager.MapSizeY)][(int)(agent.PrevPosition.X * _gridSizeX / _scenarioManager.MapSizeX)].Remove(agent.AgentID);
+                    matrix[normalizedY][normalizedX].Add(agent.AgentID, agent);
+                }
+
+
+                lock (log_lock)
+                {
+                    agent_list.Add(agent);
+                }
+
+                if (!backWorker_log.IsBusy)
+                {
+                    backWorker_log.RunWorkerAsync(agent_list);
+                }
             }
             else
             {
                 matrix[(int)(agent.PrevPosition.Y * _gridSizeY / _scenarioManager.MapSizeY)][(int)(agent.PrevPosition.X * _gridSizeX / _scenarioManager.MapSizeX)].Remove(agent.AgentID);
-                matrix[(int)(agent.CurrentPosition.Y * _gridSizeY / _scenarioManager.MapSizeY)][(int)(agent.CurrentPosition.X * _gridSizeX / _scenarioManager.MapSizeX)].Add(agent.AgentID, agent);
-            }
-            
-
-            lock (log_lock)
-            {
-                agent_list.Add(agent);
             }
 
-            if (!backWorker_log.IsBusy)
-            {
-                backWorker_log.RunWorkerAsync(agent_list);
-            }
         }
     }
 }
