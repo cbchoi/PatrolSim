@@ -27,8 +27,9 @@ namespace PatrolSim
             }
 
             chartRealWorld.Refresh();
-            _realMap.Invalidate();
-            _simulateMap.Invalidate();
+            _realMap.Refresh();
+            _simulateMap.Refresh();
+            _exclusiveMap.Refresh();
         }
 
         private void backWorker_log_DoWork(object sender, DoWorkEventArgs e)

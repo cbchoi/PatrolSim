@@ -270,36 +270,35 @@ namespace PatrolSim
             int _dx = e.ClipRectangle.Width / _gridSizeX;
             int _dy = e.ClipRectangle.Height / _gridSizeY;
 
-            //Bitmap bmpImage = new Bitmap(bmp);
 
             //using (var graphics = e.Graphics)
-            //{
-            //    for (int i = 0; i < _gridSizeY; i++)
-            //    {
-            //        for (int j = 0; j < _gridSizeX; j++)
-            //        {
-            //            if (matrixSimAgents[i][j].Keys.Count != 0)
-            //            {
-            //                float fx = j;
-            //                float fy = i;
-            //                int curX = ((int)(e.ClipRectangle.Width * (fx / _scenarioManager.MapSizeX)));
+            {
+                for (int i = 0; i < _gridSizeY; i++)
+                {
+                    for (int j = 0; j < _gridSizeX; j++)
+                    {
+                        if (matrixSimAgents[i][j].Keys.Count != matrixRealAgents[i][j].Keys.Count)
+                        {
+                            float fx = j;
+                            float fy = i;
+                            int curX = ((int)(e.ClipRectangle.Width * (fx / _scenarioManager.MapSizeX)));
 
-            //                int curY = 0;
-            //                if (e.ClipRectangle.Height - _dy - ((int)(e.ClipRectangle.Height * (fy / _scenarioManager.MapSizeY))) >=
-            //                    0)
-            //                    curY = e.ClipRectangle.Height - _dy -
-            //                           ((int)(e.ClipRectangle.Height * (fy / _scenarioManager.MapSizeY)));
-            //                Pen blackPen = new Pen(_scenarioManager.ColorList[matrixSimAgents[i][j].Values.ElementAt(0).AgentID], 1);
-            //                Brush brush = new SolidBrush(_scenarioManager.ColorList[matrixSimAgents[i][j].Values.ElementAt(0).AgentID]);
+                            int curY = 0;
+                            if (e.ClipRectangle.Height - _dy - ((int)(e.ClipRectangle.Height * (fy / _scenarioManager.MapSizeY))) >=
+                                0)
+                                curY = e.ClipRectangle.Height - _dy -
+                                       ((int)(e.ClipRectangle.Height * (fy / _scenarioManager.MapSizeY)));
+                            Pen blackPen = new Pen(Color.DarkGreen);
+                            Brush brush = new SolidBrush(Color.DarkGreen);
 
-            //                e.Graphics.FillRectangle(brush, curX, curY, _dx, _dy); // redraws background
-            //                e.Graphics.DrawRectangle(blackPen, curX, curY, _dx, _dy);
-            //                brush.Dispose();
-            //                blackPen.Dispose();
-            //            }
-            //        }
-            //    }
-            //}
+                            e.Graphics.FillRectangle(brush, curX, curY, _dx, _dy); // redraws background
+                            e.Graphics.DrawRectangle(blackPen, curX, curY, _dx, _dy);
+                            brush.Dispose();
+                            blackPen.Dispose();
+                        }
+                    }
+                }
+            }
         }
 
         public static void DrawBox(PictureBox pictureBox, double[][] matrix)
