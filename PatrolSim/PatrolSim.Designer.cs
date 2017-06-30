@@ -93,7 +93,7 @@
             this.analysisToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(2976, 40);
+            this.menuStrip1.Size = new System.Drawing.Size(2324, 40);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -231,17 +231,17 @@
             this.realLog.FormattingEnabled = true;
             this.realLog.HorizontalScrollbar = true;
             this.realLog.ItemHeight = 25;
-            this.realLog.Location = new System.Drawing.Point(17, 45);
+            this.realLog.Location = new System.Drawing.Point(27, 45);
             this.realLog.Name = "realLog";
-            this.realLog.Size = new System.Drawing.Size(956, 329);
+            this.realLog.Size = new System.Drawing.Size(700, 279);
             this.realLog.TabIndex = 4;
             // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.realLog);
-            this.groupBox1.Location = new System.Drawing.Point(1965, 471);
+            this.groupBox1.Location = new System.Drawing.Point(1541, 443);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(987, 391);
+            this.groupBox1.Size = new System.Drawing.Size(750, 350);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Interpreted AIVDM Messagers";
@@ -249,9 +249,9 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.simLog);
-            this.groupBox2.Location = new System.Drawing.Point(1965, 59);
+            this.groupBox2.Location = new System.Drawing.Point(1541, 43);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(987, 391);
+            this.groupBox2.Size = new System.Drawing.Size(750, 350);
             this.groupBox2.TabIndex = 6;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "AIVDM Messages";
@@ -261,18 +261,18 @@
             this.simLog.FormattingEnabled = true;
             this.simLog.HorizontalScrollbar = true;
             this.simLog.ItemHeight = 25;
-            this.simLog.Location = new System.Drawing.Point(17, 45);
+            this.simLog.Location = new System.Drawing.Point(27, 45);
             this.simLog.Name = "simLog";
-            this.simLog.Size = new System.Drawing.Size(956, 329);
+            this.simLog.Size = new System.Drawing.Size(700, 279);
             this.simLog.TabIndex = 4;
             // 
             // groupBox4
             // 
             this.groupBox4.Controls.Add(this.chartRealWorld);
             this.groupBox4.Controls.Add(this.groupBox5);
-            this.groupBox4.Location = new System.Drawing.Point(963, 59);
+            this.groupBox4.Location = new System.Drawing.Point(774, 43);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(987, 803);
+            this.groupBox4.Size = new System.Drawing.Size(750, 750);
             this.groupBox4.TabIndex = 8;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Visualization";
@@ -283,9 +283,9 @@
             this.chartRealWorld.AutoRefresh = false;
             this.chartRealWorld.BackColor = System.Drawing.SystemColors.Control;
             this.chartRealWorld.InputKeys = new System.Windows.Forms.Keys[0];
-            this.chartRealWorld.Location = new System.Drawing.Point(22, 42);
+            this.chartRealWorld.Location = new System.Drawing.Point(24, 30);
             this.chartRealWorld.Name = "chartRealWorld";
-            this.chartRealWorld.Size = new System.Drawing.Size(941, 744);
+            this.chartRealWorld.Size = new System.Drawing.Size(700, 700);
             this.chartRealWorld.State = ((Nevron.Chart.WinForm.NState)(resources.GetObject("chartRealWorld.State")));
             this.chartRealWorld.TabIndex = 1;
             this.chartRealWorld.Text = "SimulationMap";
@@ -305,7 +305,7 @@
             this.pictRealWorld.Image = ((System.Drawing.Image)(resources.GetObject("pictRealWorld.Image")));
             this.pictRealWorld.Location = new System.Drawing.Point(29, 76);
             this.pictRealWorld.Name = "pictRealWorld";
-            this.pictRealWorld.Size = new System.Drawing.Size(912, 769);
+            this.pictRealWorld.Size = new System.Drawing.Size(700, 700);
             this.pictRealWorld.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictRealWorld.TabIndex = 2;
             this.pictRealWorld.TabStop = false;
@@ -313,9 +313,9 @@
             // groupBox3
             // 
             this.groupBox3.Controls.Add(this._simulateMap);
-            this.groupBox3.Location = new System.Drawing.Point(29, 868);
+            this.groupBox3.Location = new System.Drawing.Point(29, 810);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(928, 833);
+            this.groupBox3.Size = new System.Drawing.Size(750, 750);
             this.groupBox3.TabIndex = 9;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Simulated +AIS Data (Cellularized)";
@@ -323,9 +323,10 @@
             // _simulateMap
             // 
             this._simulateMap.BackColor = System.Drawing.Color.White;
-            this._simulateMap.Location = new System.Drawing.Point(19, 41);
+            this._simulateMap.Location = new System.Drawing.Point(24, 30);
             this._simulateMap.Name = "_simulateMap";
-            this._simulateMap.Size = new System.Drawing.Size(893, 772);
+            this._simulateMap.Size = new System.Drawing.Size(700, 700);
+            this._simulateMap.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this._simulateMap.TabIndex = 0;
             this._simulateMap.TabStop = false;
             this._simulateMap.Paint += new System.Windows.Forms.PaintEventHandler(this._simulateMap_Paint);
@@ -333,9 +334,9 @@
             // groupBox7
             // 
             this.groupBox7.Controls.Add(this._realMap);
-            this.groupBox7.Location = new System.Drawing.Point(998, 868);
+            this.groupBox7.Location = new System.Drawing.Point(785, 810);
             this.groupBox7.Name = "groupBox7";
-            this.groupBox7.Size = new System.Drawing.Size(952, 833);
+            this.groupBox7.Size = new System.Drawing.Size(750, 750);
             this.groupBox7.TabIndex = 9;
             this.groupBox7.TabStop = false;
             this.groupBox7.Text = "Radar Data (Cellularized)";
@@ -343,9 +344,9 @@
             // _realMap
             // 
             this._realMap.BackColor = System.Drawing.Color.White;
-            this._realMap.Location = new System.Drawing.Point(35, 41);
+            this._realMap.Location = new System.Drawing.Point(24, 30);
             this._realMap.Name = "_realMap";
-            this._realMap.Size = new System.Drawing.Size(893, 772);
+            this._realMap.Size = new System.Drawing.Size(700, 700);
             this._realMap.TabIndex = 0;
             this._realMap.TabStop = false;
             this._realMap.Paint += new System.Windows.Forms.PaintEventHandler(this._realMap_Paint);
@@ -353,9 +354,9 @@
             // groupBox6
             // 
             this.groupBox6.Controls.Add(this._exclusiveMap);
-            this.groupBox6.Location = new System.Drawing.Point(1965, 868);
+            this.groupBox6.Location = new System.Drawing.Point(1541, 810);
             this.groupBox6.Name = "groupBox6";
-            this.groupBox6.Size = new System.Drawing.Size(987, 833);
+            this.groupBox6.Size = new System.Drawing.Size(750, 750);
             this.groupBox6.TabIndex = 10;
             this.groupBox6.TabStop = false;
             this.groupBox6.Text = "Exclusive Data (Cellularized)";
@@ -363,9 +364,9 @@
             // _exclusiveMap
             // 
             this._exclusiveMap.BackColor = System.Drawing.Color.White;
-            this._exclusiveMap.Location = new System.Drawing.Point(45, 41);
+            this._exclusiveMap.Location = new System.Drawing.Point(27, 42);
             this._exclusiveMap.Name = "_exclusiveMap";
-            this._exclusiveMap.Size = new System.Drawing.Size(893, 772);
+            this._exclusiveMap.Size = new System.Drawing.Size(700, 700);
             this._exclusiveMap.TabIndex = 0;
             this._exclusiveMap.TabStop = false;
             this._exclusiveMap.Paint += new System.Windows.Forms.PaintEventHandler(this._exclusiveMap_Paint);
@@ -373,9 +374,9 @@
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.listBox1);
-            this.groupBox8.Location = new System.Drawing.Point(29, 1720);
+            this.groupBox8.Location = new System.Drawing.Point(29, 1566);
             this.groupBox8.Name = "groupBox8";
-            this.groupBox8.Size = new System.Drawing.Size(928, 170);
+            this.groupBox8.Size = new System.Drawing.Size(750, 170);
             this.groupBox8.TabIndex = 11;
             this.groupBox8.TabStop = false;
             this.groupBox8.Text = "Simulation Model Infomation";
@@ -385,17 +386,17 @@
             this.listBox1.FormattingEnabled = true;
             this.listBox1.HorizontalScrollbar = true;
             this.listBox1.ItemHeight = 25;
-            this.listBox1.Location = new System.Drawing.Point(19, 42);
+            this.listBox1.Location = new System.Drawing.Point(24, 40);
             this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(893, 104);
+            this.listBox1.Size = new System.Drawing.Size(700, 104);
             this.listBox1.TabIndex = 4;
             // 
             // groupBox9
             // 
             this.groupBox9.Controls.Add(this.listBox2);
-            this.groupBox9.Location = new System.Drawing.Point(998, 1707);
+            this.groupBox9.Location = new System.Drawing.Point(785, 1566);
             this.groupBox9.Name = "groupBox9";
-            this.groupBox9.Size = new System.Drawing.Size(952, 170);
+            this.groupBox9.Size = new System.Drawing.Size(750, 170);
             this.groupBox9.TabIndex = 12;
             this.groupBox9.TabStop = false;
             this.groupBox9.Text = "Radar Information";
@@ -405,17 +406,17 @@
             this.listBox2.FormattingEnabled = true;
             this.listBox2.HorizontalScrollbar = true;
             this.listBox2.ItemHeight = 25;
-            this.listBox2.Location = new System.Drawing.Point(35, 42);
+            this.listBox2.Location = new System.Drawing.Point(24, 40);
             this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(893, 104);
+            this.listBox2.Size = new System.Drawing.Size(700, 104);
             this.listBox2.TabIndex = 4;
             // 
             // groupBox10
             // 
             this.groupBox10.Controls.Add(this.listBox3);
-            this.groupBox10.Location = new System.Drawing.Point(1965, 1707);
+            this.groupBox10.Location = new System.Drawing.Point(1541, 1566);
             this.groupBox10.Name = "groupBox10";
-            this.groupBox10.Size = new System.Drawing.Size(987, 170);
+            this.groupBox10.Size = new System.Drawing.Size(750, 170);
             this.groupBox10.TabIndex = 13;
             this.groupBox10.TabStop = false;
             this.groupBox10.Text = "Filtered Information";
@@ -425,9 +426,9 @@
             this.listBox3.FormattingEnabled = true;
             this.listBox3.HorizontalScrollbar = true;
             this.listBox3.ItemHeight = 25;
-            this.listBox3.Location = new System.Drawing.Point(45, 42);
+            this.listBox3.Location = new System.Drawing.Point(27, 40);
             this.listBox3.Name = "listBox3";
-            this.listBox3.Size = new System.Drawing.Size(893, 104);
+            this.listBox3.Size = new System.Drawing.Size(700, 104);
             this.listBox3.TabIndex = 4;
             // 
             // PatrolSim
@@ -435,7 +436,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(2976, 1930);
+            this.ClientSize = new System.Drawing.Size(2324, 1779);
             this.Controls.Add(this.groupBox10);
             this.Controls.Add(this.groupBox9);
             this.Controls.Add(this.groupBox8);
