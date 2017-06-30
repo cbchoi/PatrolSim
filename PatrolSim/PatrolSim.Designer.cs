@@ -362,7 +362,6 @@
             this._exclusiveMap.TabStop = false;
             this._exclusiveMap.Paint += new System.Windows.Forms.PaintEventHandler(this._exclusiveMap_Paint);
             // 
-<<<<<<< HEAD
             // groupBox8
             // 
             this.groupBox8.Controls.Add(this.listBox1);
@@ -423,21 +422,15 @@
             this.listBox3.Size = new System.Drawing.Size(700, 104);
             this.listBox3.TabIndex = 4;
             // 
-=======
->>>>>>> f740fcbf06fb730a286dba483ae6fd3f196b08c3
             // PatrolSim
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-<<<<<<< HEAD
             this.ClientSize = new System.Drawing.Size(2324, 1779);
             this.Controls.Add(this.groupBox10);
             this.Controls.Add(this.groupBox9);
             this.Controls.Add(this.groupBox8);
-=======
-            this.ClientSize = new System.Drawing.Size(2976, 1723);
->>>>>>> f740fcbf06fb730a286dba483ae6fd3f196b08c3
             this.Controls.Add(this.groupBox6);
             this.Controls.Add(this.groupBox7);
             this.Controls.Add(this.groupBox3);
