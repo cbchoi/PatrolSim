@@ -22,7 +22,8 @@ namespace PatrolSim
     {
         private static int _gridSizeX = 100;
         private static int _gridSizeY = 100;
-        private static Color[] _colorTable;
+
+        //private static Color[] _colorTable;
 
         private static double[][] matrixSimulation;
         private static double[][] matrixRealWorld;
@@ -48,26 +49,32 @@ namespace PatrolSim
         private Image _cloneReal;
         private Image _cloneExclusive;
 
+        private Configuration _config;
+
         public PatrolSim()
         {
-            matrixRealWorld = new double[_gridSizeY][];
-            matrixSimulation = new double[_gridSizeX][];
+            _config = new Configuration(@"configure.xml");
+            _gridSizeX = _config.CellSizeX;
+            _gridSizeY = _config.CellSizeY;
+
+            matrixRealWorld = new double[_config.CellSizeY][];
+            matrixSimulation = new double[_config.CellSizeY][];
 
             matrixRealAgents = new Dictionary<int, Agent>[_gridSizeY][];
             matrixSimAgents = new Dictionary<int, Agent>[_gridSizeY][];
 
             for (int i = 0; i < _gridSizeY; i++)
             {
-                matrixRealWorld[i] = new double[_gridSizeX];
-                matrixSimulation[i] = new double[_gridSizeX];
+                matrixRealWorld[i] = new double[_config.CellSizeX];
+                matrixSimulation[i] = new double[_config.CellSizeX];
 
-                matrixRealAgents[i] = new Dictionary<int, Agent>[_gridSizeX];
-                matrixSimAgents[i] = new Dictionary<int, Agent>[_gridSizeX];
+                matrixRealAgents[i] = new Dictionary<int, Agent>[_config.CellSizeX];
+                matrixSimAgents[i] = new Dictionary<int, Agent>[_config.CellSizeX];
             }
 
-            for (int i = 0; i < _gridSizeY; i++)
+            for (int i = 0; i < _config.CellSizeY; i++)
             {
-                for (int j = 0; j < _gridSizeX; j++)
+                for (int j = 0; j < _config.CellSizeX; j++)
                 {
                     matrixRealAgents[i][j] = new Dictionary<int, Agent>();
                     matrixSimAgents[i][j] = new Dictionary<int, Agent>();
@@ -80,10 +87,10 @@ namespace PatrolSim
             pictRealWorld.Load(@".\RealMap.png");
             pictRealWorld.SizeMode = PictureBoxSizeMode.StretchImage;
 
-            _simulateMap.Load(@".\SimMap.png");
+            _simulateMap.Load(@".\SimMap2.png");
             _simulateMap.SizeMode = PictureBoxSizeMode.StretchImage;
 
-            _realMap.Load(@".\SimMap.png");
+            _realMap.Load(@".\SimMap2.png");
             _realMap.SizeMode = PictureBoxSizeMode.StretchImage;
 
 
@@ -199,49 +206,49 @@ namespace PatrolSim
         private static List<Agent> agent_list = new List<Agent>();
         
 
-        private static Tuple<int, int> UpdateMatrix(NChartControl nChartControl, double[][] matrix)
-        {
-            Random rnd = new Random();
-            int value = (int)Math.Max(1, rnd.NextDouble() * 20);
-            int x = rnd.Next(0, 99);
-            int y = rnd.Next(0, 99);
+        //private static Tuple<int, int> UpdateMatrix(NChartControl nChartControl, double[][] matrix)
+        //{
+        //    Random rnd = new Random();
+        //    int value = (int)Math.Max(1, rnd.NextDouble() * 20);
+        //    int x = rnd.Next(0, 99);
+        //    int y = rnd.Next(0, 99);
 
-            matrix[y][x] = value;
+        //    matrix[y][x] = value;
 
-            NCartesianChart chart = (NCartesianChart)nChartControl.Charts[0];
-            for (int i = 0; i < _gridSizeY; i++)
-            {
-                NBarSeries bar = chart.Series[i] as NBarSeries;
-                double[] barValues = matrix[i];
-                int barValueCount = barValues.Length;
+        //    NCartesianChart chart = (NCartesianChart)nChartControl.Charts[0];
+        //    for (int i = 0; i < _gridSizeY; i++)
+        //    {
+        //        NBarSeries bar = chart.Series[i] as NBarSeries;
+        //        double[] barValues = matrix[i];
+        //        int barValueCount = barValues.Length;
 
-                if (bar.Values.Count == 0)
-                {
-                    bar.Values.AddRange(barValues);
-                }
-                else
-                {
-                    bar.Values.SetRange(0, barValues);
-                }
+        //        if (bar.Values.Count == 0)
+        //        {
+        //            bar.Values.AddRange(barValues);
+        //        }
+        //        else
+        //        {
+        //            bar.Values.SetRange(0, barValues);
+        //        }
 
-                int fillStyleCount = bar.FillStyles.Count;
+        //        int fillStyleCount = bar.FillStyles.Count;
 
-                for (int j = 0; j < barValueCount; j++)
-                {
-                    if (j >= fillStyleCount)
-                    {
-                        bar.FillStyles[j] = new NColorFillStyle(_colorTable[(int)barValues[j]]);
-                    }
-                    else
-                    {
-                        ((NColorFillStyle)bar.FillStyles[j]).Color = _colorTable[(int)barValues[j]];
-                    }
-                }
-            }
-            nChartControl.Refresh();
+        //        for (int j = 0; j < barValueCount; j++)
+        //        {
+        //            if (j >= fillStyleCount)
+        //            {
+        //                bar.FillStyles[j] = new NColorFillStyle(_colorTable[(int)barValues[j]]);
+        //            }
+        //            else
+        //            {
+        //                ((NColorFillStyle)bar.FillStyles[j]).Color = _colorTable[(int)barValues[j]];
+        //            }
+        //        }
+        //    }
+        //    nChartControl.Refresh();
 
-            return Tuple.Create(x, y);
-        }
+        //    return Tuple.Create(x, y);
+        //}
 
         private static void UpdateLog(ListBox lb, String objID, String eventLog, int x, int y)
         {
@@ -351,42 +358,42 @@ namespace PatrolSim
             return Color.FromArgb(num7, num8, num9);
         }
 
-        private void UpdateMap(NChartControl nChartControl, int gridY, double[] valList)
-        {
-            NCartesianChart chart = (NCartesianChart)nChartControl.Charts[0];
-            // fill grid to bars
-            //for (int i = 0; i < 100; i++)
-            {
-                NBarSeries bar = chart.Series[gridY] as NBarSeries;
-                double[] barValues = valList;
-                int barValueCount = barValues.Length;
+        //private void UpdateMap(NChartControl nChartControl, int gridY, double[] valList)
+        //{
+        //    NCartesianChart chart = (NCartesianChart)nChartControl.Charts[0];
+        //    // fill grid to bars
+        //    //for (int i = 0; i < 100; i++)
+        //    {
+        //        NBarSeries bar = chart.Series[gridY] as NBarSeries;
+        //        double[] barValues = valList;
+        //        int barValueCount = barValues.Length;
 
-                if (bar.Values.Count == 0)
-                {
-                    bar.Values.AddRange(barValues);
-                }
-                else
-                {
-                    bar.Values.SetRange(0, barValues);
-                }
+        //        if (bar.Values.Count == 0)
+        //        {
+        //            bar.Values.AddRange(barValues);
+        //        }
+        //        else
+        //        {
+        //            bar.Values.SetRange(0, barValues);
+        //        }
 
-                int fillStyleCount = bar.FillStyles.Count;
+        //        int fillStyleCount = bar.FillStyles.Count;
 
-                for (int j = 0; j < barValueCount; j++)
-                {
-                    if (j >= fillStyleCount)
-                    {
-                        bar.FillStyles[j] = new NColorFillStyle(_colorTable[(int)barValues[j]]);
-                    }
-                    else
-                    {
-                        ((NColorFillStyle)bar.FillStyles[j]).Color = _colorTable[(int)barValues[j]];
-                    }
-                }
-            }
+        //        for (int j = 0; j < barValueCount; j++)
+        //        {
+        //            if (j >= fillStyleCount)
+        //            {
+        //                bar.FillStyles[j] = new NColorFillStyle(_colorTable[(int)barValues[j]]);
+        //            }
+        //            else
+        //            {
+        //                ((NColorFillStyle)bar.FillStyles[j]).Color = _colorTable[(int)barValues[j]];
+        //            }
+        //        }
+        //    }
 
-            nChartControl.Refresh();
-        }
+        //    nChartControl.Refresh();
+        //}
 
         private static Tuple<int, int> UpdateMatrixThreadTest(double[][] matrix)
         {
@@ -400,5 +407,9 @@ namespace PatrolSim
             return Tuple.Create(x, y);
         }
 
+        private void aisCrashlStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

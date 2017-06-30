@@ -1,0 +1,4 @@
+<Configuration>
+  <CellSize CellSizeX="100" CellSizeY="100"/>
+  <BoxSize BoxSizeX="50" BoxSizeY="50"/>
+</Configuration>
