@@ -45,41 +45,44 @@ namespace PatrolSim
             {
                 List<Agent> agent_list = (List<Agent>)(e.Result);
 
-                foreach (Agent agent in agent_list)
+                if (!_simManager.AbnormalEvent)
                 {
-                    
-                    agent.AIS_MSG1.message_id(1);
-                    agent.AIS_MSG1.repeat_indicator(0);
-                    agent.AIS_MSG1.mmsi(agent.AgentMMSI);
-                    agent.AIS_MSG1.nav_status(0);
-                    agent.AIS_MSG1.rot_raw(0);
-                    agent.AIS_MSG1.sog(0);
-                    agent.AIS_MSG1.position_accuracy(1);
+                    foreach (Agent agent in agent_list)
+                    { // If Simulation is in Abnormal Status, don't update the textbox
 
-                    double lng = 128.4552 + (agent.CurrentPosition.Y * (0.0460 / 100.0));
-                    agent.AIS_MSG1.pos_long(lng);
+                        agent.AIS_MSG1.message_id(1);
+                        agent.AIS_MSG1.repeat_indicator(0);
+                        agent.AIS_MSG1.mmsi(agent.AgentMMSI);
+                        agent.AIS_MSG1.nav_status(0);
+                        agent.AIS_MSG1.rot_raw(0);
+                        agent.AIS_MSG1.sog(0);
+                        agent.AIS_MSG1.position_accuracy(1);
 
-                    double lat = 34.8035 + (agent.CurrentPosition.X * (0.0313 / 100.0));
-                    agent.AIS_MSG1.pos_lat(lat);
+                        double lng = 128.4552 + (agent.CurrentPosition.Y * (0.0460 / 100.0));
+                        agent.AIS_MSG1.pos_long(lng);
 
-                    agent.AIS_MSG1.cog(219);
-                    agent.AIS_MSG1.true_heading(13);
+                        double lat = 34.8035 + (agent.CurrentPosition.X * (0.0313 / 100.0));
+                        agent.AIS_MSG1.pos_lat(lat);
 
-                    agent.AIS_MSG1.timestamp(agent.Timestamp);
-                    agent.AIS_MSG1.special_manoeuvre(0);
-                    agent.AIS_MSG1.spare(0);
-                    agent.AIS_MSG1.raim(0);
-                    agent.AIS_MSG1.sync_state(0);
-                    agent.AIS_MSG1.slot_timeout(agent.get_random_value(0, 5));
-                    agent.AIS_MSG1.received_stations(agent.get_random_value(70, 75));
+                        agent.AIS_MSG1.cog(219);
+                        agent.AIS_MSG1.true_heading(13);
 
-                    string value = agent.AIS_MSG1.get_encoded_msg();
-                    simLog.Items.Add(value);
-                    simLog.SelectedIndex = simLog.Items.Count - 1;
+                        agent.AIS_MSG1.timestamp(agent.Timestamp);
+                        agent.AIS_MSG1.special_manoeuvre(0);
+                        agent.AIS_MSG1.spare(0);
+                        agent.AIS_MSG1.raim(0);
+                        agent.AIS_MSG1.sync_state(0);
+                        agent.AIS_MSG1.slot_timeout(agent.get_random_value(0, 5));
+                        agent.AIS_MSG1.received_stations(agent.get_random_value(70, 75));
 
-                    string str = String.Format("MMSI:{0} Latitude:{1} Longitude:{2}", agent.AgentMMSI, lat, lng);
-                    realLog.Items.Add(str);
-                    realLog.SelectedIndex = realLog.Items.Count - 1;
+                        string value = agent.AIS_MSG1.get_encoded_msg();
+                        simLog.Items.Add(value);
+                        simLog.SelectedIndex = simLog.Items.Count - 1;
+
+                        string str = String.Format("MMSI:{0} Latitude:{1} Longitude:{2}", agent.AgentMMSI, lat, lng);
+                        realLog.Items.Add(str);
+                        realLog.SelectedIndex = realLog.Items.Count - 1;
+                    }
                 }
 
                 agent_list.Clear();
