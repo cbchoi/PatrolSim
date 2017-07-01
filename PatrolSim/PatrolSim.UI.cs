@@ -28,15 +28,60 @@ namespace PatrolSim
 
             chartRealWorld.Refresh();
             _simulateMap.Refresh();
-            _exclusiveMap.Refresh();
         }
 
         private void backWorker_RadarRunWorkerCompleted(
             object sender,
             RunWorkerCompletedEventArgs e)
         {
+            foreach (Agent agent in _scenarioManager.AgentList)
+            {
+                string str = String.Format("Object ID:{0} Latitude:{1} Longitude:{2}", agent.AgentID,
+                    agent.GetLatitude(_gridSizeX), agent.GetLongitude(_gridSizeY));
+                _radarInfoBox.Items.Add(str);
+                _radarInfoBox.SelectedIndex = _radarInfoBox.Items.Count - 1;
+            }
+
             _realMap.Refresh();
             _exclusiveMap.Refresh();
+
+            int agent_count = 0;
+
+            for (int i = 0; i < _gridSizeY; i++)
+            {
+                for (int j = 0; j < _gridSizeX; j++)
+                {
+                    agent_count = 0;
+                    foreach (Agent agent in matrixSimAgents[i][j].Values)
+                    {
+                        if (agent.AgentType == (int)AgentType.SimulationModel)
+                            agent_count++;
+                    }
+
+                    if (agent_count != 0 && agent_count == matrixRealAgents[i][j].Keys.Count)
+                    {
+                        string str = String.Format("Estimation Success - Object ID:{0} Latitude:{1} Longitude:{2}", matrixRealAgents[i][j].Values.ElementAt(0).AgentID,
+                            matrixRealAgents[i][j].Values.ElementAt(0).GetLatitude(_gridSizeX), matrixRealAgents[i][j].Values.ElementAt(0).GetLongitude(_gridSizeY));
+                        _filteredInfoBox.Items.Add(str);
+                        _filteredInfoBox.SelectedIndex = _filteredInfoBox.Items.Count - 1;
+                    }
+                    else if (agent_count != 0 && agent_count != matrixRealAgents[i][j].Keys.Count)
+                    {
+                        string str = String.Format("Estimation Failed - Object ID:{0} Latitude:{1} Longitude:{2}", matrixRealAgents[i][j].Values.ElementAt(0).AgentID,
+                            matrixRealAgents[i][j].Values.ElementAt(0).GetLatitude(_gridSizeX), matrixRealAgents[i][j].Values.ElementAt(0).GetLongitude(_gridSizeY));
+                        _filteredInfoBox.Items.Add(str);
+                        _filteredInfoBox.SelectedIndex = _filteredInfoBox.Items.Count - 1;
+                    }
+                    else if ((matrixSimAgents[i][j].Keys.Count - agent_count) != matrixRealAgents[i][j].Keys.Count)
+                    {
+                        string str = String.Format("Abnormal Ship Detected - Object ID:{0} Latitude:{1} Longitude:{2}", matrixRealAgents[i][j].Values.ElementAt(0).AgentID,
+                            matrixRealAgents[i][j].Values.ElementAt(0).GetLatitude(_gridSizeX), matrixRealAgents[i][j].Values.ElementAt(0).GetLongitude(_gridSizeY));
+                        _filteredInfoBox.Items.Add(str);
+                        _filteredInfoBox.SelectedIndex = _filteredInfoBox.Items.Count - 1;
+                    }
+
+                }
+            }
         }
 
         private void backWorker_log_DoWork(object sender, DoWorkEventArgs e)
@@ -80,7 +125,7 @@ namespace PatrolSim
 
                     if (!_simManager.AbnormalEvent)
                     {
-// If Simulation is in Abnormal Status, don't update the textbox
+                        // If Simulation is in Abnormal Status, don't update the textbox
                         string value = agent.AIS_MSG1.get_encoded_msg();
                         simLog.Items.Add(value);
                         simLog.SelectedIndex = simLog.Items.Count - 1;
