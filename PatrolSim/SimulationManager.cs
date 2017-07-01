@@ -95,6 +95,22 @@ namespace PatrolSim
             }
         }
 
+        public void InsertAgentAtRuntime(Agent agent)
+        {
+            lock (event_lock)
+            {
+                _agentlist.Add(agent);
+            }
+        }
+
+        public void RemoveAgentAtRuntime(Agent agent)
+        {
+            lock (event_lock)
+            {
+                _agentlist.Remove(agent);
+            }
+        }
+
         private double Execute()
         {
             _sw = Stopwatch.StartNew();;

@@ -9,6 +9,7 @@ using System.Runtime.InteropServices;
 
 namespace AISWrapper
 {
+    [Serializable]
     public class AIS_MSG_1
     {
         [DllImport("libAIVDM.dll", CallingConvention = CallingConvention.Cdecl)]

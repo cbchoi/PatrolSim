@@ -15,7 +15,7 @@ namespace PatrolSim
 {
     partial class PatrolSim
     {
-        enum AgentType { NormalShip = 10, Unregistered = 5, }
+        public enum AgentType { NormalShip = 10, SimulationModel = 0, Unregistered = 5, }
 
         private void backWorker_RunWorkerCompleted(
             object sender,
@@ -23,7 +23,7 @@ namespace PatrolSim
         {
             lock (thisLock)
             {
-                UpdateUiComponent(chartRealWorld, matrixRealWorld);
+                UpdateChartComponent(chartRealWorld, matrixRealWorld);
             }
 
             chartRealWorld.Refresh();
@@ -88,7 +88,7 @@ namespace PatrolSim
 
         }
 
-        private static void UpdateUiComponent(NChartControl nChartControl, double[][] matrix)
+        private static void UpdateChartComponent(NChartControl nChartControl, double[][] matrix)
         {
             NCartesianChart chart = (NCartesianChart)nChartControl.Charts[0];
             for (int i = 0; i < _gridSizeY; i++)
@@ -145,8 +145,13 @@ namespace PatrolSim
                     if (agent.AgentType == (int) AgentType.NormalShip)
                     {
                         UpdateMatrix(agent, matrixRealWorld, matrixRealAgents);
+                        UpdateMatrix(agent, matrixSimulation, matrixSimAgents);
                     }
                     else if (agent.AgentType == (int)AgentType.Unregistered)
+                    {
+                        UpdateMatrix(agent, matrixRealWorld, matrixRealAgents);
+                    }
+                    else if (agent.AgentType == (int) AgentType.SimulationModel)
                     {
                         UpdateMatrix(agent, matrixSimulation, matrixSimAgents);
                     }

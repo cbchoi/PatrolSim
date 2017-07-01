@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ScenarioEditor", "ScenarioE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AIVDMTest", "AIVDMTest\AIVDMTest.csproj", "{E0552D2D-2BA3-45C4-8D2A-EF94C1C14D76}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShipRouteClassfier", "ShipRouteClassfier\ShipRouteClassfier\ShipRouteClassfier.vcxproj", "{6DD13C0D-1F72-408D-9A73-DF7F4766C1F2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -81,6 +83,14 @@ Global
 		{E0552D2D-2BA3-45C4-8D2A-EF94C1C14D76}.Release|x64.Build.0 = Release|Any CPU
 		{E0552D2D-2BA3-45C4-8D2A-EF94C1C14D76}.Release|x86.ActiveCfg = Release|Any CPU
 		{E0552D2D-2BA3-45C4-8D2A-EF94C1C14D76}.Release|x86.Build.0 = Release|Any CPU
+		{6DD13C0D-1F72-408D-9A73-DF7F4766C1F2}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{6DD13C0D-1F72-408D-9A73-DF7F4766C1F2}.Debug|x64.ActiveCfg = Debug|Win32
+		{6DD13C0D-1F72-408D-9A73-DF7F4766C1F2}.Debug|x86.ActiveCfg = Debug|Win32
+		{6DD13C0D-1F72-408D-9A73-DF7F4766C1F2}.Debug|x86.Build.0 = Debug|Win32
+		{6DD13C0D-1F72-408D-9A73-DF7F4766C1F2}.Release|Any CPU.ActiveCfg = Release|Win32
+		{6DD13C0D-1F72-408D-9A73-DF7F4766C1F2}.Release|x64.ActiveCfg = Release|Win32
+		{6DD13C0D-1F72-408D-9A73-DF7F4766C1F2}.Release|x86.ActiveCfg = Release|Win32
+		{6DD13C0D-1F72-408D-9A73-DF7F4766C1F2}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

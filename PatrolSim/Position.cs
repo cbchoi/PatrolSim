@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace PatrolSim
 {
+    [Serializable]
     public class Position
     {
         private double _x;

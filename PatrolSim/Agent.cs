@@ -1,16 +1,19 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml;
 using AISWrapper;
 
 namespace PatrolSim
 {
+    [Serializable]
     public class Agent
     {
-        private readonly int _agentID;
+        private int _agentID;
         private readonly double _agentSpeed;
-        private readonly int _agentType;
+        private int _agentType;
         private readonly int _agentMMSI;
 
         private AIS_MSG_1 _asg = new AIS_MSG_1();
@@ -239,6 +242,23 @@ namespace PatrolSim
         {
             double lng = 128.4552 + (CurrentPosition.Y * (0.0460 / MapSizeY));
             return lng;
+        }
+
+        public Agent SimModelClone()
+        {
+            MemoryStream ms = new MemoryStream();
+            BinaryFormatter bf = new BinaryFormatter();
+
+            bf.Serialize(ms, this);
+
+            ms.Position = 0;
+            object obj = bf.Deserialize(ms);
+            ms.Close();
+
+            Agent thisObject = obj as Agent;
+            thisObject._agentType = (int) PatrolSim.AgentType.SimulationModel;
+            thisObject._agentID += 100;
+            return thisObject;
         }
     }
 }

@@ -312,6 +312,7 @@ namespace PatrolSim
 
         private void simulationStartToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            
             _simManager.Run(_scenarioManager.AgentList);
 
             _threadState = ThreadState.Run;
@@ -411,7 +412,51 @@ namespace PatrolSim
 
         private void aisCrashlStripMenuItem_Click(object sender, EventArgs e)
         {
+           
             _simManager.SetAbnormalEvent(!_simManager.AbnormalEvent);
+
+            List<Agent> temp_agentList = new List<Agent>();
+            if (_simManager.AbnormalEvent == true)
+            {
+                // Clone Agents
+                foreach (Agent agent in _scenarioManager.AgentList)
+                {
+                    if (agent.AgentType == (int) AgentType.NormalShip)
+                    {
+                        temp_agentList.Add(agent.SimModelClone());
+                        
+                    }
+                }
+
+                foreach (Agent agent in temp_agentList)
+                {
+                    _simManager.InsertAgentAtRuntime(agent);
+                }
+            }
+            else
+            {
+                foreach (Agent agent in _scenarioManager.AgentList)
+                {
+                    if (agent.AgentType == (int)AgentType.SimulationModel)
+                    {
+                        temp_agentList.Add(agent.SimModelClone()); 
+                    }
+                }
+
+                foreach (Agent agent in temp_agentList)
+                {
+                    _simManager.RemoveAgentAtRuntime(agent);
+                }
+            }
+
+            if (_simManager.AbnormalEvent == false)
+            {
+                aisCrashlStripMenuItem.Text = "AIS Restored";
+            }
+            else
+            {
+                aisCrashlStripMenuItem.Text = "AIS Crashed";
+            }
         }
     }
 }
