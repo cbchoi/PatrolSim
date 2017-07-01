@@ -27,8 +27,15 @@ namespace PatrolSim
             }
 
             chartRealWorld.Refresh();
-            _realMap.Refresh();
             _simulateMap.Refresh();
+            _exclusiveMap.Refresh();
+        }
+
+        private void backWorker_RadarRunWorkerCompleted(
+            object sender,
+            RunWorkerCompletedEventArgs e)
+        {
+            _realMap.Refresh();
             _exclusiveMap.Refresh();
         }
 
@@ -89,7 +96,7 @@ namespace PatrolSim
                         {
                             string value = agent.AIS_MSG1.get_encoded_msg();
                             _simulationInfoBox.Items.Add(value);
-                            _simulationInfoBox.SelectedIndex = simLog.Items.Count - 1;
+                            _simulationInfoBox.SelectedIndex = _simulationInfoBox.Items.Count - 1;
                         }
                     }
                 }
@@ -143,6 +150,19 @@ namespace PatrolSim
                         backWorker_map.RunWorkerAsync();
                 }
                 Thread.Sleep(1000);
+            }
+        }
+
+        public void UpdateRadarMap()
+        {
+            while (_threadState == ThreadState.Run || _threadState == ThreadState.Pause)
+            {
+                if (_threadState == ThreadState.Run)
+                {
+                    if (!backWorker_map.IsBusy)
+                        backWorker_radar.RunWorkerAsync();
+                }
+                Thread.Sleep(2000);
             }
         }
 
