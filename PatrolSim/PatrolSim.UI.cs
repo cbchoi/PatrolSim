@@ -58,11 +58,9 @@ namespace PatrolSim
                         agent.AIS_MSG1.sog(0);
                         agent.AIS_MSG1.position_accuracy(1);
 
-                        double lng = 128.4552 + (agent.CurrentPosition.Y * (0.0460 / 100.0));
-                        agent.AIS_MSG1.pos_long(lng);
-
-                        double lat = 34.8035 + (agent.CurrentPosition.X * (0.0313 / 100.0));
-                        agent.AIS_MSG1.pos_lat(lat);
+                        
+                        agent.AIS_MSG1.pos_long(agent.GetLongitude(_gridSizeY));
+                        agent.AIS_MSG1.pos_lat(agent.GetLatitude(_gridSizeX));
 
                         agent.AIS_MSG1.cog(219);
                         agent.AIS_MSG1.true_heading(13);
@@ -79,7 +77,7 @@ namespace PatrolSim
                         simLog.Items.Add(value);
                         simLog.SelectedIndex = simLog.Items.Count - 1;
 
-                        string str = String.Format("MMSI:{0} Latitude:{1} Longitude:{2}", agent.AgentMMSI, lat, lng);
+                        string str = String.Format("MMSI:{0} Latitude:{1} Longitude:{2}", agent.AgentMMSI, agent.GetLatitude(_gridSizeX), agent.GetLongitude(_gridSizeY));
                         realLog.Items.Add(str);
                         realLog.SelectedIndex = realLog.Items.Count - 1;
                     }

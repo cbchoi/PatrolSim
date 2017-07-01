@@ -228,5 +228,17 @@ namespace PatrolSim
                 Move(time);
             }
         }
+
+        public double GetLatitude(double MapSizeX)
+        {
+            double lat = 34.8035 + (CurrentPosition.X * (0.0313 / MapSizeX));
+            return lat;
+        }
+
+        public double GetLongitude(double MapSizeY)
+        {
+            double lng = 128.4552 + (CurrentPosition.Y * (0.0460 / MapSizeY));
+            return lng;
+        }
     }
 }
