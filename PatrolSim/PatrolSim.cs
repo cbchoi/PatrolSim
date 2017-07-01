@@ -38,6 +38,7 @@ namespace PatrolSim
 
         private ThreadState _threadState = ThreadState.Stop;
         private Thread _worker;
+        private Thread _radarWorker;
 
         private BackgroundWorker backWorker_map;
         private static BackgroundWorker backWorker_log;
@@ -103,6 +104,7 @@ namespace PatrolSim
 
             _simManager = new SimulationManager(this);
             _worker = new Thread(UpdateSimulationMap);
+            _radarWorker = new Thread(UpdateSimulationMap);
 
             backWorker_map = new BackgroundWorker();
             backWorker_log = new BackgroundWorker();
@@ -207,58 +209,6 @@ namespace PatrolSim
 
         private static List<Agent> agent_list = new List<Agent>();
         
-
-        //private static Tuple<int, int> UpdateMatrix(NChartControl nChartControl, double[][] matrix)
-        //{
-        //    Random rnd = new Random();
-        //    int value = (int)Math.Max(1, rnd.NextDouble() * 20);
-        //    int x = rnd.Next(0, 99);
-        //    int y = rnd.Next(0, 99);
-
-        //    matrix[y][x] = value;
-
-        //    NCartesianChart chart = (NCartesianChart)nChartControl.Charts[0];
-        //    for (int i = 0; i < _gridSizeY; i++)
-        //    {
-        //        NBarSeries bar = chart.Series[i] as NBarSeries;
-        //        double[] barValues = matrix[i];
-        //        int barValueCount = barValues.Length;
-
-        //        if (bar.Values.Count == 0)
-        //        {
-        //            bar.Values.AddRange(barValues);
-        //        }
-        //        else
-        //        {
-        //            bar.Values.SetRange(0, barValues);
-        //        }
-
-        //        int fillStyleCount = bar.FillStyles.Count;
-
-        //        for (int j = 0; j < barValueCount; j++)
-        //        {
-        //            if (j >= fillStyleCount)
-        //            {
-        //                bar.FillStyles[j] = new NColorFillStyle(_colorTable[(int)barValues[j]]);
-        //            }
-        //            else
-        //            {
-        //                ((NColorFillStyle)bar.FillStyles[j]).Color = _colorTable[(int)barValues[j]];
-        //            }
-        //        }
-        //    }
-        //    nChartControl.Refresh();
-
-        //    return Tuple.Create(x, y);
-        //}
-
-        //private static void UpdateLog(ListBox lb, String objID, String eventLog, int x, int y)
-        //{
-        //    String strLog = $"{DateTime.Now:s} {objID} {eventLog} ({x}, {y})";
-        //    lb.Items.Add(strLog);
-        //    lb.SelectedIndex = lb.Items.Count - 1;
-
-        //}
 
         private void chartRealWorld_Click(object sender, EventArgs e)
         {
