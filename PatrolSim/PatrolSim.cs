@@ -312,7 +312,11 @@ namespace PatrolSim
 
         private void simulationStartToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            if (_scenarioManager == null)
+            {
+                MessageBox.Show("You should select the scenario first.");
+                return;
+            }
             _simManager.Run(_scenarioManager.AgentList);
 
             _threadState = ThreadState.Run;
@@ -412,7 +416,6 @@ namespace PatrolSim
 
         private void aisCrashlStripMenuItem_Click(object sender, EventArgs e)
         {
-           
             _simManager.SetAbnormalEvent(!_simManager.AbnormalEvent);
 
             List<Agent> temp_agentList = new List<Agent>();

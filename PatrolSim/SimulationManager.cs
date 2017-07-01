@@ -70,7 +70,7 @@ namespace PatrolSim
         public void Terminate()
         {
             _threadState = ThreadState.Stop;
-           if(_worker.IsAlive)
+           if(_worker != null && _worker.IsAlive)
                 _worker.Abort();
         }
 
