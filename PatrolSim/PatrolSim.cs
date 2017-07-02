@@ -293,30 +293,14 @@ namespace PatrolSim
         {
             _simManager.Pause();
             _threadState = ThreadState.Pause;
-            if (_worker.IsAlive)
-            {
-                _worker.Suspend();
-            }
-
-            if (!_radarWorker.IsAlive)
-            {
-                _radarWorker.Suspend();
-            }
+            
         }
 
         private void simulationResumeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _simManager.Resume();
             _threadState = ThreadState.Run;
-            if (_worker.IsAlive)
-            {
-                _worker.Resume();
-            }
-
-            if (!_radarWorker.IsAlive)
-            {
-                _radarWorker.Resume();
-            }
+            
         }
 
         private void simulationStopToolStripMenuItem_Click(object sender, EventArgs e)
