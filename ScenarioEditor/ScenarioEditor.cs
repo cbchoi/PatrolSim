@@ -29,7 +29,7 @@ namespace ScenarioEditor
 
         public void DrawLineInt(Image bmp)
         {
-            Pen blackPen = new Pen(Color.Black, 3);
+            Pen blackPen = new Pen(Color.Black, 1);
 
             // Draw line to screen.
             using (var graphics = Graphics.FromImage(bmp))

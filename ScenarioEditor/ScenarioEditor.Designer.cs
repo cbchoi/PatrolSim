@@ -50,9 +50,10 @@
             // pictRealWorld
             // 
             this.pictRealWorld.Image = ((System.Drawing.Image)(resources.GetObject("pictRealWorld.Image")));
-            this.pictRealWorld.Location = new System.Drawing.Point(18, 18);
+            this.pictRealWorld.Location = new System.Drawing.Point(10, 9);
+            this.pictRealWorld.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.pictRealWorld.Name = "pictRealWorld";
-            this.pictRealWorld.Size = new System.Drawing.Size(959, 958);
+            this.pictRealWorld.Size = new System.Drawing.Size(559, 460);
             this.pictRealWorld.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pictRealWorld.TabIndex = 3;
             this.pictRealWorld.TabStop = false;
@@ -71,10 +72,11 @@
             this.posX,
             this.posY,
             this.posZ});
-            this.dataGridView1.Location = new System.Drawing.Point(1006, 18);
+            this.dataGridView1.Location = new System.Drawing.Point(587, 9);
+            this.dataGridView1.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.RowTemplate.Height = 33;
-            this.dataGridView1.Size = new System.Drawing.Size(856, 851);
+            this.dataGridView1.Size = new System.Drawing.Size(499, 408);
             this.dataGridView1.TabIndex = 4;
             // 
             // ID
@@ -119,25 +121,28 @@
             this.panel1.Controls.Add(this.btExport);
             this.panel1.Controls.Add(this.pictRealWorld);
             this.panel1.Controls.Add(this.dataGridView1);
-            this.panel1.Location = new System.Drawing.Point(12, 12);
+            this.panel1.Location = new System.Drawing.Point(7, 6);
+            this.panel1.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1887, 998);
+            this.panel1.Size = new System.Drawing.Size(1101, 479);
             this.panel1.TabIndex = 5;
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(1272, 893);
+            this.button2.Location = new System.Drawing.Point(742, 429);
+            this.button2.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(260, 82);
+            this.button2.Size = new System.Drawing.Size(152, 39);
             this.button2.TabIndex = 7;
             this.button2.Text = "Load Object";
             this.button2.UseVisualStyleBackColor = true;
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(1006, 893);
+            this.button1.Location = new System.Drawing.Point(587, 429);
+            this.button1.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(260, 82);
+            this.button1.Size = new System.Drawing.Size(152, 39);
             this.button1.TabIndex = 6;
             this.button1.Text = "New Object";
             this.button1.UseVisualStyleBackColor = true;
@@ -145,9 +150,10 @@
             // 
             // btExport
             // 
-            this.btExport.Location = new System.Drawing.Point(1538, 893);
+            this.btExport.Location = new System.Drawing.Point(897, 429);
+            this.btExport.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.btExport.Name = "btExport";
-            this.btExport.Size = new System.Drawing.Size(323, 82);
+            this.btExport.Size = new System.Drawing.Size(188, 39);
             this.btExport.TabIndex = 5;
             this.btExport.Text = "Export";
             this.btExport.UseVisualStyleBackColor = true;
@@ -155,11 +161,12 @@
             // 
             // ScenarioEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 25F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
-            this.ClientSize = new System.Drawing.Size(1911, 1022);
+            this.ClientSize = new System.Drawing.Size(1113, 491);
             this.Controls.Add(this.panel1);
+            this.Margin = new System.Windows.Forms.Padding(2, 1, 2, 1);
             this.Name = "ScenarioEditor";
             this.Text = "Scenario Editor";
             ((System.ComponentModel.ISupportInitialize)(this.pictRealWorld)).EndInit();

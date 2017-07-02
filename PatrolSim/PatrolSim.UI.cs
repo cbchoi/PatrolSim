@@ -34,63 +34,66 @@ namespace PatrolSim
             object sender,
             RunWorkerCompletedEventArgs e)
         {
-            foreach (Agent agent in _scenarioManager.AgentList)
+            lock (remove_lock)
             {
-                string str = String.Format("Object ID:{0} Latitude:{1} Longitude:{2}", agent.AgentID,
-                    agent.GetLatitude(_gridSizeX), agent.GetLongitude(_gridSizeY));
-                _radarInfoBox.Items.Add(str);
-                _radarInfoBox.SelectedIndex = _radarInfoBox.Items.Count - 1;
-            }
-
-            _realMap.Refresh();
-            _exclusiveMap.Refresh();
-
-            int agent_count = 0;
-
-            for (int i = 0; i < _gridSizeY; i++)
-            {
-                for (int j = 0; j < _gridSizeX; j++)
+                foreach (Agent agent in _scenarioManager.AgentList)
                 {
-                    agent_count = 0;
-                    foreach (Agent agent in matrixSimAgents[i][j].Values)
-                    {
-                        if (agent.AgentType == (int)AgentType.SimulationModel)
-                            agent_count++;
-                    }
+                    string str = String.Format("Object ID:{0} Latitude:{1} Longitude:{2}", agent.AgentID,
+                        agent.GetLatitude(_gridSizeX), agent.GetLongitude(_gridSizeY));
+                    _radarInfoBox.Items.Add(str);
+                    _radarInfoBox.SelectedIndex = _radarInfoBox.Items.Count - 1;
+                }
+            
+                _realMap.Refresh();
+                _exclusiveMap.Refresh();
 
-                    if (agent_count != 0 && agent_count == matrixRealAgents[i][j].Keys.Count)
-                    {
-                        if (matrixRealAgents[i][j].Values.Count != 0)
-                        {
-                            string str = String.Format("Estimation Success - Object ID:{0} Latitude:{1} Longitude:{2}",
-                                matrixRealAgents[i][j].Values.ElementAt(0).AgentID,
-                                matrixRealAgents[i][j].Values.ElementAt(0).GetLatitude(_gridSizeX),
-                                matrixRealAgents[i][j].Values.ElementAt(0).GetLongitude(_gridSizeY));
-                            _filteredInfoBox.Items.Add(str);
-                            _filteredInfoBox.SelectedIndex = _filteredInfoBox.Items.Count - 1;
-                        }
-                    }
-                    else if (agent_count != 0 && agent_count != matrixRealAgents[i][j].Keys.Count)
-                    {
-                        if (matrixRealAgents[i][j].Values.Count != 0)
-                        {
-                            string str = String.Format("Estimation Failed - Object ID:{0} Latitude:{1} Longitude:{2}", matrixRealAgents[i][j].Values.ElementAt(0).AgentID,
-                                matrixRealAgents[i][j].Values.ElementAt(0).GetLatitude(_gridSizeX), matrixRealAgents[i][j].Values.ElementAt(0).GetLongitude(_gridSizeY));
-                            _filteredInfoBox.Items.Add(str);
-                            _filteredInfoBox.SelectedIndex = _filteredInfoBox.Items.Count - 1;
-                        }
-                    }
-                    else if ((matrixSimAgents[i][j].Keys.Count - agent_count) != matrixRealAgents[i][j].Keys.Count)
-                    {
-                        if (matrixRealAgents[i][j].Values.Count != 0)
-                        {
-                            string str = String.Format("Abnormal Ship Detected - Object ID:{0} Latitude:{1} Longitude:{2}", matrixRealAgents[i][j].Values.ElementAt(0).AgentID,
-                                matrixRealAgents[i][j].Values.ElementAt(0).GetLatitude(_gridSizeX), matrixRealAgents[i][j].Values.ElementAt(0).GetLongitude(_gridSizeY));
-                            _filteredInfoBox.Items.Add(str);
-                            _filteredInfoBox.SelectedIndex = _filteredInfoBox.Items.Count - 1;
-                        }
-                    }
+                int agent_count = 0;
 
+                for (int i = 0; i < _gridSizeY; i++)
+                {
+                    for (int j = 0; j < _gridSizeX; j++)
+                    {
+                        agent_count = 0;
+                        foreach (Agent agent in matrixSimAgents[i][j].Values)
+                        {
+                            if (agent.AgentType == (int)AgentType.SimulationModel)
+                                agent_count++;
+                        }
+
+                        if (agent_count != 0 && agent_count == matrixRealAgents[i][j].Keys.Count)
+                        {
+                            if (matrixRealAgents[i][j].Values.Count != 0)
+                            {
+                                string str = String.Format("Estimation Success - Object ID:{0} Latitude:{1} Longitude:{2}",
+                                    matrixRealAgents[i][j].Values.ElementAt(0).AgentID,
+                                    matrixRealAgents[i][j].Values.ElementAt(0).GetLatitude(_gridSizeX),
+                                    matrixRealAgents[i][j].Values.ElementAt(0).GetLongitude(_gridSizeY));
+                                _filteredInfoBox.Items.Add(str);
+                                _filteredInfoBox.SelectedIndex = _filteredInfoBox.Items.Count - 1;
+                            }
+                        }
+                        else if (agent_count != 0 && agent_count != matrixRealAgents[i][j].Keys.Count)
+                        {
+                            if (matrixRealAgents[i][j].Values.Count != 0)
+                            {
+                                string str = String.Format("Estimation Failed - Object ID:{0} Latitude:{1} Longitude:{2}", matrixRealAgents[i][j].Values.ElementAt(0).AgentID,
+                                    matrixRealAgents[i][j].Values.ElementAt(0).GetLatitude(_gridSizeX), matrixRealAgents[i][j].Values.ElementAt(0).GetLongitude(_gridSizeY));
+                                _filteredInfoBox.Items.Add(str);
+                                _filteredInfoBox.SelectedIndex = _filteredInfoBox.Items.Count - 1;
+                            }
+                        }
+                        else if ((matrixSimAgents[i][j].Keys.Count - agent_count) != matrixRealAgents[i][j].Keys.Count)
+                        {
+                            if (matrixRealAgents[i][j].Values.Count != 0)
+                            {
+                                string str = String.Format("Abnormal Ship Detected - Object ID:{0} Latitude:{1} Longitude:{2}", matrixRealAgents[i][j].Values.ElementAt(0).AgentID,
+                                    matrixRealAgents[i][j].Values.ElementAt(0).GetLatitude(_gridSizeX), matrixRealAgents[i][j].Values.ElementAt(0).GetLongitude(_gridSizeY));
+                                _filteredInfoBox.Items.Add(str);
+                                _filteredInfoBox.SelectedIndex = _filteredInfoBox.Items.Count - 1;
+                            }
+                        }
+
+                    }
                 }
             }
         }
@@ -113,7 +116,7 @@ namespace PatrolSim
 
                     foreach (Agent agent in agent_list)
                     {
-                        if (!_simManager.AbnormalEvent && _scenarioManager.AIS_MSG1MAP.ContainsKey(agent.AgentID))
+                        if (!_simManager.AbnormalEvent && _scenarioManager.AIS_MSG1MAP.ContainsKey(agent.AgentID) && agent.AgentType == (int)AgentType.NormalShip)
                         {
                             _scenarioManager.AIS_MSG1MAP[agent.AgentID].message_id(1);
                             _scenarioManager.AIS_MSG1MAP[agent.AgentID].repeat_indicator(0);

@@ -146,11 +146,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="RealMap.png" />
-    <Content Include="scenario1.xml">
-      <SubType>Designer</SubType>
-    </Content>
-    <Content Include="scenario2.xml" />
+    <Content Include="scenario.xml" />
     <Content Include="SimMap.png" />
+    <Content Include="test_scenario.xml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AISWrapper\AISWrapper.csproj">

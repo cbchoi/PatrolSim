@@ -243,7 +243,7 @@ namespace PatrolSim
                                         DrawAgent(e, j, i, _dx, _dy, _scenarioManager.ColorList[agent.AgentID]);
                                     }
                                 }
-                                else
+                                else if (agent.AgentType == (int)AgentType.SimulationModel)
                                 {
                                     if (_simManager.AbnormalEvent == true)
                                     {

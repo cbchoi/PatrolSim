@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.13
+VisualStudioVersion = 15.0.26430.14
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PatrolSim", "PatrolSim\PatrolSim.csproj", "{6F9042F7-6F78-4799-8C53-FCE2499C9D3A}"
 EndProject
@@ -14,6 +14,10 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AIVDMTest", "AIVDMTest\AIVDMTest.csproj", "{E0552D2D-2BA3-45C4-8D2A-EF94C1C14D76}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ShipRouteClassfier", "ShipRouteClassfier\ShipRouteClassfier\ShipRouteClassfier.vcxproj", "{6DD13C0D-1F72-408D-9A73-DF7F4766C1F2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShipClassifierWrapper", "ShipClassifierWrapper\ShipClassifierWrapper.csproj", "{29247C85-BD48-43D0-8660-FAA13AD9AD2B}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libShipClassifier", "libShipClassifier\libShipClassifier.vcxproj", "{5AB64EA0-A0B3-475C-9684-27A70E666DC9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -91,6 +95,28 @@ Global
 		{6DD13C0D-1F72-408D-9A73-DF7F4766C1F2}.Release|x64.ActiveCfg = Release|Win32
 		{6DD13C0D-1F72-408D-9A73-DF7F4766C1F2}.Release|x86.ActiveCfg = Release|Win32
 		{6DD13C0D-1F72-408D-9A73-DF7F4766C1F2}.Release|x86.Build.0 = Release|Win32
+		{29247C85-BD48-43D0-8660-FAA13AD9AD2B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29247C85-BD48-43D0-8660-FAA13AD9AD2B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29247C85-BD48-43D0-8660-FAA13AD9AD2B}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{29247C85-BD48-43D0-8660-FAA13AD9AD2B}.Debug|x64.Build.0 = Debug|Any CPU
+		{29247C85-BD48-43D0-8660-FAA13AD9AD2B}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{29247C85-BD48-43D0-8660-FAA13AD9AD2B}.Debug|x86.Build.0 = Debug|Any CPU
+		{29247C85-BD48-43D0-8660-FAA13AD9AD2B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29247C85-BD48-43D0-8660-FAA13AD9AD2B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29247C85-BD48-43D0-8660-FAA13AD9AD2B}.Release|x64.ActiveCfg = Release|Any CPU
+		{29247C85-BD48-43D0-8660-FAA13AD9AD2B}.Release|x64.Build.0 = Release|Any CPU
+		{29247C85-BD48-43D0-8660-FAA13AD9AD2B}.Release|x86.ActiveCfg = Release|Any CPU
+		{29247C85-BD48-43D0-8660-FAA13AD9AD2B}.Release|x86.Build.0 = Release|Any CPU
+		{5AB64EA0-A0B3-475C-9684-27A70E666DC9}.Debug|Any CPU.ActiveCfg = Debug|Win32
+		{5AB64EA0-A0B3-475C-9684-27A70E666DC9}.Debug|x64.ActiveCfg = Debug|x64
+		{5AB64EA0-A0B3-475C-9684-27A70E666DC9}.Debug|x64.Build.0 = Debug|x64
+		{5AB64EA0-A0B3-475C-9684-27A70E666DC9}.Debug|x86.ActiveCfg = Debug|Win32
+		{5AB64EA0-A0B3-475C-9684-27A70E666DC9}.Debug|x86.Build.0 = Debug|Win32
+		{5AB64EA0-A0B3-475C-9684-27A70E666DC9}.Release|Any CPU.ActiveCfg = Release|Win32
+		{5AB64EA0-A0B3-475C-9684-27A70E666DC9}.Release|x64.ActiveCfg = Release|x64
+		{5AB64EA0-A0B3-475C-9684-27A70E666DC9}.Release|x64.Build.0 = Release|x64
+		{5AB64EA0-A0B3-475C-9684-27A70E666DC9}.Release|x86.ActiveCfg = Release|Win32
+		{5AB64EA0-A0B3-475C-9684-27A70E666DC9}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
