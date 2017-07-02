@@ -96,7 +96,8 @@ namespace PatrolSim
             _realMap.Load(@".\SimMap2.png");
             _realMap.SizeMode = PictureBoxSizeMode.StretchImage;
 
-            _exclusiveMap.Image = new Bitmap(_simulateMap.Image.Width, _simulateMap.Image.Height);
+            //_exclusiveMap.Image = new Bitmap(_simulateMap.Image.Width, _simulateMap.Image.Height);
+            _exclusiveMap.Load(@".\SimMap2.png");
             _exclusiveMap.SizeMode = PictureBoxSizeMode.StretchImage;
 
             InitMap(chartRealWorld);
