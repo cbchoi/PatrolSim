@@ -10,6 +10,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using AISWrapper;
+using Nevron;
 using Nevron.Chart;
 using Nevron.Chart.Windows;
 using Nevron.Chart.WinForm;
@@ -57,6 +58,13 @@ namespace PatrolSim
 
         public PatrolSim()
         {
+            //NLicense license = new NLicense("XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX");
+            //NLicenseManager.Instance.SetLicense(license);
+            //NLicenseManager.Instance.LockLicense = true;            //NLicense license = new NLicense("XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX");
+            //NLicenseManager.Instance.SetLicense(license);
+            //NLicenseManager.Instance.LockLicense = true;
+
+
             _config = new Configuration(@"configure.xml");
             _gridSizeX = _config.CellSizeX;
             _gridSizeY = _config.CellSizeY;
