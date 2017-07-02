@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ShipClassifierWrapper
 {
-    public class ShipClassifierWrapper
+    public class RouteClassifier
     {
         [DllImport("libShipClassifier.dll", CallingConvention = CallingConvention.Cdecl)]
         protected static extern void createInstrance([MarshalAs(UnmanagedType.LPStr)] string path);
@@ -22,12 +22,12 @@ namespace ShipClassifierWrapper
         [DllImport("libShipClassifier.dll", CallingConvention = CallingConvention.Cdecl)]
         protected static extern System.IntPtr getNextPoint(int _id);
 
-        public ShipClassifierWrapper(string path)
+        public RouteClassifier(string path)
         {
             createInstrance(path);
         }
 
-        ~ShipClassifierWrapper()
+        ~RouteClassifier()
         {
             releaseInstance();
         }

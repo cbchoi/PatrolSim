@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
 using AISWrapper;
+using ShipClassifierWrapper;
 
 namespace PatrolSim
 {
@@ -15,6 +16,12 @@ namespace PatrolSim
         public Dictionary<int, AIS_MSG_1> AIS_MSG1MAP
         {
             get { return _aisList; }
+        }
+
+        private RouteClassifier _rc;
+        public RouteClassifier RouteManager
+        {
+            get { return _rc; }
         }
 
         private List<Agent> _agentList;
@@ -66,6 +73,10 @@ namespace PatrolSim
             HandleShips(rootNode.SelectSingleNode("ShipList"));
             HandleObscles(rootNode.SelectSingleNode("ObstcleList"));
             HandleColors(rootNode.SelectSingleNode("ColorList"));
+
+            // TODO
+            // Initalize RouteClassifier
+            //_rc = new RouteClassifier(xmlFilePath);
         }
 
         public void HandleShips(XmlNode node)

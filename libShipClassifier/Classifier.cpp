@@ -33,7 +33,7 @@ bool Classifier::addWayPoints(const std::string &file, const MoveType & moveType
 	std::vector<CPos> curWayPoints;
 
 	if (!fin.is_open())
-	{ 
+	{
 		throw nodeInfoException("topology xml file is not loaded for parsing");
 		return false;
 	}
@@ -43,13 +43,13 @@ bool Classifier::addWayPoints(const std::string &file, const MoveType & moveType
 
 	sstr.flush();
 	fin.close();
-	
+
 	std::string xmlData = sstr.str();
 	rapidxml::xml_document<> doc;
-	doc.parse<0> (&xmlData[0]);
-	
+	doc.parse<0>(&xmlData[0]);
+
 	rapidxml::xml_node<> *rootNode = doc.first_node("ObjectList");
-	if(!rootNode)
+	if (!rootNode)
 		return false;
 
 	//set map size
@@ -58,77 +58,14 @@ bool Classifier::addWayPoints(const std::string &file, const MoveType & moveType
 	attr = rootNode->first_attribute("MapSizeY");
 	mapSizeY = atoi(attr->value());
 
-	//set map size
-	rapidxml::xml_node<> *curNode = rootNode->first_node("ShipList")->first_node("Ship");
-	attr = curNode->first_attribute("id");
-	int shipID = atoi(attr->value());
 
-	//Add waypoints
-	curNode = curNode->first_node("Waypoints")->first_node("Waypoint");
-
- 	while(curNode) {
-		//Get waypoint
-		attr = curNode->first_attribute("x");
-		double x = std::stod(attr->value());
-		attr = curNode->first_attribute("y");
-		double y = std::stod(attr->value());
-		CPos curPos = getPos(x, y);
-
-		if (curWayPoints.empty())
-		{ 
-			curWayPoints.push_back(curPos);
-		}
-		else {
-			addIntermediatePos(curWayPoints, curPos);
-		}
-
-		//next sibling
- 		curNode = curNode->next_sibling("Waypoint");
- 	}
-
-	std::vector<int> matchingGroups;
-	std::vector<double> corrVec;
-	std::vector<WPPattern>	* localWPPatterns;
-
-	if (moveType == NORMAL)
-	{ 
-		localWPPatterns = & normalWPPatterns;
-	}
-	else 
+	while (1)
 	{
-		localWPPatterns = & abnormalWPPatterns;
-	}
-
-	getPatternCandidates(*localWPPatterns, curWayPoints);
-
-	//Add current position
-	int curWPIndex = prevWPPoints.size();
-	prevWPPoints.push_back(curWayPoints);
-
-	int _patternID; 
-
-	//Sort compare 
-	if (!matchingGroups.empty())
-	{ 
-		int minindex = std::min_element(corrVec.begin(), corrVec.end()) - corrVec.begin();
-		_patternID = matchingGroups.at(minindex);
-
-		localWPPatterns->at(_patternID).wpIDs.push_back(curWPIndex);
-		addWeights(localWPPatterns->at(_patternID).PosWeightMap, curWayPoints);
-	}
-	else 
-	{
-		WPPattern _pattern; 
-		if (localWPPatterns->empty())
-			_patternID = 0;
-		else 
-			_patternID = localWPPatterns->back().patternID + 1; 
-
-		_pattern.patternID = _patternID;
-		_pattern.wpIDs.push_back(curWPIndex);
-		addWeights(_pattern.PosWeightMap, curWayPoints);
-
-		localWPPatterns->push_back(_pattern);
+		rapidxml::xml_node<> *curShipNode = rootNode->first_node("ShipList")->first_node("Ship");
+		addShipWaypoints(curShipNode, curWayPoints, moveType);
+		curShipNode = curShipNode->next_sibling("Ship");
+		if (curShipNode == NULL)
+			break;
 	}
 
 	return true;

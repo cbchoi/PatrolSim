@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using ShipClassifierWrapper;
 
 namespace PatrolSim
 {
@@ -31,6 +32,8 @@ namespace PatrolSim
         private System.Diagnostics.Stopwatch _sw;
         private List<Agent> _agentlist = null;
 
+        private RouteClassifier _rc;
+
         public List<Agent> AgentList
         {
             get { return _agentlist; }
@@ -45,16 +48,15 @@ namespace PatrolSim
             set => _threadState = value;
         }
 
-        private PatrolSim _parent;
-        public SimulationManager(PatrolSim parent)
+        public SimulationManager()
         {
-            _parent = parent;
             time_mode = 1;
             _threadState = ThreadState.Stop;
         }
 
-        public void Run(List<Agent> agentlist)
+        public void Run(List<Agent> agentlist, RouteClassifier rc)
         {
+            _rc = rc;
             _agentlist = agentlist;
             _threadState = ThreadState.Run;
 
@@ -125,7 +127,7 @@ namespace PatrolSim
             {
                 lock (event_lock)
                 {
-                    agent.Move(1, _abnormalEvent);
+                    agent.Move(1, _abnormalEvent, _rc);
                 }
             }
             

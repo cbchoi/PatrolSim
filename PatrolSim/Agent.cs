@@ -5,6 +5,7 @@ using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Xml;
 using AISWrapper;
+using ShipClassifierWrapper;
 
 namespace PatrolSim
 {
@@ -50,7 +51,7 @@ namespace PatrolSim
         public int AgentMMSI { get { return _agentMMSI; } }
 
         public int CurrentWayointIndex { get { return _curWayIndex; } }
-
+        public ArrayList WaypointList { get { return _wayList; } }
         public Position PrevPosition { get { return _prevPosition; } }
 
         public Position SimulationPosition
@@ -209,7 +210,39 @@ namespace PatrolSim
             get { return _abnormalEvent; }
         }
 
-        public void Move(double time, bool abnormalEvent)
+        public void EstimatedMove(double time, RouteClassifier rc)
+        {
+
+            Position targetPosition;
+            string next_data = rc.GetNextPoint(AgentID);
+            if (next_data != "no matching")
+            {
+                char[] delimiter = {','};
+                string [] token = next_data.Split(delimiter);
+                targetPosition = new Position(Double.Parse(token[0]), Double.Parse(token[1]));
+            }
+            else
+            {
+                targetPosition = new Position(_currentPosition.X, _currentPosition.Y);
+            }
+            _prevPosition.X = _currentPosition.X;
+            _prevPosition.Y = _currentPosition.Y;
+
+            // X Move : total distance
+            if ((targetPosition.X - _currentPosition.X) < 0)
+                _currentPosition.X -= AgentSpeed * time;
+            else
+                _currentPosition.X += AgentSpeed * time;
+            // Y Move
+            if ((targetPosition.Y - _currentPosition.Y) < 0)
+                _currentPosition.Y -= AgentSpeed * time;
+            else
+                _currentPosition.Y += AgentSpeed * time;
+
+            rc.SetNextWaypoint(AgentID, (int)_currentPosition.X, (int)_currentPosition.Y);
+        }
+
+        public void Move(double time, bool abnormalEvent, RouteClassifier rc)
         {
             if (abnormalEvent)
             {
@@ -218,7 +251,17 @@ namespace PatrolSim
                     _abnormalEvent = true;
                     _crashedPosition = new Position(_currentPosition.X, _currentPosition.Y); ;
                 }
-                Move(time); // Real Agent
+
+                // TODO
+                //if (_agentType == 0)
+                //{
+                //    EstimatedMove(time, rc);
+                //}
+                //else
+                {
+                    Move(time); // Real Agent    
+                }
+                
                 //Move(time); // Simulated Agent
             }
             else

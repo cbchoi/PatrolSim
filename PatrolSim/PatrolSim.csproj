@@ -159,6 +159,14 @@
       <Project>{256007b6-7e7c-4e40-bb0f-a1dfe01f375f}</Project>
       <Name>libAIVDM</Name>
     </ProjectReference>
+    <ProjectReference Include="..\libShipClassifier\libShipClassifier.vcxproj">
+      <Project>{5ab64ea0-a0b3-475c-9684-27a70e666dc9}</Project>
+      <Name>libShipClassifier</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ShipClassifierWrapper\ShipClassifierWrapper.csproj">
+      <Project>{29247c85-bd48-43d0-8660-faa13ad9ad2b}</Project>
+      <Name>ShipClassifierWrapper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

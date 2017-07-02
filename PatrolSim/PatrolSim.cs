@@ -15,6 +15,7 @@ using Nevron.Chart.Windows;
 using Nevron.Chart.WinForm;
 using Nevron.Dom;
 using Nevron.GraphicsCore;
+using ShipClassifierWrapper;
 
 namespace PatrolSim
 {
@@ -105,7 +106,7 @@ namespace PatrolSim
             DrawLineInt(_realMap);
             DrawLineInt(_exclusiveMap);
 
-            _simManager = new SimulationManager(this);
+            _simManager = new SimulationManager();
             _worker = new Thread(UpdateSimulationMap);
             _radarWorker = new Thread(UpdateRadarMap);
 
@@ -243,6 +244,7 @@ namespace PatrolSim
         private void openScenarioToolStripMenuItem_Click(object sender, EventArgs e)
         {
             OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "Scenario File (.xml)|*.xml|All Files (*.*)|*.*";
             if (ofd.ShowDialog() == DialogResult.OK)
             {
                 //StreamReader sr = new StreamReader(ofd.FileName);
@@ -277,7 +279,7 @@ namespace PatrolSim
                 MessageBox.Show("You should select the scenario first.");
                 return;
             }
-            _simManager.Run(_scenarioManager.AgentList);
+            _simManager.Run(_scenarioManager.AgentList, _scenarioManager.RouteManager);
 
             _threadState = ThreadState.Run;
             if (!_worker.IsAlive)
@@ -319,7 +321,9 @@ namespace PatrolSim
                 _radarWorker.Abort();
             }
         }
-        
+
+        private RouteClassifier _routeManager;
+
         private void aisCrashlStripMenuItem_Click(object sender, EventArgs e)
         {
             _simManager.SetAbnormalEvent(!_simManager.AbnormalEvent);
@@ -334,8 +338,16 @@ namespace PatrolSim
                     {
                         if (agent.AgentType == (int)AgentType.NormalShip)
                         {
-                            temp_agentList.Add(agent.SimModelClone());
+                            Agent sim_agent = agent.SimModelClone();
+                            temp_agentList.Add(sim_agent);
 
+                            // TODO
+                            // Partial Trajectory Initalize
+                            //for (int i = 0; i < sim_agent.CurrentWayointIndex - 1; i++)
+                            //{
+                            //    _routeManager.SetWaypoints(sim_agent.AgentID, (int)((Position)sim_agent.WaypointList[i]).X, (int)((Position)sim_agent.WaypointList[i]).Y) ;
+                            //}
+                            //_routeManager.SetWaypoints(sim_agent.AgentID, (int) agent.CurrentPosition.X, (int) agent.CurrentPosition.Y);
                         }
                     }
 
