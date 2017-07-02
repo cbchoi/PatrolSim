@@ -38,12 +38,15 @@ namespace PatrolSim
 
         private ThreadState _threadState = ThreadState.Stop;
         private Thread _worker;
+        private Thread _radarWorker;
 
         private BackgroundWorker backWorker_map;
+        private BackgroundWorker backWorker_radar;
         private static BackgroundWorker backWorker_log;
 
         private static Object thisLock = new Object();
         private static Object log_lock = new Object();
+        private static Object remove_lock = new Object();
 
         //private Image _cloneSim;
         //private Image _cloneReal;
@@ -103,11 +106,14 @@ namespace PatrolSim
 
             _simManager = new SimulationManager(this);
             _worker = new Thread(UpdateSimulationMap);
+            _radarWorker = new Thread(UpdateRadarMap);
 
             backWorker_map = new BackgroundWorker();
             backWorker_log = new BackgroundWorker();
+            backWorker_radar = new BackgroundWorker();
 
             this.backWorker_map.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backWorker_RunWorkerCompleted);
+            this.backWorker_radar.RunWorkerCompleted += new RunWorkerCompletedEventHandler(this.backWorker_RadarRunWorkerCompleted);
             backWorker_log.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backWorker_log_RunWorkerCompleted);
             backWorker_log.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backWorker_log_DoWork);
         }
@@ -208,58 +214,6 @@ namespace PatrolSim
         private static List<Agent> agent_list = new List<Agent>();
         
 
-        //private static Tuple<int, int> UpdateMatrix(NChartControl nChartControl, double[][] matrix)
-        //{
-        //    Random rnd = new Random();
-        //    int value = (int)Math.Max(1, rnd.NextDouble() * 20);
-        //    int x = rnd.Next(0, 99);
-        //    int y = rnd.Next(0, 99);
-
-        //    matrix[y][x] = value;
-
-        //    NCartesianChart chart = (NCartesianChart)nChartControl.Charts[0];
-        //    for (int i = 0; i < _gridSizeY; i++)
-        //    {
-        //        NBarSeries bar = chart.Series[i] as NBarSeries;
-        //        double[] barValues = matrix[i];
-        //        int barValueCount = barValues.Length;
-
-        //        if (bar.Values.Count == 0)
-        //        {
-        //            bar.Values.AddRange(barValues);
-        //        }
-        //        else
-        //        {
-        //            bar.Values.SetRange(0, barValues);
-        //        }
-
-        //        int fillStyleCount = bar.FillStyles.Count;
-
-        //        for (int j = 0; j < barValueCount; j++)
-        //        {
-        //            if (j >= fillStyleCount)
-        //            {
-        //                bar.FillStyles[j] = new NColorFillStyle(_colorTable[(int)barValues[j]]);
-        //            }
-        //            else
-        //            {
-        //                ((NColorFillStyle)bar.FillStyles[j]).Color = _colorTable[(int)barValues[j]];
-        //            }
-        //        }
-        //    }
-        //    nChartControl.Refresh();
-
-        //    return Tuple.Create(x, y);
-        //}
-
-        //private static void UpdateLog(ListBox lb, String objID, String eventLog, int x, int y)
-        //{
-        //    String strLog = $"{DateTime.Now:s} {objID} {eventLog} ({x}, {y})";
-        //    lb.Items.Add(strLog);
-        //    lb.SelectedIndex = lb.Items.Count - 1;
-
-        //}
-
         private void chartRealWorld_Click(object sender, EventArgs e)
         {
 
@@ -277,6 +231,11 @@ namespace PatrolSim
                 _worker.Abort();
                 _threadState = ThreadState.Stop;
                _simManager.Terminate();
+            }
+
+            if (_radarWorker.IsAlive)
+            {
+                _radarWorker.Abort();
             }
         }
 
@@ -312,7 +271,11 @@ namespace PatrolSim
 
         private void simulationStartToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            
+            if (_scenarioManager == null)
+            {
+                MessageBox.Show("You should select the scenario first.");
+                return;
+            }
             _simManager.Run(_scenarioManager.AgentList);
 
             _threadState = ThreadState.Run;
@@ -320,18 +283,25 @@ namespace PatrolSim
             {
                 _worker.Start();
             }
+
+            if (!_radarWorker.IsAlive)
+            {
+                _radarWorker.Start();
+            }
         }
 
         private void simulaitionPauseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _simManager.Pause();
             _threadState = ThreadState.Pause;
+            
         }
 
         private void simulationResumeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             _simManager.Resume();
             _threadState = ThreadState.Run;
+            
         }
 
         private void simulationStopToolStripMenuItem_Click(object sender, EventArgs e)
@@ -342,114 +312,55 @@ namespace PatrolSim
             {
                 _worker.Abort();
             }
+
+            if (!_radarWorker.IsAlive)
+            {
+                _radarWorker.Abort();
+            }
         }
-
-        //public static Color InterpolateColors(Color color1, Color color2, float factor)
-        //{
-        //    int num1 = ((int)color1.R);
-        //    int num2 = ((int)color1.G);
-        //    int num3 = ((int)color1.B);
-
-        //    int num4 = ((int)color2.R);
-        //    int num5 = ((int)color2.G);
-        //    int num6 = ((int)color2.B);
-
-        //    byte num7 = (byte)((((float)num1) + (((float)(num4 - num1)) * factor)));
-        //    byte num8 = (byte)((((float)num2) + (((float)(num5 - num2)) * factor)));
-        //    byte num9 = (byte)((((float)num3) + (((float)(num6 - num3)) * factor)));
-
-        //    return Color.FromArgb(num7, num8, num9);
-        //}
-
-        //private void UpdateMap(NChartControl nChartControl, int gridY, double[] valList)
-        //{
-        //    NCartesianChart chart = (NCartesianChart)nChartControl.Charts[0];
-        //    // fill grid to bars
-        //    //for (int i = 0; i < 100; i++)
-        //    {
-        //        NBarSeries bar = chart.Series[gridY] as NBarSeries;
-        //        double[] barValues = valList;
-        //        int barValueCount = barValues.Length;
-
-        //        if (bar.Values.Count == 0)
-        //        {
-        //            bar.Values.AddRange(barValues);
-        //        }
-        //        else
-        //        {
-        //            bar.Values.SetRange(0, barValues);
-        //        }
-
-        //        int fillStyleCount = bar.FillStyles.Count;
-
-        //        for (int j = 0; j < barValueCount; j++)
-        //        {
-        //            if (j >= fillStyleCount)
-        //            {
-        //                bar.FillStyles[j] = new NColorFillStyle(_colorTable[(int)barValues[j]]);
-        //            }
-        //            else
-        //            {
-        //                ((NColorFillStyle)bar.FillStyles[j]).Color = _colorTable[(int)barValues[j]];
-        //            }
-        //        }
-        //    }
-
-        //    nChartControl.Refresh();
-        //}
-
-        //private static Tuple<int, int> UpdateMatrixThreadTest(double[][] matrix)
-        //{
-        //    Random rnd = new Random();
-        //    int value = (int)Math.Max(1, rnd.NextDouble() * 20);
-        //    int x = rnd.Next(0, 99);
-        //    int y = rnd.Next(0, 99);
-
-        //    matrix[y][x] = value;
-
-        //    return Tuple.Create(x, y);
-        //}
-
+        
         private void aisCrashlStripMenuItem_Click(object sender, EventArgs e)
         {
-           
             _simManager.SetAbnormalEvent(!_simManager.AbnormalEvent);
 
-            List<Agent> temp_agentList = new List<Agent>();
+            lock (remove_lock)
+            {
+                List<Agent> temp_agentList = new List<Agent>();
+                if (_simManager.AbnormalEvent == true)
+                {
+                    // Clone Agents
+                    foreach (Agent agent in _scenarioManager.AgentList)
+                    {
+                        if (agent.AgentType == (int)AgentType.NormalShip)
+                        {
+                            temp_agentList.Add(agent.SimModelClone());
+
+                        }
+                    }
+
+                    foreach (Agent agent in temp_agentList)
+                    {
+                        _simManager.InsertAgentAtRuntime(agent);
+                    }
+                }
+                else
+                {
+                    foreach (Agent agent in _simManager.AgentList)
+                    {
+                        if (agent.AgentType == (int)AgentType.SimulationModel)
+                        {
+                            temp_agentList.Add(agent);
+                        }
+                    }
+
+                    foreach (Agent agent in temp_agentList)
+                    {
+                        _simManager.RemoveAgentAtRuntime(agent);
+                    }
+                }
+            }
+
             if (_simManager.AbnormalEvent == true)
-            {
-                // Clone Agents
-                foreach (Agent agent in _scenarioManager.AgentList)
-                {
-                    if (agent.AgentType == (int) AgentType.NormalShip)
-                    {
-                        temp_agentList.Add(agent.SimModelClone());
-                        
-                    }
-                }
-
-                foreach (Agent agent in temp_agentList)
-                {
-                    _simManager.InsertAgentAtRuntime(agent);
-                }
-            }
-            else
-            {
-                foreach (Agent agent in _scenarioManager.AgentList)
-                {
-                    if (agent.AgentType == (int)AgentType.SimulationModel)
-                    {
-                        temp_agentList.Add(agent.SimModelClone()); 
-                    }
-                }
-
-                foreach (Agent agent in temp_agentList)
-                {
-                    _simManager.RemoveAgentAtRuntime(agent);
-                }
-            }
-
-            if (_simManager.AbnormalEvent == false)
             {
                 aisCrashlStripMenuItem.Text = "AIS Restored";
             }

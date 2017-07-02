@@ -10,8 +10,8 @@ namespace ScenarioEditor
         public ScenarioEditor()
         {
             InitializeComponent();
-            _dx = pictRealWorld.Image.Width / 50;
-            _dy = pictRealWorld.Image.Height / 50;
+            _dx = pictRealWorld.Image.Width / 100;
+            _dy = pictRealWorld.Image.Height / 100;
 
             DrawLineInt(pictRealWorld.Image);
             DrawBox(pictRealWorld.Image, 0, 0);
@@ -22,7 +22,7 @@ namespace ScenarioEditor
             MouseEventArgs me = (MouseEventArgs)e;
             Point coordinates = me.Location;
 
-            dataGridView1.Rows.Add(_curAgentID, 0, _curAgentSpd, _curAgentType, coordinates.X, pictRealWorld.Height - coordinates.Y, 0);
+            dataGridView1.Rows.Add(_curAgentID, 0, _curAgentSpd, _curAgentType, ((float)coordinates.X/pictRealWorld.Width) *100, ((float)(pictRealWorld.Height - coordinates.Y))/ pictRealWorld.Height *100, 0);
             DrawBox(pictRealWorld.Image, coordinates.X, coordinates.Y);
             pictRealWorld.Refresh();
         }
