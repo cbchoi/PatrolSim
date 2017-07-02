@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
@@ -96,6 +97,7 @@ namespace ScenarioEditor
 
                     newXmlDoc.AppendChild(NCD);
                     newXmlDoc.Save(sfd.FileName);
+                    Debug.WriteLine(ex.Message);
                 }
 
                 XmlNode SelectedData = newXmlDoc.SelectSingleNode("ObjectList");

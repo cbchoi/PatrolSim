@@ -254,7 +254,7 @@ namespace PatrolSim
                                     }
                                     else
                                     {
-                                        remove_list.Add(new Tuple<int, int, int>(i,j, agent.AgentID));                                        
+                                        remove_list.Add(new Tuple<int, int, int>(i,j, agent.AgentID));
                                     }
                                 }
 
