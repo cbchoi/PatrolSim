@@ -16,9 +16,6 @@ namespace PatrolSim
         private int _agentType;
         private readonly int _agentMMSI;
 
-        private AIS_MSG_1 _asg = new AIS_MSG_1();
-        public AIS_MSG_1 AIS_MSG1 { get { return _asg; } }
-
         private Position _prevPosition;
 
         private readonly ArrayList _wayList;
@@ -140,16 +137,16 @@ namespace PatrolSim
                 _curWayIndex++;
         }
 
-        public void AddWaypoint(int x, int y, int z)
+        public void AddWaypoint(double x, double y, double z)
         {
             _wayList.Add(new Position(x, y));
         }
 
         public void AddWaypoint(XmlNode node)
         {
-            int x = Int32.Parse(node.Attributes["x"].Value);
-            int y = ((Int32.Parse(node.Attributes["y"].Value)));
-            int z = Int32.Parse(node.Attributes["z"].Value);
+            double x = Double.Parse(node.Attributes["x"].Value);
+            double y = ((Double.Parse(node.Attributes["y"].Value)));
+            double z = Double.Parse(node.Attributes["z"].Value);
 
             AddWaypoint(x, y, z);
         }

@@ -214,8 +214,9 @@ namespace PatrolSim
             int _dy = e.ClipRectangle.Height / _gridSizeY;
 
             //Bitmap bmpImage = new Bitmap(bmp);
+            List<Tuple<int, int, int>> remove_list = new List<Tuple<int, int, int>>();
 
-            //using (var graphics = e.Graphics)
+            lock (remove_lock)
             {
                 for (int i = 0; i < _gridSizeY; i++)
                 {
@@ -253,13 +254,18 @@ namespace PatrolSim
                                     }
                                     else
                                     {
-                                        matrixSimAgents[i][j].Remove(agent.AgentID);
+                                        remove_list.Add(new Tuple<int, int, int>(i,j, agent.AgentID));                                        
                                     }
                                 }
 
                             }
                         }
                     }
+                }
+
+                foreach (Tuple<int, int, int> tuple in remove_list)
+                {
+                    matrixSimAgents[tuple.Item1][tuple.Item2].Remove(tuple.Item3);
                 }
             }
         }

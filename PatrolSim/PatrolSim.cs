@@ -46,6 +46,7 @@ namespace PatrolSim
 
         private static Object thisLock = new Object();
         private static Object log_lock = new Object();
+        private static Object remove_lock = new Object();
 
         //private Image _cloneSim;
         //private Image _cloneReal;
@@ -322,41 +323,44 @@ namespace PatrolSim
         {
             _simManager.SetAbnormalEvent(!_simManager.AbnormalEvent);
 
-            List<Agent> temp_agentList = new List<Agent>();
+            lock (remove_lock)
+            {
+                List<Agent> temp_agentList = new List<Agent>();
+                if (_simManager.AbnormalEvent == true)
+                {
+                    // Clone Agents
+                    foreach (Agent agent in _scenarioManager.AgentList)
+                    {
+                        if (agent.AgentType == (int)AgentType.NormalShip)
+                        {
+                            temp_agentList.Add(agent.SimModelClone());
+
+                        }
+                    }
+
+                    foreach (Agent agent in temp_agentList)
+                    {
+                        _simManager.InsertAgentAtRuntime(agent);
+                    }
+                }
+                else
+                {
+                    foreach (Agent agent in _simManager.AgentList)
+                    {
+                        if (agent.AgentType == (int)AgentType.SimulationModel)
+                        {
+                            temp_agentList.Add(agent);
+                        }
+                    }
+
+                    foreach (Agent agent in temp_agentList)
+                    {
+                        _simManager.RemoveAgentAtRuntime(agent);
+                    }
+                }
+            }
+
             if (_simManager.AbnormalEvent == true)
-            {
-                // Clone Agents
-                foreach (Agent agent in _scenarioManager.AgentList)
-                {
-                    if (agent.AgentType == (int) AgentType.NormalShip)
-                    {
-                        temp_agentList.Add(agent.SimModelClone());
-                        
-                    }
-                }
-
-                foreach (Agent agent in temp_agentList)
-                {
-                    _simManager.InsertAgentAtRuntime(agent);
-                }
-            }
-            else
-            {
-                foreach (Agent agent in _scenarioManager.AgentList)
-                {
-                    if (agent.AgentType == (int)AgentType.SimulationModel)
-                    {
-                        temp_agentList.Add(agent.SimModelClone()); 
-                    }
-                }
-
-                foreach (Agent agent in temp_agentList)
-                {
-                    _simManager.RemoveAgentAtRuntime(agent);
-                }
-            }
-
-            if (_simManager.AbnormalEvent == false)
             {
                 aisCrashlStripMenuItem.Text = "AIS Restored";
             }

@@ -1,6 +1,6 @@
-<ObjectList MapSizeX="480" MapSizeY="498">
+<ObjectList MapSizeX="100" MapSizeY="100">
   <ShipList>
-    <Ship id="1" mmsi="0" spd="0.5" type="10">
+    <Ship id="1" mmsi="440113380" spd="0.5" type="10">
       <Waypoints>
         <Waypoint x="0.8333333" y="79.91968" z="0" />
         <Waypoint x="3.541667" y="80.72289" z="0" />
@@ -32,7 +32,7 @@
         <Waypoint x="99.58334" y="45.78313" z="0" />
       </Waypoints>
     </Ship>
-    <Ship id="2" mmsi="0" spd="0.5" type="10">
+    <Ship id="2" mmsi="440113350" spd="0.5" type="10">
       <Waypoints>
         <Waypoint x="29.16667" y="99.79919" z="0" />
         <Waypoint x="25.625" y="95.98393" z="0" />
@@ -50,7 +50,7 @@
         <Waypoint x="17.5" y="1.004016" z="0" />
       </Waypoints>
     </Ship>
-    <Ship id="3" mmsi="0" spd="0.5" type="10">
+    <Ship id="3" mmsi="440113320" spd="0.5" type="10">
       <Waypoints>
         <Waypoint x="16.45833" y="1.004016" z="0" />
         <Waypoint x="16.45833" y="5.62249" z="0" />
@@ -67,7 +67,7 @@
         <Waypoint x="0.8333333" y="70.88354" z="0" />
       </Waypoints>
     </Ship>
-    <Ship id="4" mmsi="0" spd="0.5" type="10">
+    <Ship id="4" mmsi="440313380" spd="0.5" type="10">
       <Waypoints>
         <Waypoint x="0.2083333" y="72.08836" z="0" />
         <Waypoint x="3.541667" y="70.48193" z="0" />
@@ -96,7 +96,7 @@
         <Waypoint x="50" y="1.004016" z="0" />
       </Waypoints>
     </Ship>
-    <Ship id="5" mmsi="0" spd="0.5" type="10">
+    <Ship id="5" mmsi="440113280" spd="0.5" type="10">
       <Waypoints>
         <Waypoint x="99.79166" y="44.17671" z="0" />
         <Waypoint x="98.125" y="46.98795" z="0" />
@@ -132,7 +132,7 @@
         <Waypoint x="0.625" y="80.32128" z="0" />
       </Waypoints>
     </Ship>
-    <Ship id="6" mmsi="0" spd="0.5" type="10">
+    <Ship id="6" mmsi="440163380" spd="0.5" type="10">
       <Waypoints>
         <Waypoint x="41.04167" y="2.208835" z="0" />
         <Waypoint x="38.95833" y="2.008032" z="0" />
@@ -167,7 +167,7 @@
         <Waypoint x="0" y="69.47791" z="0" />
       </Waypoints>
     </Ship>
-    <Ship id="7" mmsi="0" spd="0.5" type="10">
+    <Ship id="7" mmsi="440213380" spd="0.5" type="10">
       <Waypoints>
         <Waypoint x="5" y="14.05622" z="0" />
         <Waypoint x="8.541667" y="15.06024" z="0" />
@@ -341,5 +341,17 @@
     </Ship>
   </ShipList>
   <ObstcleList />
-  <ColorList />
+  <ColorList>
+  	<Color id="0" r="255" g="255" b="255"/>
+    <Color id="1" r="255" g="0" b="0"/>
+    <Color id="2" r="0" g="255" b="0"/>
+    <Color id="3" r="0" g="0" b="255"/>
+    <Color id="4" r="238" g="244" b="66"/>
+    <Color id="5" r="214" g="93" b="23"/>
+    <Color id="6" r="112" g="214" b="23"/>
+    <Color id="7" r="112" g="214" b="23"/>
+    <Color id="8" r="112" g="214" b="23"/>
+    <Color id="9" r="112" g="214" b="23"/>
+    <Color id="10" r="112" g="214" b="23"/>
+  </ColorList>
 </ObjectList>

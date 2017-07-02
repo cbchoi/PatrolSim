@@ -5,11 +5,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using AISWrapper;
 
 namespace PatrolSim
 {
     class ScenarioManager
     {
+        private Dictionary<int, AIS_MSG_1> _aisList = new Dictionary<int, AIS_MSG_1>();
+        public Dictionary<int, AIS_MSG_1> AIS_MSG1MAP
+        {
+            get { return _aisList; }
+        }
+
         private List<Agent> _agentList;
         public List<Agent> AgentList
         {
@@ -65,7 +72,9 @@ namespace PatrolSim
         {
             foreach (XmlNode ship in node.ChildNodes)
             {
-                _agentList.Add(new Agent(ship));
+                Agent agent = new Agent(ship);
+                _agentList.Add(agent);
+                _aisList.Add(agent.AgentID, new AIS_MSG_1());
             }
         }
 

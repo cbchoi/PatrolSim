@@ -30,6 +30,12 @@ namespace PatrolSim
 
         private System.Diagnostics.Stopwatch _sw;
         private List<Agent> _agentlist = null;
+
+        public List<Agent> AgentList
+        {
+            get { return _agentlist; }
+        }
+
         private ThreadState _threadState;
         private Thread _worker;
 
