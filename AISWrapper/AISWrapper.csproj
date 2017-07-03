@@ -61,11 +61,5 @@
     <Compile Include="AISWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\libAIVDM\libAIVDM.vcxproj">
-      <Project>{256007b6-7e7c-4e40-bb0f-a1dfe01f375f}</Project>
-      <Name>libAIVDM</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
