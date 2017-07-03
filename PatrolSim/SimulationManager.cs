@@ -123,10 +123,11 @@ namespace PatrolSim
         {
             _sw = Stopwatch.StartNew();;
             long currentMilliseconds = _sw.ElapsedMilliseconds;
-            foreach (Agent agent in _agentlist)
+            lock (event_lock)
             {
-                lock (event_lock)
+                foreach (Agent agent in _agentlist)
                 {
+               
                     agent.Move(1, _abnormalEvent, _rc);
                 }
             }

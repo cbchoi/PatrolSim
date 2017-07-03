@@ -253,11 +253,11 @@ namespace PatrolSim
                 }
 
                 // TODO
-                //if (_agentType == 0)
-                //{
-                //    EstimatedMove(time, rc);
-                //}
-                //else
+                if (_agentType == 0)
+                {
+                    EstimatedMove(time, rc);
+                }
+                else
                 {
                     Move(time); // Real Agent    
                 }

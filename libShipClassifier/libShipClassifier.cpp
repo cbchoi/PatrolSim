@@ -1,10 +1,21 @@
 #include "libShipClassifier.h"
 #include "Classifier.h"
 #include "Windows.h"
+#include <fstream>
 
+//Classifier * pInstance = NULL;
 void createInstrance(char* path)
 {
-	Classifier::getInstancePtr()->addWayPoints(path, NORMAL);
+	std::ifstream fin("outPatter1.xml");
+	/*if(fin.good())
+	{
+		fin.close();
+		Classifier::getInstancePtr()->loadWayPointPatter("outPatter1.xml");
+	}
+	else*/
+	{
+		Classifier::getInstancePtr()->addWayPoints(path, NORMAL);
+	}
 }
 
 void releaseInstance()
@@ -33,24 +44,25 @@ void setNextWaypoint(int _id, int x, int y)
 
 char* getNextPoint(int _id)
 {
-	std::vector<WayPoints> nextPointsCandidate = Classifier::getInstancePtr()->getNextPoints(*(Classifier::GetTrajectoryMap()[_id]), 6);
+	std::vector<WayPoints > nextPointsCandidate = Classifier::getInstancePtr()->getNextPoints(*(Classifier::GetTrajectoryMap()[_id]), 6);
 	std::stringstream sstream;
 	
 	if (!nextPointsCandidate.empty())
 	{
-		sstream << nextPointsCandidate[0][0].x << "," << nextPointsCandidate[0][0].y;
+		sstream << (nextPointsCandidate[0][0].x+1) << "," << nextPointsCandidate[0][0].y;
 	}
 	else
 	{
 		sstream << "no matching";
 	}
 
-	int size = sstream.str().length();
-	char* result = (char*)LocalAlloc(LPTR, size + 1);
-
-	strcpy_s(result, sstream.str().length(), sstream.str().c_str());
+	std::string temp = sstream.str();
+	const char* temp_c = temp.c_str();
+	char* result = (char*)LocalAlloc(LPTR, temp.length() + 1);
+	for (int i = 0; i < temp.length(); i++)
+		result[i] = temp_c[i];
 	
-	result[size + 1] = '\0';
+	result[temp.length() + 1] = '\0';
 
 	return result;
 }

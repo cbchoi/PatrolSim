@@ -21,7 +21,7 @@ namespace PatrolSim
             object sender,
             RunWorkerCompletedEventArgs e)
         {
-            lock (thisLock)
+            lock (remove_lock)
             {
                 UpdateChartComponent(chartRealWorld, matrixRealWorld);
             }
@@ -227,25 +227,29 @@ namespace PatrolSim
 
         public static void UpdateSimulation()
         {
-            lock (thisLock)
+            lock (remove_lock)
             {
-                foreach (Agent agent in _scenarioManager.AgentList)
+                lock (thisLock)
                 {
-                    if (agent.AgentType == (int) AgentType.NormalShip)
+                    foreach (Agent agent in _scenarioManager.AgentList)
                     {
-                        UpdateMatrix(agent, matrixRealWorld, matrixRealAgents);
-                        UpdateMatrix(agent, matrixSimulation, matrixSimAgents);
-                    }
-                    else if (agent.AgentType == (int)AgentType.Unregistered)
-                    {
-                        UpdateMatrix(agent, matrixRealWorld, matrixRealAgents);
-                    }
-                    else if (agent.AgentType == (int) AgentType.SimulationModel)
-                    {
-                        UpdateMatrix(agent, matrixSimulation, matrixSimAgents);
+                        if (agent.AgentType == (int)AgentType.NormalShip)
+                        {
+                            UpdateMatrix(agent, matrixRealWorld, matrixRealAgents);
+                            UpdateMatrix(agent, matrixSimulation, matrixSimAgents);
+                        }
+                        else if (agent.AgentType == (int)AgentType.Unregistered)
+                        {
+                            UpdateMatrix(agent, matrixRealWorld, matrixRealAgents);
+                        }
+                        else if (agent.AgentType == (int)AgentType.SimulationModel)
+                        {
+                            UpdateMatrix(agent, matrixSimulation, matrixSimAgents);
+                        }
                     }
                 }
             }
+            
         }
 
         //private static void UpdateMatrix(Agent agent, double[][] matrix)
@@ -265,7 +269,7 @@ namespace PatrolSim
 
         private static void UpdateMatrix(Agent agent, double[][] matrix_chart, Dictionary<int, Agent>[][] matrix)
         {
-            lock (remove_lock)
+            //lock (remove_lock)
             {
                 int normalizedX = (int)(agent.CurrentPosition.X * _gridSizeX / _scenarioManager.MapSizeX);
                 int normalizedY = (int)(agent.CurrentPosition.Y * _gridSizeY / _scenarioManager.MapSizeY);

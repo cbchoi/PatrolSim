@@ -8,6 +8,7 @@
 #include <exception>
 
 #include "rapidxml.hpp"
+#include "rapidxml_print.hpp"
 #include "type.h"
 
 
@@ -21,6 +22,9 @@ class Classifier
 public:
 	bool			addWayPoints(const std::string &file, const MoveType & moveType);
 	std::vector<WayPoints>	getNextPoints(const WayPoints & partialWPs, const int & depth);
+	bool			writeWayPointPattern(const std::string & file);
+	bool			loadWayPointPatter(const std::string & file);
+
 
 public: 
 	int			addShipWaypoints(rapidxml::xml_node<> * rootNode, std::vector<CPos> &curWayPoints, const MoveType & moveType);
@@ -29,6 +33,8 @@ public:
 	int			addWeights(std::map<CPos, double> & PosWeightMap, const WayPoints & points);
 	CPos			getPos(const double & x, const double & y);
 	int			getFullPath(WayPoints & points, const WayPoints & sourceWPs);
+	int			initMovingPoints();
+
 
 private: 
 	double		getCorrelationBtwWPs(const WayPoints & lhs, const WayPoints & rhs);
@@ -60,6 +66,8 @@ public:
 	std::vector<WPPattern>	normalWPPatterns;
 	std::vector<WPPattern>	abnormalWPPatterns;
 	std::vector<WayPoints>	prevWPPoints;
+	std::set<CPos>			movingWPforAdding;
+	std::set<CPos>			movingWPforRemoving;
 
 public:
 	static Classifier * getInstancePtr() 
@@ -96,7 +104,6 @@ private:
 	Classifier(); 
 	~Classifier() {} 
 	static Classifier * pInstance;
-
 
 private:
 	static std::map<int, std::vector<CPos>*> trajectoryMap;

@@ -11,7 +11,6 @@
 #include <cmath>
 #include <set>
 
-std::map<int, std::vector<CPos>*> Classifier::trajectoryMap = std::map<int, std::vector<CPos>*>();
 
 Classifier::Classifier()
 : resolPerCell(1)
@@ -22,6 +21,8 @@ Classifier::Classifier()
 	minusWeight = -1.7;
 	minusRadius = 2;
 	numCandidate = 3;
+
+	initMovingPoints();
 }
 
 Classifier * Classifier::pInstance = NULL;
@@ -33,7 +34,7 @@ bool Classifier::addWayPoints(const std::string &file, const MoveType & moveType
 	std::vector<CPos> curWayPoints;
 
 	if (!fin.is_open())
-	{
+	{ 
 		throw nodeInfoException("topology xml file is not loaded for parsing");
 		return false;
 	}
@@ -43,13 +44,13 @@ bool Classifier::addWayPoints(const std::string &file, const MoveType & moveType
 
 	sstr.flush();
 	fin.close();
-
+	
 	std::string xmlData = sstr.str();
 	rapidxml::xml_document<> doc;
-	doc.parse<0>(&xmlData[0]);
-
+	doc.parse<0> (&xmlData[0]);
+	
 	rapidxml::xml_node<> *rootNode = doc.first_node("ObjectList");
-	if (!rootNode)
+	if(!rootNode)
 		return false;
 
 	//set map size
@@ -58,10 +59,9 @@ bool Classifier::addWayPoints(const std::string &file, const MoveType & moveType
 	attr = rootNode->first_attribute("MapSizeY");
 	mapSizeY = atoi(attr->value());
 
-
+	rapidxml::xml_node<> *curShipNode = rootNode->first_node("ShipList")->first_node("Ship");
 	while (1)
-	{
-		rapidxml::xml_node<> *curShipNode = rootNode->first_node("ShipList")->first_node("Ship");
+	{ 
 		addShipWaypoints(curShipNode, curWayPoints, moveType);
 		curShipNode = curShipNode->next_sibling("Ship");
 		if (curShipNode == NULL)
@@ -144,7 +144,7 @@ int Classifier::addShipWaypoints(rapidxml::xml_node<> * curShipNode, std::vector
 		addWeights(_pattern.PosWeightMap, curWayPoints);
 
 		localWPPatterns->push_back(_pattern);
-	}
+	}	
 
 	return 0;
 }
@@ -159,6 +159,9 @@ std::vector<CorrInfo> Classifier::getPatternCandidates(std::vector<WPPattern> & 
 
 		for (size_t i = 0; i < wpGroupIndexes.size(); ++i)
 		{
+			int value = prevWPPoints.size();
+			int value2 = wpGroupIndexes[i];
+
 			WayPoints & eachWPs = prevWPPoints.at(wpGroupIndexes[i]);
 
 			WayPoints reverseWPs = curWayPoints;
@@ -225,6 +228,144 @@ std::vector<WayPoints> Classifier::getNextPoints(const WayPoints & partialWPs, c
 	retWPsCandidates = getWPsFromWeightSum(targetPattern->PosWeightMap, partialWPs, depth);
 
 	return retWPsCandidates;
+}
+
+bool Classifier::writeWayPointPattern(const std::string & file)
+{
+	rapidxml::xml_document<> doc;
+	rapidxml::xml_node<>* decl = doc.allocate_node(rapidxml::node_declaration);
+	decl->append_attribute(doc.allocate_attribute("version", "1.0"));
+	decl->append_attribute(doc.allocate_attribute("encoding", "UTF-8"));
+	doc.append_node(decl);
+
+	rapidxml::xml_node<> *patterns = doc.allocate_node(rapidxml::node_element, "Patterns");
+	doc.append_node(patterns);
+
+	std::vector<std::string> idVec;
+	std::vector<std::string> posXVec;
+	std::vector<std::string> posYVec;
+	std::vector<std::string> posWeightVec;
+
+	for (auto patternIter = normalWPPatterns.begin(); patternIter != normalWPPatterns.end(); ++patternIter)
+	{
+		char * idxStr = doc.allocate_string(std::to_string(patternIter->patternID).c_str());
+
+		rapidxml::xml_node<> *pattern = doc.allocate_node(rapidxml::node_element, "Pattern");
+		//pattern->append_attribute(doc.allocate_attribute("id", "0"));
+		pattern->append_attribute(doc.allocate_attribute("id", idxStr));
+		patterns->append_node(pattern);
+
+		for (auto wpIter = patternIter->wpIDs.begin();
+				wpIter != patternIter->wpIDs.end(); ++wpIter)
+		{ 
+
+			char * wpIterStr = doc.allocate_string(std::to_string(*wpIter).c_str());
+
+			rapidxml::xml_node<> *wpNodePtr = doc.allocate_node(rapidxml::node_element, "WPID");
+			wpNodePtr->append_attribute(doc.allocate_attribute("id", wpIterStr));
+			pattern->append_node(wpNodePtr);
+		}
+
+		for (auto weightIter = patternIter->PosWeightMap.begin();
+			weightIter != patternIter->PosWeightMap.end(); ++weightIter)
+		{ 
+
+			char * posXStr = doc.allocate_string(std::to_string(weightIter->first.x).c_str());
+			char * posYStr = doc.allocate_string(std::to_string(weightIter->first.y).c_str());
+			char * weightStr = doc.allocate_string(std::to_string(weightIter->second).c_str());
+
+			rapidxml::xml_node<> *weightNodePtr = doc.allocate_node(rapidxml::node_element, "Coor");
+			weightNodePtr->append_attribute(doc.allocate_attribute("x", posXStr));
+			weightNodePtr->append_attribute(doc.allocate_attribute("y", posYStr));
+			weightNodePtr->append_attribute(doc.allocate_attribute("w", weightStr));
+			pattern->append_node(weightNodePtr);
+		}
+	}
+
+	std::ofstream file_stored(file);
+	file_stored << doc;
+	file_stored.close();
+	doc.clear();
+
+	//print(std::cout, doc, 0);
+	return 0;
+}
+
+bool Classifier::loadWayPointPatter(const std::string & file)
+{
+	std::ifstream fin(file.c_str());
+	std::vector<CPos> curWayPoints;
+
+	if (!fin.is_open())
+	{ 
+		throw nodeInfoException("Loading Pattern xml file is not loaded for parsing");
+		return false;
+	}
+
+	std::ostringstream sstr;
+	sstr << fin.rdbuf();
+
+	sstr.flush();
+	fin.close();
+	
+	std::string xmlData = sstr.str();
+	rapidxml::xml_document<> doc;
+	doc.parse<0> (&xmlData[0]);
+	
+	rapidxml::xml_node<> *patternNode = doc.first_node("Patterns")->first_node("Pattern");
+	if(!patternNode)
+		return false;
+
+	for (;;)
+	{
+		rapidxml::xml_attribute<> *patternIDAttr = patternNode->first_attribute("id");
+		WPPattern _tmpPatter;
+		_tmpPatter.patternID = atoi(patternIDAttr->value());
+
+		std::map<CPos, double> _posWeightMap;
+		std::vector<int>	 _wpIDs;
+
+
+		rapidxml::xml_node<> *idNode = patternNode->first_node("WPID");
+		while (1)
+		{
+			rapidxml::xml_attribute<> *idattr = idNode->first_attribute("id");
+
+			int _id = std::stoi(idattr->value());
+			_wpIDs.push_back(_id);
+
+			idNode = idNode->next_sibling("WPID");
+			if (idNode == NULL)
+				break;
+		}
+
+		rapidxml::xml_node<> *coorNode = patternNode->first_node("Coor");  
+		while (1)
+		{
+			int x = std::atoi(coorNode->first_attribute("x")->value());
+			int y = std::atoi(coorNode->first_attribute("y")->value());
+			double w = std::stod(coorNode->first_attribute("w")->value());
+
+			CPos _pos(x, y);
+
+			_posWeightMap.insert(std::make_pair(_pos, w));
+			coorNode = coorNode->next_sibling("Coor");
+			if (coorNode == NULL)
+				break;
+		}
+
+		_tmpPatter.PosWeightMap = _posWeightMap;
+		_tmpPatter.wpIDs = _wpIDs;
+
+		normalWPPatterns.push_back(_tmpPatter);
+
+		patternNode = patternNode->next_sibling("Pattern");
+		if (patternNode == NULL)
+			break;
+	}
+
+
+	return true;
 }
 
 std::vector<int> Classifier::getMoveSequence(const int & num, int depth)
@@ -362,40 +503,58 @@ int Classifier::getFullPath(WayPoints & points, const WayPoints & sourceWPs)
 	return 0;
 }
 
+int Classifier::initMovingPoints()
+{
+	CPos curPos(0,0), nextPos;
+	std::vector<int> moveSequence; 
+
+	for (int tmp = 0; tmp <= radius; ++tmp)
+	{
+		int totalNum = static_cast<int>(pow(4, tmp));
+
+		for (int i = 0; i < totalNum; ++i)
+		{
+			moveSequence = getMoveSequence(i, tmp);
+			nextPos = getFinalPos(moveSequence, curPos);
+			movingWPforAdding.insert(nextPos);
+		}
+	}
+
+	for (int tmp = 0; tmp <= minusRadius; ++tmp)
+	{ 
+		int totalNum = static_cast<int>(pow(4, tmp));
+
+		for (int i = 0; i < totalNum; ++i)
+		{ 
+			moveSequence = getMoveSequence(i, tmp);
+			nextPos = getFinalPos(moveSequence, curPos);
+			movingWPforRemoving.insert(nextPos);
+		}
+	}
+
+
+	return 0;
+}
+
 int Classifier::addWeights(std::map<CPos, double> & PosWeightMap, const WayPoints & points)
 {
-	std::vector<int> moveSequence; 
-	std::set<CPos> weightPointCandidates;
-
 	for (auto iter = points.begin(); iter != points.end(); ++iter)
 	{ 
 		CPos curPos(iter->x, iter->y);
 
-		for (int tmp = 0; tmp <= radius; ++tmp)
+		for (auto wpIter = movingWPforAdding.begin(); wpIter != movingWPforAdding.end(); ++wpIter)
 		{ 
-			int totalNum = static_cast<int>(pow(4, tmp));
-			CPos nextPos = curPos; 
-
-			for (int i = 0; i < totalNum; ++i)
-			{ 
-				moveSequence = getMoveSequence(i, tmp);
-				nextPos = getFinalPos(moveSequence, curPos);
-				weightPointCandidates.insert(nextPos);
-			}
-		}
+			CPos _tmpPos = curPos + *wpIter;
 
 
-		for (auto iter = weightPointCandidates.begin(); iter != weightPointCandidates.end(); ++iter)
-		{ 
-
-			if (iter->x < 0 || iter->x  >= mapSizeX * resolPerCell)
+			if (_tmpPos.x < 0 || _tmpPos.x  >= mapSizeX * resolPerCell)
 				continue;
 
-			if (iter->y < 0 || iter->y  >= mapSizeY * resolPerCell)
+			if (_tmpPos.y < 0 || _tmpPos.y  >= mapSizeY * resolPerCell)
 				continue;
 
-			double squareDistance = getSquareDistance(curPos, *iter);
-			PosWeightMap[*iter] += getProbDesity(sqrt(squareDistance));
+			double squareDistance = getSquareDistance(curPos, _tmpPos);
+			PosWeightMap[_tmpPos] += getProbDesity(sqrt(squareDistance));
 		}
 	}
 
@@ -543,37 +702,22 @@ double Classifier::getCorrelation(const WayPoints & largeWPs,
 
 int Classifier::removeWeightsAlongPath(std::map<CPos, double> & PosWeightMap, const WayPoints & points, int depth)
 {
-	std::vector<int> moveSequence; 
-	std::set<CPos> weightPointCandidates;
-
 	for (auto iter = points.begin(); iter != points.end(); ++iter)
 	{ 
 		CPos curPos(iter->x, iter->y);
 
-		for (int tmp = 0; tmp <= minusRadius; ++tmp)
+		for (auto wpIter = movingWPforRemoving.begin(); wpIter != movingWPforRemoving.end(); ++wpIter)
 		{ 
-			int totalNum = static_cast<int>(pow(4, tmp));
-			CPos nextPos = curPos; 
+			CPos _tmpPos = curPos + *wpIter;
 
-			for (int i = 0; i < totalNum; ++i)
-			{ 
-				moveSequence = getMoveSequence(i, tmp);
-				nextPos = getFinalPos(moveSequence, curPos);
-				weightPointCandidates.insert(nextPos);
-			}
-		}
-
-		for (auto iter = weightPointCandidates.begin(); iter != weightPointCandidates.end(); ++iter)
-		{ 
-
-			if (iter->x < 0 || iter->x  >= mapSizeX * resolPerCell)
+			if (_tmpPos.x < 0 || _tmpPos.x  >= mapSizeX * resolPerCell)
 				continue;
 
-			if (iter->y < 0 || iter->y  >= mapSizeY * resolPerCell)
+			if (_tmpPos.y < 0 || _tmpPos.y  >= mapSizeY * resolPerCell)
 				continue;
 
-			double squareDistance = getSquareDistance(curPos, *iter);
-			PosWeightMap[*iter] += minusWeight * getProbDesity(sqrt(squareDistance));
+			double squareDistance = getSquareDistance(curPos, _tmpPos);
+			PosWeightMap[_tmpPos] += minusWeight * getProbDesity(sqrt(squareDistance));
 		}
 	}
 
@@ -581,7 +725,9 @@ int Classifier::removeWeightsAlongPath(std::map<CPos, double> & PosWeightMap, co
 
 }
 
+std::map<int, std::vector<CPos>*> Classifier::trajectoryMap = std::map<int, std::vector<CPos>*>();
 
+// Added by cbchoi
 std::map<int, std::vector<CPos>*>& Classifier::GetTrajectoryMap()
 {
 	return trajectoryMap;

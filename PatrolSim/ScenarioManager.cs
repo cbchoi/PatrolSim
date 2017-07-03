@@ -75,8 +75,8 @@ namespace PatrolSim
             HandleColors(rootNode.SelectSingleNode("ColorList"));
 
             // TODO
-            // Initalize RouteClassifier
-            //_rc = new RouteClassifier(xmlFilePath);
+            //Initalize RouteClassifier
+            _rc = new RouteClassifier(xmlFilePath);
         }
 
         public void HandleShips(XmlNode node)

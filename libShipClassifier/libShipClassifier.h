@@ -2,6 +2,7 @@
 
 #include "Classifier.h"
 
+//extern "C" __declspec(dllexport) Classifier* Classifier::pInstance = NULL;
 extern "C" __declspec(dllexport) void createInstrance(char* path);
 extern "C" __declspec(dllexport) void releaseInstance();
 
